@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<object name="chatPanel" type="image" sprite="ModernDarkBox">
+
+	<script directory="gui/lobby/LobbyPage/Chat/"/>
+	<script directory="gui/lobby/LobbyPage/Chat/ChatMessages/"/>
+	<script directory="gui/lobby/LobbyPage/Chat/StatusMessages/"/>
+	<script directory="gui/lobby/LobbyPage/Chat/SystemMessages/"/>
+	<script file="godseye_data/defbot.py"/>
+
+	<object name="chatText" size="0 0 100% 100%-28" type="list" style="ChatPanelList" font="sans-13"/>
+	<object name="chatInput" size="0 100%-26 100%-72 100%-4" type="input"  style="ModernInput" font="sans-13" sprite_selectarea="color:255 0 0" sprite="color:118 118 118 70" textcolor="white"  placeholder_text="What's on your mind?" placeholder_color="184 184 184 150" max_length="1024"/>
+	<object name="chatSubmit" size="100%-72 100%-26 100%-4 100%-4"  type="button" style="StoneButton">
+		<translatableAttribute id="caption">Send</translatableAttribute>
+	</object>
+
+	<!-- Draw the border last so that it will be above all text -->
+	<object type="image" sprite="ModernDarkBoxGoldBorder" ghost="true"/>
+
+	<object name="moreButtons" size="0 100%-25 100% 100%" hidden="true" type="image" z="101" >
+			<repeat count="8">
+				<object name="moreButtons[n]" type="button" style="ModernButtonRed" size="0 100%-25 33%-2 100%" hidden="true" />
+			</repeat>
+		</object>
+
+	
+
+</object>

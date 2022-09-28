@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<styles>
+
+	<style name="MainMenuPanel"
+		sprite="MainMenuPanel"
+	/>
+
+	<style name="SubmenuPanel"
+		sprite="SubmenuPanel"
+	/>
+
+	<style name="userReportPanel"
+		sprite="pgUserReportBox"
+	/>
+
+	<style name="userReportText"
+		font="sans-14"
+		textcolor="white"
+		scrollbar="true"
+		scrollbar_style="ModernScrollBar"
+	/>
+
+
+	
+</styles>

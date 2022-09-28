@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<objects>
+
+	<script directory="gui/common/"/>
+	<script directory="gui/maps/"/>
+	<script directory="gui/lobby/"/>
+	<script file="gui/lobby/autoAway.js"/>
+
+	<object>
+
+		<include file="gui/lobby/LobbyPage/LobbyPage.xml"/>
+		<include file="gui/lobby/LeaderboardPage/LeaderboardPage.xml"/>
+		<include file="gui/lobby/ProfilePage/ProfilePage.xml"/>
+
+
+	<action on="WindowFocus">
+		g_WindowFocus = true;
+	</action>
+
+	<action on="WindowBlur">
+		g_WindowFocus = false;
+		resetAutoAway();
+	</action>
+
+	</object>
+</objects>

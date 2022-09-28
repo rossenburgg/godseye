@@ -1,0 +1,19 @@
+                    [font="sans-bold-20" color="red" align="center"]                           About Me. 
+[font="sans-16"]
+   Hello! Thanks for your interest in God's Eye Mod. In thus page  I will reveal a     little about myself and the mode, 
+   My name is [color="orange"] Defc0n [/color], probably your seen Me
+   hanging around in the lobby. 
+   This mod is in it's early version and I will continue to improve the UI designs 
+   and other features will be added in the future. 
+   Made with ♡  by [color="orange"] Defc0n [/color]™ [color="green"]Happy Gaming! [/color]
+
+   Features Overview:
+
+    ● Auto Login                                       ● Vision Ally Stats
+    ● Auto Away                                       ● Start into lobby
+    ● Improved UI designs
+    ● Functions with all mods
+    ● Network Warnings
+    ● Late Observer Joins
+    ● Auto Share Resource Among Allies
+    when you resign

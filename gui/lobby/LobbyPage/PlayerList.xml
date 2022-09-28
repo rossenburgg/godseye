@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+	<object>
+	<script directory="gui/lobby/"/>
+	<script file="gui/lobby/autoAway.js"/>
+	
+<object name="playersBox"
+	style="ModernSortedList"
+	selected_column="status"
+	selected_column_order="1"
+	type="olist"
+	sortable="true"
+	size="0 23 100% 100%-24"
+	font="sans-bold-stroke-13"
+>
+	<column id="buddy" width="12"/>
+		<column id="smurf" width="12"/>
+	<column id="status" width="17%">
+		<translatableAttribute id="heading">Status</translatableAttribute>
+	</column>
+	<column id="name" width="45%-12">
+		<translatableAttribute id="heading">Name</translatableAttribute>
+	</column>
+	<column id="rating" width="29%">
+		<translatableAttribute id="heading">Rating</translatableAttribute>
+	</column>
+
+
+	<action on="SelectionChange">
+				onPlayerListSelection();
+			</action>
+			<action on="SelectionColumnChange">
+				changeGUIListSort(this, g_PlayersSort, "lobby.sort.players");
+				updatePlayerList();
+			</action>
+				<action on="mouseleftclickitem">
+				selectGameFromPlayername();
+			</action>
+			<action on="mouseleftdoubleclickitem">toggleBuddy();</action>
+
+			</object>
+			
+		<object name="toggleSmurfButton"
+			type="button"
+			style="ModernButtonRed"
+			z="100"
+			size="0 100%-35 100% 100%"
+			font="sans-bold-stroke-12">
+			
+		</object>
+		
+</object>

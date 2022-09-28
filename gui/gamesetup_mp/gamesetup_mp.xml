@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<objects>
+
+	<script directory="gui/common/"/>
+	<script directory="gui/gamesetup_mp/"/>
+
+	<!-- Add a translucent black background to fade out the menu page -->
+	<object type="image" sprite="ModernFade"/>
+
+	<object name="multiplayerPages" type="image" style="ModernDialog" size="50%-230 50%-120 50%+230 53%+120">
+
+		<action on="Tick">
+			onTick();
+		</action>
+
+		<object style="ModernLabelText" type="text" size="50%-128 0%-16 50%+128 16">
+			<translatableAttribute id="caption">Multiplayer</translatableAttribute>
+		</object>
+
+		<object name="pageJoin" size="0 32 100% 100%" hidden="true">
+
+			<object type="text" style="ModernLabelText" size="0 0 100% 30">
+				<translatableAttribute id="caption">Joining an existing game.</translatableAttribute>
+			</object>
+
+			<object type="text" size="20 36 50% 66" style="ModernRightLabelText">
+				<translatableAttribute id="caption">Player Name:</translatableAttribute>
+			</object>
+
+			<object name="joinPlayerName" type="input" size="50%+10 40 100%-20 64" style="ModernInput">
+				<action on="Load">
+					this.caption = multiplayerName();
+				</action>
+			</object>
+
+			<object type="text" size="20 76 50% 106" style="ModernRightLabelText">
+				<translatableAttribute id="caption">Server Hostname or IP:</translatableAttribute>
+			</object>
+
+			<object name="joinServer" type="input" size="50%+10 80 100%-20 104" style="ModernInput">
+				<action on="Load">
+					this.caption = Engine.ConfigDB_GetValue("user", "multiplayerserver");
+				</action>
+			</object>
+
+			<object type="text" size="20 116 50% 146" style="ModernRightLabelText">
+				<translatableAttribute id="caption">Server Port:</translatableAttribute>
+			</object>
+
+			<object name="joinPort" type="input" size="50%+10 120 100%-20 144" style="ModernInput">
+				<translatableAttribute id="tooltip">Leave blank to use the default port.</translatableAttribute>
+				<action on="Load">
+					this.caption = getValidPort(Engine.ConfigDB_GetValue("user", "multiplayerjoining.port"));
+				</action>
+				<action on="Press">
+					this.caption = getValidPort(this.caption);
+				</action>
+			</object>
+		</object>
+
+		<object name="pageHost" size="0 32 100% 100%" hidden="true">
+
+			<object type="text" style="ModernLabelText" size="0 0 100% 30">
+				<translatableAttribute id="caption">Set up your server to host.</translatableAttribute>
+			</object>
+
+			<object name="hostPlayerNameWrapper" hidden="true">
+				<object type="text" size="20 36 50% 66" style="ModernRightLabelText">
+					<translatableAttribute id="caption">Player Name:</translatableAttribute>
+				</object>
+
+				<object name="hostPlayerName" type="input" size="50%+10 40 100%-20 64" style="ModernInput">
+					<action on="Load">
+						this.caption = multiplayerName();
+					</action>
+				</object>
+			</object>
+
+			<!-- Host server name is only used on games started through the lobby. -->
+			<object name="hostServerNameWrapper" hidden="true">
+				<object type="text" size="20 36 50% 66" style="ModernRightLabelText">
+					<translatableAttribute id="caption">Server Name:</translatableAttribute>
+				</object>
+
+				<object name="hostServerName" type="input" size="50%+10 40 100%-20 64" style="ModernInput" max_length="256">
+					<action on="Load">
+						this.caption = getDefaultGameName();
+					</action>
+				</object>
+			</object>
+
+			<object>
+				<object type="text" size="20 66 50% 104" style="ModernRightLabelText">
+					<translatableAttribute id="caption">Server Port:</translatableAttribute>
+				</object>
+
+				<object name="hostPort" type="input" size="50%+10 80 100%-20 104" style="ModernInput">
+					<translatableAttribute id="tooltip">Leave blank to use the default port.</translatableAttribute>
+					<action on="Load">
+						this.caption = getValidPort(Engine.ConfigDB_GetValue("user", "multiplayerhosting.port"));
+					</action>
+					<action on="Press">
+						this.caption = getValidPort(this.caption);
+					</action>
+				</object>
+			</object>
+
+			<!-- Host password is only used on games started through the lobby. -->
+			<object name="hostPasswordWrapper" size="0 116 100% 126" hidden="true">
+				<object type="text" size="20 0 50% 22" style="ModernRightLabelText">
+					<translatableAttribute id="caption">Server Password:</translatableAttribute>
+					<translatableAttribute id="tooltip">Leave blank to not require it.</translatableAttribute>
+				</object>
+
+				<object name="hostPassword" type="input" size="50%+10 0 100%-20 22" style="ModernInput" mask="true" mask_char="*" max_length="256">
+					<action on="Load">
+						this.caption = getDefaultPassword();
+					</action>
+				</object>
+			</object>
+
+			<object name="hostSTUNWrapper" size="120 136 100% 180">
+				<object name="useSTUN" size="0 10 32 100%" type="checkbox" style="ModernTickBox">
+					<action on="Press">Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.stun.enabled", String(this.checked), "config/user.cfg");</action>
+				</object>
+				<object type="text" size="26 0 100% 100%" style="ModernLeftLabelText">
+					<translatableAttribute id="caption">Use STUN to work around firewalls</translatableAttribute>
+				</object>
+			</object>
+
+
+			<object name="hostLobbyAuthWrapper" size="120 160 100% 210" >
+				<object name="useLobbyAuth" size="0 10 32 100%" type="checkbox" style="ModernTickBox">
+					<action on="Press">Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.secureauth", String(this.checked), "config/user.cfg");</action>
+				</object>
+				<object type="text" size="26 0 100% 100%" style="ModernLeftLabelText" >
+				<translatableAttribute id="caption">Impersonation Blocker (Prevent Players from using different nicks in game)</translatableAttribute>
+					<translatableAttribute id="tooltip">If enable, this prevents the impersonation of other players, so no name change possible.\n\nThe lobby server confirms the identity of the player before they join.\n\nBut also no replace player functionality in game.</translatableAttribute>
+				</object>
+			</object>
+
+
+		
+		</object>
+
+		<object name="hostFeedback" type="text" style="ModernLabelText" size="50 100%-80 100%-50 100%-45" textcolor="red"/>
+
+		<object name="continueButton" hotkey="confirm" type="button" size="50%+5 100%-45 100%-18 100%-17" style="ModernButtonRed">
+			<translatableAttribute id="caption">Continue</translatableAttribute>
+			<action on="Press">confirmSetup();</action>
+		</object>
+
+		<object type="button" style="ModernButtonRed" size="18 100%-45 50%-5 100%-17" hotkey="cancel">
+			<translatableAttribute id="caption">Cancel</translatableAttribute>
+			<action on="Press">cancelSetup();</action>
+		</object>
+
+		<object name="pageConnecting" hidden="true">
+			<object name="connectionStatus" type="text" style="ModernLabelText" size="0 50%-10 100% 50%+10"/>
+		</object>
+
+		<object name="pagePassword" size="0 32 100% 100%" hidden="true">
+			<object name="clientPasswordWrapper" size="0 0 100% 40">
+				<object type="text" size="20 0 50% 22" style="ModernRightLabelText">
+					<translatableAttribute id="caption">Password:</translatableAttribute>
+				</object>
+
+				<object name="clientPassword" type="input" size="50%+10 0 100%-20 22" style="ModernInput" mask="true" mask_char="*" max_length="256">
+					<action on="Load">
+						this.caption = getDefaultPassword();
+					</action>
+				</object>
+			</object>
+			<object name="confirmPasswordButton" hotkey="confirm" type="button" size="50%+5 100%-45 100%-18 100%-17" style="ModernButtonRed">
+				<translatableAttribute id="caption">Confirm</translatableAttribute>
+				<action on="Press">confirmPassword();</action>
+			</object>
+		</object>
+	</object>
+
+</objects>
