@@ -2,8 +2,12 @@ name: Build Pyromod
 
 on:
   push:
+    branches:
+    - main
+    - release/*
     tags:
-      - v**
+      - v0.0.1
+  
 
 jobs:
   build-pyromod:
