@@ -3,7 +3,7 @@ name: Release Pyromod
 on:
   push:
     tags:
-      - v0.0.7
+      - v**
 
 jobs:
   build-pyromod:
