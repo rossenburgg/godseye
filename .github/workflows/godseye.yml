@@ -3,7 +3,7 @@ name: Build Pyromod
 on:
   push:
     branches:
-    - main
+    - master
     - release/*
     tags:
       - v0.0.1
