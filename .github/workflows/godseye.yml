@@ -2,8 +2,11 @@ name: Release Pyromod
 
 on:
   push:
+    branches:
+      - main
     tags:
       - v**
+ 
 
 jobs:
   build-pyromod:
