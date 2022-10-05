@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects>
+
+	<script directory="gui/common/"/>
+	<script directory="gui/security/"/>
+	<script directory="gui/prelobby/common/feedback/"/>
+	<script directory="gui/prelobby/common/terms/"/>
+	<script file="gui/security/updatepassword.js"/>
+
+	<object type="image" style="ModernDialog" size="50%-230 50%-210 50%+230 50%+210">
+
+		<object style="ModernLabelText" type="text" size="50%-128 -18 50%+128 15">
+			<translatableAttribute id="caption">Change Password</translatableAttribute>
+		</object>
+
+		<object size="0 30 100% 100">
+			<include file="gui/security/olddata.xml"/>
+		</object>
+
+		<object size="0 110 100% 140">
+			<include file="gui/security/confirmpassword.xml"/>
+		</object>
+
+		
+
+		<object size="0 295 100% 510">
+			<include file="gui/security/response.xml"/>
+		</object>
+
+	</object>
+
+</objects>

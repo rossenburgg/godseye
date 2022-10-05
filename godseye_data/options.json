@@ -1,0 +1,151 @@
+[
+	{
+		"label": "God's Eye",
+		"options":
+		[
+		
+			{
+				"type": "boolean",
+				"label": "Network Warnings",
+				"tooltip": "Show which player has a bad connection in multiplayer games.",
+				"config": "overlay.netwarnings"
+			},
+		
+			
+			{
+				"type": "dropdown",
+				"label": "Late Observer Joins",
+				"tooltip": "Allow everybody or buddies only to join the game as observer after it started.",
+				"config": "network.lateobservers",
+				"list": [
+					{ "value": "everyone", "label": "Everyone" },
+					{ "value": "buddies", "label": "Buddies" },
+					{ "value": "disabled", "label": "Disabled" }
+				]
+			},
+		
+			{
+				"type": "boolean",
+				"label": "Chat Timestamp",
+				"tooltip": "Show time that messages are posted in the lobby, gamesetup and ingame chat.",
+				"config": "chat.timestamp"
+			},
+			{
+				"type": "boolean",
+				"label": "Share Resources Among Allies on Resign",
+				"tooltip": "Share own remaining resources among allies on resign. (Little Bug, Default Off, Can be tested though.)",
+				"config": "session.sendresonresign"
+			},
+			{
+				"type": "boolean",
+				"label": "Show Vision Allies Stats",
+				"tooltip": "New window for quick showing team stats to phase, population, resources and killed units.",
+				"config": "session.showstats"
+			},
+			{
+				"type": "boolean",
+				"label": "Show Observers and Offlines Players",
+				"tooltip": "New window for quick showing Observers and Offlines Players.",
+				"config": "session.showobservers"
+			},
+			{
+				"type": "boolean",
+				"label": "Start Into Lobby",
+				"tooltip": "Go into lobby at startup.",
+				"config": "gui.startintolobby"
+			},
+			{
+				"type": "boolean",
+				"label": "Auto Login",
+				"tooltip": "On prelobby page opening auto-login user. Press escape for abort.",
+				"config": "lobby.autologin"
+			},
+			{
+				"type": "boolean",
+				"label": "Highlight buddies",
+				"tooltip": "Highlight user, buddies and their games.",
+				"config": "lobby.highlightbuddies"
+			},
+			{
+				"type": "boolean",
+				"label": "Highlight smurfs",
+				"tooltip": "Highlight all smurfs so that you can easily identify them",
+				"config": "lobby.highlightsmurfs"
+			},
+			{
+				"type": "number",
+				"label": "Auto Away Minutes",
+				"tooltip": "Number of minutes before you are set to auto away.",
+				"config": "lobby.autoawaytime",
+				"min": "0.001"
+			},
+			{
+				"type": "dropdown",
+				"label": "Show More Buttons Bar",
+				"tooltip": "Show more buttons bar below chat input auto-hiding (reveal on mouse over).",
+				"config": "gui.lobby.morebuttonsbar",
+				"list": [
+					{ "value": "disabled", "label": "Disabled" },
+					{ "value": "hiding", "label": "Auto-Hiding" },
+					{ "value": "visible", "label": "Always visible" }
+				]
+			}
+			
+		
+		]
+	},
+
+	{
+		"label": "Account",
+		"options":
+		[
+			{
+				"type": "string",
+				"label": "Old Password",
+				"tooltip": "Enter old password.",
+				"config": "lobby.oldpassword"
+			},
+			{
+				"type": "string",
+				"label": "New Password",
+				"tooltip": "Enter new password.",
+				"config": "lobby.newpassword"
+			},
+
+			{
+				"type": "string",
+				"label": "Confirm Password",
+				"tooltip": "Confirm new password.",
+				"config": "lobby.cpassword"
+			},
+
+			{
+				"type": "boolean",
+				"label": "I confirm everything is write",
+				"tooltip": "Highlight all smurfs so that you can easily identify them",
+				"config": "lobby.highlightsmurfs"
+			}
+			
+		
+		]
+	},
+
+
+	{
+		"label": "Profile",
+		"options":
+		[
+			{
+				"type": "string",
+				"label": "Name",
+				"tooltip": "Username",
+				"config": "playername.multiplayer"
+			}
+			
+		
+		]
+	}
+
+	
+	
+]

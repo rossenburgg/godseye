@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<object name="chatPanel" type="image" sprite="ModernDarkBox">
+
+	<object name="chatText" type="list" size="2 2 100%-2 100%-28" style="ChatPanelList"/>
+
+	<object name="chatInput" type="input"  size="4 100%-26 100%-96 100%-4" style="ModernInput" max_length="1024"/>
+
+	<object name="chatSubmitButton"  size="100%-92 100%-26 100%-4 100%-4" type="button" style="StoneButton">
+		<translatableAttribute id="caption">Send</translatableAttribute>
+	</object>
+
+	<!-- Draw the border last so that it will be above all text -->
+	<object type="image" sprite="ModernDarkBoxGoldBorder" ghost="true"/>
+</object>

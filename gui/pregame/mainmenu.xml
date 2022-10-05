@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objects>
+
+	<script directory="gui/common/"/>
+	<script directory="gui/common/campaigns/"/>
+	<script directory="gui/pregame/"/>
+	<script directory="gui/pregame/backgrounds/"/>
+	<script directory="gui/pregame/userreport/"/>
+
+	<object name="mainMenuPage">
+		<include file="gui/pregame/backgrounds.xml"/>
+		<include file="gui/pregame/menupanel.xml"/>
+		<include file="gui/pregame/userreport/userreport.xml"/>
+	</object>
+
+</objects>
