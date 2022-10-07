@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - v0.0.7
+    branches:
+      - ALARIC
 
 
 jobs:
