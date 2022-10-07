@@ -3,7 +3,10 @@
 	<object>
 	<script directory="gui/lobby/"/>
 	<script file="gui/lobby/autoAway.js"/>
-	
+	<object name="playersFilter" type="input" style="ModernInput" size="0 0 100% 22" font="sans-bold-13">
+		<translatableAttribute id="placeholder_text">Search for Player</translatableAttribute>
+	</object>
+
 <object name="playersBox"
 	style="ModernSortedList"
 	selected_column="status"
@@ -15,13 +18,13 @@
 >
 	<column id="buddy" width="12"/>
 		<column id="smurf" width="12"/>
-	<column id="status" width="17%">
+	<column id="status" width="26%">
 		<translatableAttribute id="heading">Status</translatableAttribute>
 	</column>
-	<column id="name" width="45%-12">
+	<column id="name" width="48%-12">
 		<translatableAttribute id="heading">Name</translatableAttribute>
 	</column>
-	<column id="rating" width="29%">
+	<column id="rating" width="26%">
 		<translatableAttribute id="heading">Rating</translatableAttribute>
 	</column>
 
