@@ -3,6 +3,7 @@
 	<object>
 	<script directory="gui/lobby/"/>
 	<script file="gui/lobby/autoAway.js"/>
+	<!-- search field-->
 	<object name="playersFilter" type="input" style="ModernInput" size="0 0 100% 22" font="sans-bold-13">
 		<translatableAttribute id="placeholder_text">Search for Player</translatableAttribute>
 	</object>
