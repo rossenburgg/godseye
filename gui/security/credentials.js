@@ -1,15 +1,12 @@
 function checkUsername(register)
 {
-	let oldpassword = Engine.GetGUIObjectByName("oldpassword").caption;
-	if (!oldpassword)
-		return translate("Please enter your old password");
+	let username = Engine.GetGUIObjectByName("username").caption;
+	if (!username)
+		return translate("Please enter your username");
 
-        if (register && oldpassword.length < 8)
-		return translate("Old password is incorrect");
+	if (register && (!username.match(/^[a-z0-9._-]*$/i) || username.length > 20))
+		return translate("Invalid username");
 
-        let password2 = Engine.GetGUIObjectByName("passwordRepeat").caption;
-        if (password2 == oldpassword)
-		return translate("You cannot use your old password as your new password");
 	return "";
 }
 
@@ -19,7 +16,7 @@ function checkPassword(register)
 
 	if (!password)
 		return register ?
-			translateWithContext("register", "Please enter your new password") :
+			translateWithContext("register", "Please enter your password") :
 			translateWithContext("login", "Please enter your password");
 
 	if (register && password.length < 8)
@@ -32,18 +29,38 @@ function checkPasswordConfirmation()
 {
 	let password1 = Engine.GetGUIObjectByName("password").caption;
 	if (!password1)
-		return translate("Please enter your new password");
+		return translate("Please enter your password again");
 
 	let password2 = Engine.GetGUIObjectByName("passwordRepeat").caption;
 	if (password1 != password2)
-		return translate("New passwords do not match");
-
-       
-        
+		return translate("Passwords do not match");
 
 	return "";
 }
 
+function initRememberPassword()
+{
+	Engine.GetGUIObjectByName("rememberPassword").checked =
+		Engine.ConfigDB_GetValue("user", "lobby.rememberpassword") == "true";
+}
+
+function toggleRememberPassword()
+{
+	let checkbox = Engine.GetGUIObjectByName("rememberPassword");
+	let enabled = Engine.ConfigDB_GetValue("user", "lobby.rememberpassword") == "true";
+	if (!checkbox.checked && enabled && Engine.ConfigDB_GetValue("user", "lobby.password"))
+		messageBox(
+			360, 160,
+			translate("Are you sure you want to delete the password after connecting?"),
+			translate("Confirmation"),
+			[translate("No"), translate("Yes")],
+			[
+				() => { checkbox.checked = true; },
+				() => { Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.rememberpassword", String(!enabled), "config/user.cfg"); }
+			]);
+	else
+		Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.rememberpassword", String(!enabled), "config/user.cfg");
+}
 
 function getEncryptedPassword()
 {
@@ -60,6 +77,9 @@ function getEncryptedPassword()
 
 function saveCredentials()
 {
+	let username = Engine.GetGUIObjectByName("username").caption;
+	Engine.ConfigDB_CreateAndWriteValueToFile("user", "playername.multiplayer", username, "config/user.cfg");
+	Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.login", username, "config/user.cfg");
 
 	if (Engine.ConfigDB_GetValue("user", "lobby.rememberpassword") == "true")
 		Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.password", getEncryptedPassword(), "config/user.cfg");

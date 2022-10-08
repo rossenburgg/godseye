@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+
+<!DOCTYPE objects SYSTEM "../gui.dtd">
+
+<objects>
+
+	<!--
+	==========================================
+	 - GLOBAL OBJECTS -
+	==========================================
+	-->
+
+
+	<object>
+
+		<!--
+		==========================================
+		- GAMESTATE NOTIFICATIONS
+		==========================================
+		-->
+		<object name="gameStateNotifications"
+			type="text"
+			ghost="true"
+			z="199"
+			size="100%-110 40 100%-110 40"
+			font="mono-stroke-10"
+			textcolor="255 219 77"
+			text_align="center"
+			text_valign="top"
+			sprite="color: 0 0 0 100"
+			>
+		</object>
+
+		<!--
+		==========================================
+		- FPS & REAL TIME & GAME TIME COUNTER
+		==========================================
+		-->
+		<object name="dataCounter"
+			type="text"
+			ghost="true"
+			z="199"
+			size="100%-100 40 100%-5 54"
+			font="mono-10"
+			textcolor="white"
+			text_align="right"
+			text_valign="top"
+			sprite="color: 0 0 0 100"
+		>
+			<action on="Load">
+				g_OverlayCounterManager = new OverlayCounterManager(this);
+			</action>
+		</object>
+
+		<!--
+		==========================================
+		- WATERMARK - USED WHEN TAKING OFFICIAL SCREENSHOTS
+		==========================================
+		-->
+
+		<object name="glbWaterMark"
+			hidden="true"
+			hotkey="screenshot.watermark"
+			z="200"
+		>
+			<action on="Press">
+				this.hidden = !this.hidden;
+			</action>
+
+			<object name="glbWaterMarkProductLogo"
+				type="image"
+				size="0 100%-96 192 100%"
+				sprite="watermarkProduct"
+			/>
+
+			<object name="glbWaterMarkCompanyLogo"
+				type="image"
+				size="100%-192 100%-24 100% 100%"
+				sprite="watermarkCompany"
+			/>
+		</object>
+
+		<!-- ==========================================
+		- TICK ANIMATION ROUTINES - IF NOT USED, THEY DO NOTHING ==========================================
+		-->
+
+		<action on="Tick">
+			g_resizeBarManager.onTick();
+			animate.onTick();
+		</action>
+
+		<!-- ==========================================
+		- RESIZE BAR - USED FOR VISUALIZING OBJECT RESIZE BAR ==========================================
+		-->
+
+		<object name="glResizeBar"
+			type="image"
+			sprite="color: 160 160 160 255"
+			hidden="true"
+			size="0 0 0 0"
+			z="800" />
+
+		<!-- ==========================================
+		- CLI DATA INFO ==========================================
+		-->
+
+		<object name="gl_autocivCLI"
+			size="50%-400 28% 50%+400 28%"
+			hidden="true"
+			z="799"
+			>
+			<action on="Load">
+				global["g_autociv_CLI"] = new Autociv_CLI(this);
+			</action>
+
+			<object size="0% 0% 100% 100%+20"
+				type="input"
+				multiline="false">
+				<object size="0% 100% 100% 100%+20"
+					type="list"
+					sprite_selectarea="ModernDarkBoxWhite"
+					scrollbar="true"
+					scrollbar_style="ModernScrollBar">
+					<object size="0% 100% 100% 100%+20"
+						type="text"
+						scrollbar ="true"
+						scrollbar_style="ModernScrollBar">
+					</object>
+				</object>
+				<object type="text" size="0% 0%+2 0% 100%-2"/>
+			</object>
+			<object size="0% 0%-70 100% 0%"
+				hotkey="autociv.CLI.stdout.toggle"
+				hidden="true"
+				type="input"
+				multiline="true"
+				scrollbar ="true"
+				style="ModernInput"
+				scrollbar_style="ModernScrollBar">
+			</object>
+			<object hotkey="autociv.CLI.stdout.eval"/>
+		</object>
+
+	</object>
+</objects>
