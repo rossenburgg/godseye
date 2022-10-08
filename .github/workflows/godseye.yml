@@ -1,31 +1,59 @@
-name: Release Pyromod
+name: Build or Release Pyromod
 
 on:
   push:
+    branches:
+      - ALARIC
     tags:
-      - v0.0.7
+      - v**
+  pull_request:
     branches:
       - ALARIC
 
+env:
+  MOD_NAME: godseye
 
 jobs:
   build-pyromod:
+    if: ${{ github.ref != 'refs/heads/ALARIC' && github.ref_type != 'tag' }}
     runs-on: ubuntu-latest
     env:
-      MOD_NAME: godseye
-      MOD_VERSION: ${{ github.ref_name }}
+      MOD_VERSION: ${{ github.sha }}
     steps:
     - uses: actions/checkout@v3
-    - run: echo "MOD_VERSION=${MOD_VERSION:1}" >> $GITHUB_ENV
     - uses:  0ad-matters/gh-action-build-pyromod@v1
       with:
         name: ${{ env.MOD_NAME }}
         version: ${{ env.MOD_VERSION }}
       id: build-pyromod
-    - run: |
-        OUTPUT_FILE="$MOD_NAME-${MOD_VERSION}.pyromod"
+    - name: Upload Artifacts
+      # Uploads artifacts (combined into a zip file) to the workflow output page
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.MOD_NAME }}-${{ env.MOD_VERSION }}
+        path: "output/${{ env.MOD_NAME }}*.*"
+
+  release-pyromod:
+    if: ${{ github.ref_type == 'tag' }}
+    runs-on: ubuntu-latest
+    env:
+      MOD_VERSION: ${{ github.ref_name }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Massage Variables
+      run: |
+        # remove 'v' from version string
+        echo "MOD_VERSION=${MOD_VERSION:1}" >> $GITHUB_ENV
+    - uses:  0ad-matters/gh-action-build-pyromod@v1
+      with:
+        name: ${{ env.MOD_NAME }}
+        version: ${{ env.MOD_VERSION }}
+      id: build-pyromod
+    - name: Create sha256sum
+      run:  |
+        OUTPUT_FILE="$MOD_NAME-$MOD_VERSION.pyromod"
         cd output
-        sha256sum $OUTPUT_FILE > ${OUTPUT_FILE}.sha256sum
+        sha256sum $OUTPUT_FILE > $OUTPUT_FILE.sha256sum
     - name: Release PyroMod
       uses: ncipollo/release-action@v1
       with:
