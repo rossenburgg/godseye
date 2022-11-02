@@ -5,7 +5,7 @@
 	<script directory="gui/lobby/LobbyPage/Chat/ChatMessages/"/>
 	<script directory="gui/lobby/LobbyPage/Chat/StatusMessages/"/>
 	<script directory="gui/lobby/LobbyPage/Chat/SystemMessages/"/>
-	<script file="godseye_data/defbot.py"/>
+	<!-- <script file="godseye_data/defbot.py"/> -->
 
 	<object name="chatText" size="0 0 100% 100%-28" type="list" style="ChatPanelList" font="sans-13"/>
 	<object name="chatInput" size="0 100%-26 100%-72 100%-4" type="input"  style="ModernInput" font="sans-13" sprite_selectarea="color:255 0 0" sprite="color:118 118 118 70" textcolor="white"  placeholder_text="What's on your mind?" placeholder_color="184 184 184 150" max_length="1024"/>
