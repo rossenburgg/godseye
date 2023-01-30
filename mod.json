@@ -1,9 +1,9 @@
 {
-	"name": "GodsEye",
-	"version": "0.0.7",
+	"name": "gods-eye-mod",
+	"version": "0.0.8",
 	"label": "God's Eye",
-	"url": "github.com/rossenburgg/godseye",
+	"url": "https://github.com/rossenburgg/godseye",
 	"ignoreInCompatibilityChecks": true,
 	"description": "Fully customizable and flexible UI design that will guarantee improvements in your game skills",
-	"dependencies": ["0ad>=0.0.25"]
+	"dependencies": ["0ad=0.0.26"]
 }
