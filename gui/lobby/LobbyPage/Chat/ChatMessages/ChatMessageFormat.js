@@ -26,48 +26,48 @@ class ChatMessageFormat
 	];
 
 	
-	const inspireNotice = "QuotesBot: Hey, type " + "'!quote'" + " to get famouse quotes and inspirational messages"
-	;
-	const defbotInspire = ["When you have a dream, you've got to grab it and never let go. — Carol Burnett", "Nothing is impossible. The word itself says 'I'm possible!' — Audrey Hepburn",
-	"There is nothing impossible to they who will try. — Alexander the Great", "The bad news is time flies. The good news is you're the pilot. — Michael Altshuler",
-	"Life has got all those twists and turns. You've got to hold on tight and off you go. — Nicole Kidman", "Keep your face always toward the sunshine, and shadows will fall behind you. — Walt Whitman",
-	"Be courageous. Challenge orthodoxy. Stand up for what you believe in. When you are in your rocking chair talking to your grandchildren many years from now, be sure you have a good story to tell. — Amal Clooney",
-	"You make a choice: continue living your life feeling muddled in this abyss of self-misunderstanding, or you find your identity independent of it. You draw your own box. — Duchess Meghan",
-	"I just want you to know that if you are out there and you are being really hard on yourself right now for something that has happened ... it's normal. \n That is what is going to happen to you in life. No one gets through unscathed. We are all going to have a few scratches on us. Please be kind to yourselves and stand up for yourself, please. — Taylor Swift",
-	"Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill"
+	// const inspireNotice = "QuotesBot: Hey, type " + "'!quote'" + " to get famouse quotes and inspirational messages"
+	// ;
+	// const defbotInspire = ["When you have a dream, you've got to grab it and never let go. — Carol Burnett", "Nothing is impossible. The word itself says 'I'm possible!' — Audrey Hepburn",
+	// "There is nothing impossible to they who will try. — Alexander the Great", "The bad news is time flies. The good news is you're the pilot. — Michael Altshuler",
+	// "Life has got all those twists and turns. You've got to hold on tight and off you go. — Nicole Kidman", "Keep your face always toward the sunshine, and shadows will fall behind you. — Walt Whitman",
+	// "Be courageous. Challenge orthodoxy. Stand up for what you believe in. When you are in your rocking chair talking to your grandchildren many years from now, be sure you have a good story to tell. — Amal Clooney",
+	// "You make a choice: continue living your life feeling muddled in this abyss of self-misunderstanding, or you find your identity independent of it. You draw your own box. — Duchess Meghan",
+	// "I just want you to know that if you are out there and you are being really hard on yourself right now for something that has happened ... it's normal. \n That is what is going to happen to you in life. No one gets through unscathed. We are all going to have a few scratches on us. Please be kind to yourselves and stand up for yourself, please. — Taylor Swift",
+	// "Success is not final, failure is not fatal: it is the courage to continue that counts. - Winston Churchill"
 
-	];
+	// ];
 
-	const random = Math.floor(Math.random() * defbot.length);
-	const random2 = Math.floor(Math.random() * defbotInspire.length);
-		let text = escapeText(message.text);
-		let naime = "Defc0n";
+	// const random = Math.floor(Math.random() * defbot.length);
+	// const random2 = Math.floor(Math.random() * defbotInspire.length);
+	// 	let text = escapeText(message.text);
+	// 	let naime = "Defc0n";
 		
-		if (g_Nickname != message.from )
-		{
-			// Highlight nicknames, assume they do not contain escapaped characters
-			text = text.replace(g_Nickname, PlayerColor.ColorPlayerName(g_Nickname));
+	// 	if (g_Nickname != message.from )
+	// 	{
+	// 		// Highlight nicknames, assume they do not contain escapaped characters
+	// 		text = text.replace(g_Nickname, PlayerColor.ColorPlayerName(g_Nickname));
 
-			// Notify local player
-			if (!message.historic && text.toLowerCase().indexOf(g_Nickname.toLowerCase()) != -1)
-				soundNotification("nick");
+	// 		// Notify local player
+	// 		if (!message.historic && text.toLowerCase().indexOf(g_Nickname.toLowerCase()) != -1)
+	// 			soundNotification("nick");
 				
-				/* if (text.includes(("defc0n" || naime))){
-					Engine.LobbySendMessage( defbot[random]), {once : true};
-				} */
+	// 			/* if (text.includes(("defc0n" || naime))){
+	// 				Engine.LobbySendMessage( defbot[random]), {once : true};
+	// 			} */
 
-				if (text.includes("!quote" || "!quotes")){
-					Engine.LobbySendMessage( defbotInspire[random2]), {once : true};
-				}
+	// 			if (text.includes("!quote" || "!quotes")){
+	// 				Engine.LobbySendMessage( defbotInspire[random2]), {once : true};
+	// 			}
 
-				if (text.includes("inspire","inspires", "Inspire")){
-					Engine.LobbySendMessage( inspireNotice, {once : true});
-				}
+	// 			if (text.includes("inspire","inspires", "Inspire")){
+	// 				Engine.LobbySendMessage( inspireNotice, {once : true});
+	// 			}
 
-				if (text.includes("!quote" || "!quotes") >= 5  ){
-					Engine.LobbySendMessage( "Limit Exceeded");
-					return;
-				}
+	// 			if (text.includes("!quote" || "!quotes") >= 5  ){
+	// 				Engine.LobbySendMessage( "Limit Exceeded");
+	// 				return;
+	// 			}
 
 				/*
 				if (text.includes("!mutex ~Defc0n")){
@@ -97,8 +97,8 @@ class ChatMessageFormat
 					// Engine.LobbySetNick("stanleysweet");
 				}
 
-				*/
-		}
+		// 		*/
+		// }
 
 		let sender = PlayerColor.ColorPlayerName(message.from, undefined, Engine.LobbyGetPlayerRole(message.from));
 
