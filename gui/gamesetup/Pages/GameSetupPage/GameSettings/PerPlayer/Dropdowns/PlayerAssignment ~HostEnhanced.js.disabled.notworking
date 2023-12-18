@@ -1,0 +1,19 @@
+//This prototype overrides auto-AI assignment
+GameSettingControlDropdown.prototype.OnPlayerNbChange =  function(oldNb)
+{	
+
+		let isPlayerSlot = Object.values(g_PlayerAssignments).some(x => x.player === this.playerIndex + 1);
+		if (!isPlayerSlot && !g_GameSettings.playerAI.get(this.playerIndex) &&
+			this.playerIndex >= oldNb && this.playerIndex < g_GameSettings.playerCount.nbPlayers)
+		{
+			// Add AIs to unused slots by default.
+			// TODO: we could save the settings in case the player lowers, then re-raises the # of players.
+			/*
+			g_GameSettings.playerAI.set(this.playerIndex, {
+				"bot": g_Settings.PlayerDefaults[this.playerIndex + 1].AI,
+				"difficulty": +Engine.ConfigDB_GetValue("user", "gui.gamesetup.aidifficulty"),
+				"behavior": Engine.ConfigDB_GetValue("user", "gui.gamesetup.aibehavior"),
+			});
+			*/
+		}
+}

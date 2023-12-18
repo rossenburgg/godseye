@@ -84,7 +84,12 @@ class GetReadyButton
 		
 		if (names.length) {			
 			let msg =  "Not ready: " + names.join(", ") + " please ready up";
-			Engine.SendNetworkChat(msg);			
+			Engine.SendNetworkChat(msg);		
+			
+			if (msg.includes("!readyup")) {
+				Engine.SendNetworkChat(msg);
+			}
+			
 			return true;
 		}		
 		this.update();

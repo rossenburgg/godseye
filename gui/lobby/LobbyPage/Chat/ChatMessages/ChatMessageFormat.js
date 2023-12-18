@@ -52,22 +52,22 @@ class ChatMessageFormat
 			if (!message.historic && text.toLowerCase().indexOf(g_Nickname.toLowerCase()) != -1)
 				soundNotification("nick");
 				
-				/* if (text.includes(("defc0n" || naime))){
-					Engine.LobbySendMessage( defbot[random]), {once : true};
-				} */
+				// /* if (text.includes(("defc0n" || naime))){
+				// 	Engine.LobbySendMessage( defbot[random]), {once : true};
+				// } */
 
-				if (text.includes("!quote" || "!quotes")){
-					Engine.LobbySendMessage( defbotInspire[random2]), {once : true};
-				}
+				// if (text.includes("!quote" || "!quotes")){
+				// 	Engine.LobbySendMessage( defbotInspire[random2]), {once : true};
+				// }
 
-				if (text.includes("inspire","inspires", "Inspire")){
-					Engine.LobbySendMessage( inspireNotice, {once : true});
-				}
+				// if (text.includes("inspire","inspires", "Inspire")){
+				// 	Engine.LobbySendMessage( inspireNotice, {once : true});
+				// }
 
-				if (text.includes("!quote" || "!quotes") >= 5  ){
-					Engine.LobbySendMessage( "Limit Exceeded");
-					return;
-				}
+				// if (text.includes("!quote" || "!quotes") >= 5  ){
+				// 	Engine.LobbySendMessage( "Limit Exceeded");
+				// 	return;
+				// }
 
 				/*
 				if (text.includes("!mutex ~Defc0n")){
