@@ -35,8 +35,9 @@ export class MainMenuItemHandler
 		this.buttonAnims = new Map();
 		this.animatingButtons = new Set();
 
-		// Per-tile background art for PS5-style cross-fade (300ms).
-		this.bgOverlay = Engine.GetGUIObjectByName("dashboardBackgroundOverlay");
+		// Per-tile background art: instant re-theme on hover (PS5-style).
+		// (0ad GUI has no opacity property, so no cross-fade possible.)
+		this.bgBase = Engine.GetGUIObjectByName("dashboardBackground");
 		this.tileBackgrounds = [
 			"DashboardBackgroundLearn",
 			"DashboardBackgroundCampaign",
@@ -49,7 +50,6 @@ export class MainMenuItemHandler
 			"DashboardBackgroundManual",
 			"DashboardBackgroundExit"
 		];
-		this.bgFade = null; // { from, to, startTime }
 
 		this.setupMenuButtons(this.mainMenuButtons.children, this.menuItems, true);
 		this.setupHotkeys(this.menuItems);
@@ -62,52 +62,6 @@ export class MainMenuItemHandler
 	tickAnimations()
 	{
 		this.tickButtonAnims();
-		this.tickBackgroundFade();
-	}
-
-	/**
-	 * Cross-fade the background overlay to a per-tile art sprite.
-	 * Pass null to fade back to the base background.
-	 */
-	fadeBackgroundTo(spriteName)
-	{
-		if (!this.bgOverlay)
-			return;
-
-		const currentOpacity = this.bgOverlay.hidden ? 0 : this.bgOverlay.opacity;
-
-		if (spriteName)
-		{
-			// Switching art: start from current opacity for a smooth handoff.
-			this.bgOverlay.sprite = spriteName;
-			this.bgOverlay.hidden = false;
-			this.bgFade = { "from": currentOpacity, "to": 1.0, "startTime": Date.now() };
-		}
-		else if (!this.bgOverlay.hidden)
-		{
-			this.bgFade = { "from": currentOpacity, "to": 0.0, "startTime": Date.now() };
-		}
-	}
-
-	tickBackgroundFade()
-	{
-		if (!this.bgFade || !this.bgOverlay)
-			return;
-
-		const duration = 300; // PS5 signature: 300ms background swap
-		const t = Math.min((Date.now() - this.bgFade.startTime) / duration, 1.0);
-		// Ease-out cubic for a smooth glide.
-		const eased = 1 - Math.pow(1 - t, 3);
-		const opacity = this.bgFade.from + (this.bgFade.to - this.bgFade.from) * eased;
-		this.bgOverlay.opacity = opacity;
-
-		if (t >= 1.0)
-		{
-			this.bgOverlay.opacity = this.bgFade.to;
-			if (this.bgFade.to === 0.0)
-				this.bgOverlay.hidden = true;
-			this.bgFade = null;
-		}
 	}
 
 	tickButtonAnims()
@@ -191,8 +145,8 @@ export class MainMenuItemHandler
 				anim.startTime = Date.now();
 				button.z = 100;
 				this.animatingButtons.add(button);
-				if (isTopLevel && this.tileBackgrounds[i])
-					this.fadeBackgroundTo(this.tileBackgrounds[i]);
+				if (isTopLevel && this.tileBackgrounds[i] && this.bgBase)
+					this.bgBase.sprite = this.tileBackgrounds[i];
 			};
 			button.onMouseLeave = () => {
 				const anim = this.buttonAnims.get(button);
@@ -200,8 +154,8 @@ export class MainMenuItemHandler
 				anim.target = 1.0;
 				anim.startTime = Date.now();
 				this.animatingButtons.add(button);
-				if (isTopLevel)
-					this.fadeBackgroundTo(null);
+				if (isTopLevel && this.bgBase)
+					this.bgBase.sprite = "DashboardBackground";
 			};
 			left += tileW + gap;
 
