@@ -10,7 +10,7 @@
 
 	<object type="image" style="ModernDialog" size="50%-300 50%-225 50%+300 50%+225">
 
-		<object type="text" style="ModernLabelText" size="50%-200 -24 50%+200 16" font="godseye-display-30" textcolor="212 175 55" text_align="center">
+		<object type="text" style="ModernLabelText" size="50%-200 -24 50%+200 16" font="godseye-bold-30" textcolor="212 175 55" text_align="center">
 			<translatableAttribute id="caption">God's Eye Manual</translatableAttribute>
 		</object>
 

@@ -4,7 +4,7 @@
 	<object name="pgToolTip" style="TranslucentPanel" type="text" hidden="true" size="100%-290 25 100% 140" ghost="true"/>
 
 	<object name="mainMenu" type="image" style="MainMenuPanel" size="60 -2 300 100%+2" z="50">
-		<object type="text" size="8 18 100%-8 64" font="godseye-display-30" textcolor="212 175 55" text_align="center">
+		<object type="text" size="8 18 100%-8 64" font="godseye-bold-30" textcolor="212 175 55" text_align="center">
 			<translatableAttribute id="caption">GOD'S EYE</translatableAttribute>
 		</object>
 
