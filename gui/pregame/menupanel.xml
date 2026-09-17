@@ -24,6 +24,8 @@
 					text_align="center" text_valign="bottom" tooltip_style="pgToolTip"
 					buffer_zone="4">
 					<object name="mainMenuTileIcon[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardIconLearn" ghost="true"/>
+					<object name="mainMenuTileCaptionShadow[n]" type="text" size="2 81% 100% 100%"
+						font="sans-bold-14" textcolor="0 0 0" text_align="center" text_valign="center" ghost="true"/>
 					<object name="mainMenuTileCaption[n]" type="text" size="0% 80% 100% 100%"
 						font="sans-bold-14" textcolor="white" text_align="center" text_valign="center" ghost="true"/>
 				</object>

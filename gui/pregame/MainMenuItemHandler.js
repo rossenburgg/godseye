@@ -220,6 +220,9 @@ export class MainMenuItemHandler
 			const label = Engine.GetGUIObjectByName("mainMenuTileCaption[" + i + "]");
 			if (label)
 				label.caption = item.caption;
+			const labelShadow = Engine.GetGUIObjectByName("mainMenuTileCaptionShadow[" + i + "]");
+			if (labelShadow)
+				labelShadow.caption = item.caption;
 			button.enabled = item.enabled === undefined || item.enabled();
 
 			if (isTopLevel && this.tileIcons[i])
