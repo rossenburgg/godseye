@@ -629,4 +629,160 @@
 		/>
 	</sprite>
 
+	<!--
+	==========================================
+	GODSEYE MODERN THEME
+	==========================================
+	-->
+
+	<sprite name="ModernFade">
+		<image texture="global/modern/fade.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernDarkBox">
+		<image texture="global/modern/dark_translucent.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernDarkBoxOpaque">
+		<image texture="global/modern/dark_opaque.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernDarkBoxGold">
+		<image texture="global/modern/dark_gold.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernDarkBoxGoldBorder">
+		<image texture="global/modern/gold_border_center.png"
+			size="3 3 100%-3 100%-3"
+		/>
+		<image texture="global/modern/gold_border_edge_v.png"
+			size="0 3 3 100%-3"
+		/>
+		<image texture="global/modern/gold_border_edge_h.png"
+			size="3 0 100%-3 3"
+		/>
+		<image texture="global/modern/gold_border_edge_v.png"
+			size="100%-3 3 100% 100%-3"
+		/>
+		<image texture="global/modern/gold_border_edge_h.png"
+			size="3 100%-3 100%-3 100%"
+		/>
+		<image texture="global/modern/gold_border_corner.png"
+			size="0 0 3 3"
+		/>
+		<image texture="global/modern/gold_border_corner.png"
+			size="100%-3 0 100% 3"
+		/>
+		<image texture="global/modern/gold_border_corner.png"
+			size="0 100%-3 3 100%"
+		/>
+		<image texture="global/modern/gold_border_corner.png"
+			size="100%-3 100%-3 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernDarkBoxWhite">
+		<image texture="global/modern/white_border_center.png"
+			size="3 3 100%-3 100%-3"
+		/>
+		<image texture="global/modern/white_border_edge_v.png"
+			size="0 3 3 100%-3"
+		/>
+		<image texture="global/modern/white_border_edge_h.png"
+			size="3 0 100%-3 3"
+		/>
+		<image texture="global/modern/white_border_edge_v.png"
+			size="100%-3 3 100% 100%-3"
+		/>
+		<image texture="global/modern/white_border_edge_h.png"
+			size="3 100%-3 100%-3 100%"
+		/>
+		<image texture="global/modern/white_border_corner.png"
+			size="0 0 3 3"
+		/>
+		<image texture="global/modern/white_border_corner.png"
+			size="100%-3 0 100% 3"
+		/>
+		<image texture="global/modern/white_border_corner.png"
+			size="0 100%-3 3 100%"
+		/>
+		<image texture="global/modern/white_border_corner.png"
+			size="100%-3 100%-3 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernWindow">
+		<image texture="global/modern/window_center.png"
+			size="4 4 100%-4 100%-4"
+		/>
+		<image texture="global/modern/window_edge_v.png"
+			size="0 4 4 100%-4"
+		/>
+		<image texture="global/modern/window_edge_h.png"
+			size="4 0 100%-4 4"
+		/>
+		<image texture="global/modern/window_edge_v.png"
+			size="100%-4 4 100% 100%-4"
+		/>
+		<image texture="global/modern/window_edge_h.png"
+			size="4 100%-4 100%-4 100%"
+		/>
+		<image texture="global/modern/window_corner.png"
+			size="0 0 4 4"
+		/>
+		<image texture="global/modern/window_corner.png"
+			size="100%-4 0 100% 4"
+		/>
+		<image texture="global/modern/window_corner.png"
+			size="0 100%-4 4 100%"
+		/>
+		<image texture="global/modern/window_corner.png"
+			size="100%-4 100%-4 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernGear">
+		<image texture="global/modern/gear.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernGearHover">
+		<image texture="global/modern/gear_hover.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernGearPressed">
+		<image texture="global/modern/gear_pressed.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernTabHorizontalFrame">
+		<image texture="global/modern/tab_frame.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernTabHorizontalSpacer">
+		<image texture="global/modern/tab_spacer.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="ModernWhiteLine">
+		<image texture="global/modern/white_line.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
 </sprites>

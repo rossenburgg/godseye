@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<styles>
+
+	<!--
+	==========================================
+	MENU TEXT STYLES
+	==========================================
+	-->
+
+	<style name="TitleText"
+		font="sans-bold-stroke-14"
+		textcolor="white"
+		text_align="center"
+		text_valign="center"
+	/>
+
+	<style name="LargeTitleText"
+		font="sans-bold-24"
+		textcolor="white"
+		text_align="center"
+		text_valign="center"
+	/>
+
+	<style name="MediumTitleText"
+		font="sans-bold-12"
+		textcolor="white"
+		text_align="center"
+		text_valign="center"
+	/>
+
+	<!--
+	==========================================
+	MENU WINDOW STYLES
+	==========================================
+	-->
+
+	<style name="TranslucentPanel"
+		sprite="BackgroundTranslucent"
+		buffer_zone="10"
+		font="sans-bold-stroke-14"
+		textcolor="white"
+		text_align="left"
+		text_valign="top"
+	/>
+
+	<style name="TranslucentPanelThinBorder"
+		sprite="TranslucentPanelThinBorder"
+	/>
+
+	<style name="StonePanelThinBorder"
+		sprite="StonePanelThinBorder"
+	/>
+
+	<!--
+	==========================================
+	MENU CONTROL ELEMENT STYLES
+	==========================================
+	-->
+
+	<style name="BrownButton"
+		sprite="BrownButton"
+		sprite_disabled="BrownButtonDisabled"
+		sprite_over="BrownButtonOver"
+		sprite_pressed="BrownButtonPressed"
+		font="sans-bold-stroke-14"
+		textcolor="white"
+		textcolor_disabled="210 210 210 160"
+		text_align="center"
+		text_valign="center"
+		sound_pressed="audio/interface/ui/ui_button_click.ogg"
+	/>
+
+	<style name="StoneButtonFancy"
+		sprite="StoneButton"
+		sprite_disabled="StoneButtonDisabled"
+		sprite_over="StoneButtonFancyOver"
+		sprite_pressed="StoneButtonFancyGlow"
+		font="sans-bold-stroke-14"
+		textcolor="white"
+		textcolor_disabled="210 210 210 160"
+		text_align="center"
+		text_valign="center"
+		sound_pressed="audio/interface/ui/ui_button_click.ogg"
+	/>
+
+	<style name="StoneButton"
+		sprite="StoneButton"
+		sprite_disabled="StoneButtonDisabled"
+		sprite_over="StoneButtonOver"
+		sprite_pressed="StoneButtonGlow"
+		font="sans-bold-stroke-14"
+		textcolor="white"
+		text_align="center"
+		text_valign="center"
+		sound_pressed="audio/interface/ui/ui_button_click.ogg"
+	/>
+
+	<style name="MapPlayerList"
+		buffer_zone="8"
+		font="sans-14"
+		scrollbar="true"
+		scrollbar_style="ModernScrollBar"
+		scroll_bottom="false"
+		textcolor="white"
+		text_align="left"
+		text_valign="top"
+	/>
+
+	<style name="ChatPanel"
+		buffer_zone="5"
+		font="sans-13"
+		scrollbar="true"
+		scrollbar_style="ModernScrollBar"
+		scroll_bottom="true"
+		textcolor="white"
+		text_align="left"
+	/>
+
+	<style name="ChatPanelList"
+		buffer_zone="2"
+		font="sans-13"
+		scrollbar="true"
+		scrollbar_style="ModernScrollBar"
+		scroll_bottom="true"
+		textcolor="white"
+		text_align="left"
+	/>
+
+	<style name="TutorialPanel"
+		buffer_zone="8"
+		font="sans-bold-14"
+		scrollbar="true"
+		scrollbar_style="ModernScrollBar"
+		scroll_bottom="true"
+		textcolor="white"
+		text_align="left"
+		text_valign="center"
+		sprite="ModernDarkBox"
+		sprite_overlay="ModernDarkBoxGoldBorder"
+	/>
+
+	<!-- Godseye modern theme styles (obsidian + gold).
+	     These shadow/extend the A28 base styles for this mod only. -->
+
+	<style name="ModernLabelText"
+		font="sans-bold-14"
+		textcolor="white"
+		text_align="left"
+		text_valign="center"
+	/>
+
+	<style name="ModernLeftLabelText"
+		font="sans-14"
+		textcolor="white"
+		text_align="left"
+		text_valign="center"
+	/>
+
+	<style name="ModernRightLabelText"
+		font="sans-14"
+		textcolor="white"
+		text_align="right"
+		text_valign="center"
+	/>
+
+	<style name="ModernTopLabelText"
+		font="sans-14"
+		textcolor="white"
+		text_align="center"
+		text_valign="top"
+	/>
+
+	<style name="ModernLeftTopLabelText"
+		font="sans-14"
+		textcolor="white"
+		text_align="left"
+		text_valign="top"
+	/>
+
+	<style name="ModernText"
+		font="sans-14"
+		textcolor="white"
+		text_align="left"
+		text_valign="top"
+	/>
+
+	<style name="ModernTextPanel"
+		font="sans-14"
+		textcolor="white"
+		text_align="left"
+		text_valign="top"
+		scrollbar="true"
+		scrollbar_style="ModernScrollBar"
+		sprite="ModernDarkBox"
+		buffer_zone="10"
+	/>
+
+	<style name="ModernDialog"
+		sprite="ModernDarkBoxGoldBorder"
+		buffer_zone="12"
+		font="sans-bold-14"
+		textcolor="white"
+		text_align="center"
+		text_valign="top"
+	/>
+
+	<style name="ModernWindow"
+		sprite="ModernWindow"
+		buffer_zone="10"
+		font="sans-14"
+		textcolor="white"
+	/>
+
+	<style name="ModernButtonRed"
+		sprite="GodseyeButton"
+		sprite_disabled="GodseyeButtonDisabled"
+		sprite_over="GodseyeButtonOver"
+		sprite_pressed="GodseyeButtonPressed"
+		font="sans-bold-stroke-14"
+		textcolor="255 220 220"
+		textcolor_disabled="210 210 210 160"
+		text_align="center"
+		text_valign="center"
+		sound_pressed="audio/interface/ui/ui_button_click.ogg"
+	/>
+
+	<style name="ModernInput"
+		font="sans-14"
+		textcolor="white"
+		sprite="ModernDarkBoxGoldBorder"
+		buffer_zone="6"
+		text_align="left"
+		text_valign="center"
+	/>
+
+	<style name="ModernDropDown"
+		font="sans-14"
+		textcolor="white"
+		sprite="GodseyeButton"
+		sprite_over="GodseyeButtonOver"
+		sprite_pressed="GodseyeButtonPressed"
+		sprite_disabled="GodseyeButtonDisabled"
+		text_align="left"
+		text_valign="center"
+		buffer_zone="4"
+	/>
+
+	<style name="ModernTickBox"
+		font="sans-14"
+		textcolor="white"
+		sprite="ModernDarkBoxGoldBorder"
+		sprite_pressed="ModernDarkBoxGold"
+	/>
+
+	<style name="ModernList"
+		font="sans-14"
+		textcolor="white"
+		text_align="left"
+		text_valign="top"
+		scrollbar="true"
+		scrollbar_style="ModernScrollBar"
+		sprite="ModernDarkBox"
+		buffer_zone="6"
+	/>
+
+	<style name="ModernSortedList"
+		font="sans-14"
+		textcolor="white"
+		text_align="left"
+		text_valign="top"
+		scrollbar="true"
+		scrollbar_style="ModernScrollBar"
+		sprite="ModernDarkBox"
+		buffer_zone="6"
+	/>
+
+	<style name="ModernChart"
+		font="sans-12"
+		textcolor="white"
+		sprite="ModernDarkBox"
+		buffer_zone="8"
+	/>
+
+	<style name="ModernScrollBar"
+		sprite="ModernDarkBoxGoldBorder"
+	/>
+
+</styles>
