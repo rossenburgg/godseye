@@ -296,8 +296,27 @@ export class MainMenuItemHandler
 
 		if (!nicks.length)
 		{
-			count.caption = this.lobbyWidgetIsConnected() ? translate("0 online") : translate("Connecting...");
-			names.caption = "";
+			if (this.lobbyWidgetIsConnected())
+			{
+				count.caption = translate("0 online");
+				// Debug: reveal the raw roster shape so normalization can be fixed.
+				try
+				{
+					const first = players[0];
+					const shape = first === undefined ? "undefined" :
+						typeof first != "object" ? typeof first :
+						"keys(" + Object.keys(first).join(",") + ")";
+					log("Godseye roster: n=" + players.length + " shape=" + shape +
+						" first=" + JSON.stringify(first).slice(0, 500));
+					names.caption = players.length ? "shape: " + shape : "";
+				}
+				catch (e) { names.caption = ""; }
+			}
+			else
+			{
+				count.caption = translate("Connecting...");
+				names.caption = "";
+			}
 			return;
 		}
 		this.lobbyWidgetState = "connected";
