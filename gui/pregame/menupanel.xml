@@ -33,6 +33,10 @@
 		</object>
 	</object>
 
+	<!-- PS5-style info panel: hovered tile name + description -->
+	<object name="tileInfoTitle" type="text" size="0 50% 100% 55%" font="godseye-bold-26" textcolor="212 175 55" text_align="center" text_valign="center" ghost="true"/>
+	<object name="tileInfoDesc" type="text" size="15% 55% 85% 59%" font="sans-14" textcolor="180 190 210" text_align="center" text_valign="top" ghost="true"/>
+
 	<!-- Submenu tile row (appears below main row) -->
 	<object name="submenu" size="0 60% 100% 74%" hidden="true">
 		<object name="submenuButtons" size="0 0 100% 100%" tooltip_style="pgToolTip">
@@ -54,6 +58,14 @@
 	<!-- 0AD logo: top-right, honoring the base game -->
 	<object name="productLogo" type="image" size="100%-120 8 100%-8 64" ghost="true"/>
 	<object name="productBuild" type="text" size="100%-120 66 100%-8 82" font="sans-10" textcolor="120 140 180" text_align="right" ghost="true"/>
+
+	<!-- PS5-style top-right utilities: player profile + quick settings -->
+	<object name="playerNameLabel" type="text" size="100%-220 90 100%-60 112" font="sans-bold-12" textcolor="200 210 230" text_align="right" text_valign="center" ghost="true"/>
+	<object name="quickSettingsButton" type="button" size="100%-52 88 100%-8 132"
+		sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton"
+		tooltip="Change game options." tooltip_style="pgToolTip">
+		<object type="image" size="0% 0% 100% 100%" sprite="DashboardIconSettings" ghost="true"/>
+	</object>
 
 	<!-- Required by MainMenuPage.js (hidden) -->
 	<object name="organizationName" type="text" size="0 0 0 0" hidden="true"/>

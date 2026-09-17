@@ -72,7 +72,43 @@ export class MainMenuItemHandler
 
 		Engine.GetGUIObjectByName("closeMenuButton").onPress = this.closeSubmenu.bind(this);
 
+		// PS5-style info panel + top-right utilities.
+		this.tileInfoTitle = Engine.GetGUIObjectByName("tileInfoTitle");
+		this.tileInfoDesc = Engine.GetGUIObjectByName("tileInfoDesc");
+		this.resetInfoPanel();
+
+		const playerNameLabel = Engine.GetGUIObjectByName("playerNameLabel");
+		if (playerNameLabel)
+		{
+			const playerName = Engine.ConfigDB_GetValue("user", "player.name") || "Player";
+			playerNameLabel.caption = playerName;
+		}
+
+		const quickSettings = Engine.GetGUIObjectByName("quickSettingsButton");
+		if (quickSettings)
+			quickSettings.onPress = () => {
+				const settingsItem = this.menuItems[4];
+				if (settingsItem)
+					this.performButtonAction(settingsItem, 4);
+			};
+
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
+	}
+
+	resetInfoPanel()
+	{
+		if (this.tileInfoTitle)
+			this.tileInfoTitle.caption = translate("Choose your path");
+		if (this.tileInfoDesc)
+			this.tileInfoDesc.caption = translate("Hover a tile to see what lies ahead.");
+	}
+
+	updateInfoPanel(item)
+	{
+		if (this.tileInfoTitle)
+			this.tileInfoTitle.caption = item.caption;
+		if (this.tileInfoDesc)
+			this.tileInfoDesc.caption = item.tooltip;
 	}
 
 	tickAnimations()
@@ -199,6 +235,7 @@ export class MainMenuItemHandler
 				anim.startTime = Date.now();
 				button.z = 100;
 				this.animatingButtons.add(button);
+				this.updateInfoPanel(item);
 				if (isTopLevel && this.tileBackgrounds[i] && this.bgBase)
 					this.swapBackground(this.tileBackgrounds[i], 1.06);
 			};
@@ -209,6 +246,8 @@ export class MainMenuItemHandler
 				anim.startTime = Date.now();
 				button.z = 10; // drop behind immediately so the newly hovered card draws on top
 				this.animatingButtons.add(button);
+				if (isTopLevel)
+					this.resetInfoPanel();
 				if (isTopLevel && this.bgBase)
 					this.swapBackground("DashboardBackground", 1.0);
 			};
