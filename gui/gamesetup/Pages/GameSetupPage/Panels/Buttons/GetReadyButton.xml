@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <object
 	name="getReadyButton"
-	type="button"
+	type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled"
 	style="StoneButton"
 	tooltip_style="onscreenToolTip"
 	z="21"

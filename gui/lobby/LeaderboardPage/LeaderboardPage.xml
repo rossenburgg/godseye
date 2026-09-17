@@ -24,11 +24,11 @@
 			</column>
 		</object>
 
-		<object type="button" name="leaderboardPageBack" style="ModernButtonRed" size="50%-133 100%-45 50%-5 100%-17">
+		<object type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" name="leaderboardPageBack" style="ModernButtonRed" size="50%-133 100%-45 50%-5 100%-17">
 			<translatableAttribute id="caption">Back</translatableAttribute>
 		</object>
 
-		<object type="button" name="leaderboardUpdateButton" style="ModernButtonRed" size="50%+5 100%-45 50%+133 100%-17">
+		<object type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" name="leaderboardUpdateButton" style="ModernButtonRed" size="50%+5 100%-45 50%+133 100%-17">
 			<translatableAttribute id="caption">Update</translatableAttribute>
 		</object>
 	</object>

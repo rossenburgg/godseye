@@ -28,7 +28,7 @@
 	</object>
 
 	<object name="toggleSmurfButton"
-		type="button"
+		type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled"
 		style="ModernButtonRed"
 		z="100"
 		size="0 100%-24 100% 100%"

@@ -364,6 +364,138 @@
 		<image backcolor="0 0 0 0" size="0 0 100% 100%"/>
 	</sprite>
 
+	<!--
+	==========================================
+	GODSEYE BUTTONS (obsidian + gold)
+	9-slice; 8-unit borders, center inset 5.
+	Disabled derives from base via grayscale.
+	==========================================
+	-->
+
+	<sprite name="GodseyeButton">
+		<image texture="global/button/button_godseye/base/center.png"
+			size="5 5 100%-5 100%-5"
+		/>
+		<image texture="global/button/button_godseye/base/left_edge.png"
+			size="0 5 8 100%-5"
+		/>
+		<image texture="global/button/button_godseye/base/top_edge.png"
+			size="5 0 100%-5 8"
+		/>
+		<image texture="global/button/button_godseye/base/right_edge.png"
+			size="100%-8 5 100% 100%-5"
+		/>
+		<image texture="global/button/button_godseye/base/bottom_edge.png"
+			size="5 100%-8 100%-5 100%"
+		/>
+		<image texture="global/button/button_godseye/base/top_left_corner.png"
+			size="0 0 8 8"
+		/>
+		<image texture="global/button/button_godseye/base/top_right_corner.png"
+			size="100%-8 0 100% 8"
+		/>
+		<image texture="global/button/button_godseye/base/bottom_right_corner.png"
+			size="100%-8 100%-8 100% 100%"
+		/>
+		<image texture="global/button/button_godseye/base/bottom_left_corner.png"
+			size="0 100%-8 8 100%"
+		/>
+	</sprite>
+
+	<sprite name="GodseyeButtonOver">
+		<image texture="global/button/button_godseye/over/center.png"
+			size="5 5 100%-5 100%-5"
+		/>
+		<image texture="global/button/button_godseye/over/left_edge.png"
+			size="0 5 8 100%-5"
+		/>
+		<image texture="global/button/button_godseye/over/top_edge.png"
+			size="5 0 100%-5 8"
+		/>
+		<image texture="global/button/button_godseye/over/right_edge.png"
+			size="100%-8 5 100% 100%-5"
+		/>
+		<image texture="global/button/button_godseye/over/bottom_edge.png"
+			size="5 100%-8 100%-5 100%"
+		/>
+		<image texture="global/button/button_godseye/over/top_left_corner.png"
+			size="0 0 8 8"
+		/>
+		<image texture="global/button/button_godseye/over/top_right_corner.png"
+			size="100%-8 0 100% 8"
+		/>
+		<image texture="global/button/button_godseye/over/bottom_right_corner.png"
+			size="100%-8 100%-8 100% 100%"
+		/>
+		<image texture="global/button/button_godseye/over/bottom_left_corner.png"
+			size="0 100%-8 8 100%"
+		/>
+	</sprite>
+
+	<sprite name="GodseyeButtonPressed">
+		<image texture="global/button/button_godseye/pressed/center.png"
+			size="5 5 100%-5 100%-5"
+		/>
+		<image texture="global/button/button_godseye/pressed/left_edge.png"
+			size="0 5 8 100%-5"
+		/>
+		<image texture="global/button/button_godseye/pressed/top_edge.png"
+			size="5 0 100%-5 8"
+		/>
+		<image texture="global/button/button_godseye/pressed/right_edge.png"
+			size="100%-8 5 100% 100%-5"
+		/>
+		<image texture="global/button/button_godseye/pressed/bottom_edge.png"
+			size="5 100%-8 100%-5 100%"
+		/>
+		<image texture="global/button/button_godseye/pressed/top_left_corner.png"
+			size="0 0 8 8"
+		/>
+		<image texture="global/button/button_godseye/pressed/top_right_corner.png"
+			size="100%-8 0 100% 8"
+		/>
+		<image texture="global/button/button_godseye/pressed/bottom_right_corner.png"
+			size="100%-8 100%-8 100% 100%"
+		/>
+		<image texture="global/button/button_godseye/pressed/bottom_left_corner.png"
+			size="0 100%-8 8 100%"
+		/>
+	</sprite>
+
+	<sprite name="GodseyeButtonDisabled">
+		<effect grayscale=""/>
+
+		<image texture="global/button/button_godseye/base/center.png"
+			size="5 5 100%-5 100%-5"
+		/>
+		<image texture="global/button/button_godseye/base/left_edge.png"
+			size="0 5 8 100%-5"
+		/>
+		<image texture="global/button/button_godseye/base/top_edge.png"
+			size="5 0 100%-5 8"
+		/>
+		<image texture="global/button/button_godseye/base/right_edge.png"
+			size="100%-8 5 100% 100%-5"
+		/>
+		<image texture="global/button/button_godseye/base/bottom_edge.png"
+			size="5 100%-8 100%-5 100%"
+		/>
+		<image texture="global/button/button_godseye/base/top_left_corner.png"
+			size="0 0 8 8"
+		/>
+		<image texture="global/button/button_godseye/base/top_right_corner.png"
+			size="100%-8 0 100% 8"
+		/>
+		<image texture="global/button/button_godseye/base/bottom_right_corner.png"
+			size="100%-8 100%-8 100% 100%"
+		/>
+		<image texture="global/button/button_godseye/base/bottom_left_corner.png"
+			size="0 100%-8 8 100%"
+		/>
+
+		<image backcolor="100 100 100 60"/>
+	</sprite>
+
 
 	<sprite name="ShinyButtonOver">
 		<image texture="global/button/button_shiny_selected.png"

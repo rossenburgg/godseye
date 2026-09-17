@@ -23,9 +23,9 @@
 					<include file="gui/lobby/LobbyPage/ProfilePanel.xml"/>
 				</object>
 				<object size="0 100%-125 100% 100%">
-					<object name="toggleBuddyButton" type="button" style="ModernButtonRed" size="0 0 100% 40"/>
-					<object name="leaderboardButton" type="button" style="ModernButtonRed" size="0 42 100% 82"/>
-					<object name="profileButton" type="button" style="ModernButtonRed" size="0 84 100% 124"/>
+					<object name="toggleBuddyButton" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed" size="0 0 100% 40"/>
+					<object name="leaderboardButton" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed" size="0 42 100% 82"/>
+					<object name="profileButton" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed" size="0 84 100% 124"/>
 				</object>
 			</object>
 
@@ -40,12 +40,12 @@
 					<include file="gui/lobby/LobbyPage/Chat/ChatPanel.xml"/>
 				</object>
 
-				<object name="replayButton" size="0% 100% 16% 100%+30" type="button" style="ModernButtonRed"/>
-				<object name="lastSummaryButton" size="16% 100% 33% 100%+30" type="button" style="ModernButtonRed"/>
-				<object name="civilizationLobbyButton" size="33% 100% 50% 100%+30" type="button" style="ModernButtonRed"/>
-				<object name="hotkeyButton" size="50% 100% 67% 100%+30" type="button" style="ModernButtonRed"/>
-				<object name="optionsButton" size="67% 100% 84% 100%+30" type="button" style="ModernButtonRed"/>
-				<object name="aboutButton" size="84% 100% 100% 100%+30" type="button" style="ModernButtonRed"/>
+				<object name="replayButton" size="0% 100% 16% 100%+30" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed"/>
+				<object name="lastSummaryButton" size="16% 100% 33% 100%+30" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed"/>
+				<object name="civilizationLobbyButton" size="33% 100% 50% 100%+30" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed"/>
+				<object name="hotkeyButton" size="50% 100% 67% 100%+30" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed"/>
+				<object name="optionsButton" size="67% 100% 84% 100%+30" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed"/>
+				<object name="aboutButton" size="84% 100% 100% 100%+30" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed"/>
 			</object>
 
 			<object name="rightPanel" size="100%-250 0 100%-20 100%">

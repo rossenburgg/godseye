@@ -126,11 +126,11 @@
 
 		<object name="hostFeedback" type="text" style="ModernLabelText" size="50 100%-80 100%-50 100%-45" textcolor="red"/>
 
-		<object name="continueButton" hotkey="confirm" type="button" size="50%+5 100%-45 100%-18 100%-17" style="ModernButtonRed">
+		<object name="continueButton" hotkey="confirm" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" size="50%+5 100%-45 100%-18 100%-17" style="ModernButtonRed">
 			<translatableAttribute id="caption">Continue</translatableAttribute>
 		</object>
 
-		<object name="cancelButton" type="button" style="ModernButtonRed" size="18 100%-45 50%-5 100%-17" hotkey="cancel">
+		<object name="cancelButton" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed" size="18 100%-45 50%-5 100%-17" hotkey="cancel">
 			<translatableAttribute id="caption">Cancel</translatableAttribute>
 		</object>
 
@@ -150,7 +150,7 @@
 					</action>
 				</object>
 			</object>
-			<object name="confirmPasswordButton" hotkey="confirm" type="button" size="50%+5 100%-45 100%-18 100%-17" style="ModernButtonRed">
+			<object name="confirmPasswordButton" hotkey="confirm" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" size="50%+5 100%-45 100%-18 100%-17" style="ModernButtonRed">
 				<translatableAttribute id="caption">Confirm</translatableAttribute>
 			</object>
 		</object>

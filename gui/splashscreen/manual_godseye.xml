@@ -20,12 +20,12 @@
 			</object>
 		</object>
 
-		<object name="btnOK" type="button" style="ModernButtonRed" size="18 100%-45 50%-5 100%-17" hotkey="cancel">
+		<object name="btnOK" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed" size="18 100%-45 50%-5 100%-17" hotkey="cancel">
 			<translatableAttribute id="caption">OK</translatableAttribute>
 			<action on="Press">closePage();</action>
 		</object>
 
-		<object type="button" style="ModernButtonRed" size="50%+5 100%-45 100%-18 100%-17">
+		<object type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="ModernButtonRed" size="50%+5 100%-45 100%-18 100%-17">
 			<translatableAttribute id="caption">Official Git Repo</translatableAttribute>
 			<action on="Press">openURL("https://github.com/rossenburgg/godseye");</action>
 		</object>

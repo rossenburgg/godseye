@@ -6,7 +6,7 @@
 	<object name="mainMenu" type="image" style="MainMenuPanel" size="60 -2 300 100%+2" z="50">
 		<object name="mainMenuButtons" size="8 146 100%-8 346">
 			<repeat count="10">
-				<object name="mainMenuButton[n]" type="button" style="StoneButtonFancy" tooltip_style="pgToolTip"/>
+				<object name="mainMenuButton[n]" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="StoneButtonFancy" tooltip_style="pgToolTip"/>
 			</repeat>
 		</object>
 
@@ -20,12 +20,12 @@
 	<object name="submenu" type="image" style="SubmenuPanel" size="60 0 300 0%" hidden="true">
 		<object name="submenuButtons" type="image" size="0 4 100%-4 100%-4" tooltip_style="pgToolTip">
 			<repeat count="30">
-				<object type="button" style="StoneButtonFancy" tooltip_style="pgToolTip"/>
+				<object type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="StoneButtonFancy" tooltip_style="pgToolTip"/>
 			</repeat>
 		</object>
 	</object>
 
 	<!-- Hide submenu when user clicks on the background -->
-	<object name="closeMenuButton" type="button" hotkey="cancel"/>
+	<object name="closeMenuButton" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" hotkey="cancel"/>
 
 </object>

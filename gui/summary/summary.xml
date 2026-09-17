@@ -176,12 +176,12 @@
 			</action>
 		</object>
 
-		<object type="button" name="replayButton" style="ModernButtonRed" size="100%-410 100%-48 100%-210 100%-20" z="50">
+		<object type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" name="replayButton" style="ModernButtonRed" size="100%-410 100%-48 100%-210 100%-20" z="50">
 			<translatableAttribute id="caption">Watch Replay</translatableAttribute>
 			<action on="Press">startReplay();</action>
 		</object>
 
-		<object type="button" name="continueButton" style="ModernButtonRed" size="100%-200 100%-48 100%-20 100%-20" z="50">
+		<object type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" name="continueButton" style="ModernButtonRed" size="100%-200 100%-48 100%-20 100%-20" z="50">
 			<translatableAttribute id="caption">Continue</translatableAttribute>
 		</object>
 	</object>
