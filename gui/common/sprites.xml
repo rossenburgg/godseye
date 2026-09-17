@@ -834,6 +834,9 @@
 	<sprite name="DashboardArtLearn">
 		<image texture="pregame/dashboard/tile_art_learn.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
+	<sprite name="DashboardArtCampaign">
+		<image texture="pregame/dashboard/tile_art_campaign.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
 	<sprite name="DashboardArtSingleplayer">
 		<image texture="pregame/dashboard/tile_art_singleplayer.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>

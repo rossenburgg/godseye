@@ -29,10 +29,10 @@ export class MainMenuItemHandler
 			"DashboardIconExit"
 		];
 
-		// GTA-style card art per tile (campaign art was blocked, falls back to icon).
+		// GTA-style card art per tile.
 		this.tileArt = [
 			"DashboardArtLearn",
-			null,
+			"DashboardArtCampaign",
 			"DashboardArtSingleplayer",
 			"DashboardArtMultiplayer",
 			"DashboardArtSettings",
