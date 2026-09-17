@@ -29,15 +29,17 @@ export class MainMenuItemHandler
 			"DashboardIconExit"
 		];
 
+		// PS5-style hover: smooth 400ms ease-out, no overshoot.
+		// Focus scale 1.5x (PS5 uses ~1.56x).
+		// Must init before setupMenuButtons (it registers animations).
+		this.buttonAnims = new Map();
+		this.animatingButtons = new Set();
+
 		this.setupMenuButtons(this.mainMenuButtons.children, this.menuItems, true);
 		this.setupHotkeys(this.menuItems);
 
 		Engine.GetGUIObjectByName("closeMenuButton").onPress = this.closeSubmenu.bind(this);
 
-		// PS5-style hover: smooth 400ms ease-out, no overshoot.
-		// Focus scale 1.5x (PS5 uses ~1.56x).
-		this.buttonAnims = new Map();
-		this.animatingButtons = new Set();
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
 	}
 
