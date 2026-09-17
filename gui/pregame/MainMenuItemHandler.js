@@ -243,6 +243,42 @@ export class MainMenuItemHandler
 		this.lobbyWidgetState = "off";
 	}
 
+	/**
+	 * List every Engine property that looks lobby-related, so we can find
+	 * the real roster function on builds where LobbyGetPlayerList is missing.
+	 */
+	lobbyWidgetProbeEngine()
+	{
+		const found = [];
+		const candidates = [
+			"LobbyGetPlayerList", "GetLobbyPlayerList", "LobbyGetPlayers",
+			"GetPlayerList", "LobbyGetRoster", "GetLobbyRoster",
+			"LobbyGetPresence", "XmppGetPlayerList", "LobbyListPlayers"
+		];
+		for (const name of candidates)
+			try { if (typeof Engine[name] == "function") found.push(name + "()"); } catch (e) {}
+		try
+		{
+			let props = [];
+			try { props = Object.getOwnPropertyNames(Engine); } catch (e) {}
+			if (!props.length)
+				try { props = Object.keys(Engine); } catch (e) {}
+			if (!props.length)
+				try { for (const k in Engine) props.push(k); } catch (e) {}
+			for (const k of props)
+			{
+				if (!/lobby|xmpp|roster|presence/i.test(k))
+					continue;
+				let label = k;
+				try { if (typeof Engine[k] == "function") label += "()"; } catch (e) {}
+				if (found.indexOf(label) === -1)
+					found.push(label);
+			}
+		}
+		catch (e) {}
+		return found;
+	}
+
 	lobbyWidgetRefresh()
 	{
 		const title = Engine.GetGUIObjectByName("lobbyWidgetTitle");
@@ -256,7 +292,16 @@ export class MainMenuItemHandler
 		if (this.lobbyWidgetState == "unavailable")
 		{
 			count.caption = translate("Unavailable");
-			names.caption = translate("This build can't read the lobby roster.");
+			// Probe the Engine for any lobby/roster API so we can wire up the
+			// real function name. Shown here and in the log for copy-paste.
+			if (!this.lobbyWidgetProbeResult)
+			{
+				this.lobbyWidgetProbeResult = this.lobbyWidgetProbeEngine();
+				try { log("Godseye lobby probe: " + this.lobbyWidgetProbeResult.join(", ")); } catch (e) {}
+			}
+			names.caption = this.lobbyWidgetProbeResult.length
+				? translate("Lobby API found:") + "\n" + this.lobbyWidgetProbeResult.join("\n")
+				: translate("No lobby roster API found on Engine.");
 			return;
 		}
 		if (this.lobbyWidgetState == "nocreds")
