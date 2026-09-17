@@ -794,6 +794,7 @@
 	<sprite name="DashboardBackground">
 		<image texture="pregame/dashboard/dashboard_bg.png"
 			size="0 0 100% 100%"
+			texture_size="0 0 100% 100%"
 		/>
 	</sprite>
 

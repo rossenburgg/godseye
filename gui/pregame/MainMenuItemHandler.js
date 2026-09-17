@@ -38,7 +38,7 @@ export class MainMenuItemHandler
 	setupMenuButtons(buttons, menuItems, isTopLevel)
 	{
 		// Horizontal layout: tiles in a centered row.
-		// Container is full-width, so % units are screen-relative.
+		// Use rleft/rright for percentage positioning.
 		const tileW = isTopLevel ? 8 : 7;
 		const gap = 1.2;
 		const totalW = menuItems.length * tileW + (menuItems.length - 1) * gap;
@@ -51,10 +51,10 @@ export class MainMenuItemHandler
 				return;
 
 			button.size = {
-				"left": left,
-				"right": left + tileW,
-				"top": 0,
-				"bottom": 100
+				"rleft": left,
+				"rright": left + tileW,
+				"rtop": 0,
+				"rbottom": 100
 			};
 			left += tileW + gap;
 
