@@ -23,12 +23,9 @@
 					<include file="gui/lobby/LobbyPage/ProfilePanel.xml"/>
 				</object>
 				<object size="0 100%-125 100% 100%">
-					<object name="toggleBuddyButton" type="button" style="ModernButtonRed" size="0 0 100% 25"/>
-					<object name="accountSettingsButton" type="button" style="ModernButtonRed" size="0 27 100% 52">
-						<translatableAttribute id="caption">Account settings</translatableAttribute>
-					</object>
-					<object name="leaderboardButton" type="button" style="ModernButtonRed" size="0 54 100% 79"/>
-					<object name="profileButton" type="button" style="ModernButtonRed" size="0 81 100% 106"/>
+					<object name="toggleBuddyButton" type="button" style="ModernButtonRed" size="0 0 100% 40"/>
+					<object name="leaderboardButton" type="button" style="ModernButtonRed" size="0 42 100% 82"/>
+					<object name="profileButton" type="button" style="ModernButtonRed" size="0 84 100% 124"/>
 				</object>
 			</object>
 

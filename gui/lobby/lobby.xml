@@ -10,7 +10,6 @@
 	<object>
 
 		<include file="gui/lobby/LobbyPage/LobbyPage.xml"/>
-		<include file="gui/lobby/AccountSettingsPage/AccountSettingsPage.xml"/>
 		<include file="gui/lobby/LeaderboardPage/LeaderboardPage.xml"/>
 		<include file="gui/lobby/ProfilePage/ProfilePage.xml"/>
 

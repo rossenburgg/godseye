@@ -4,14 +4,12 @@
  */
 class LobbyPage
 {
-	constructor(closePageCallback, dialog, xmppMessages, leaderboardPage, profilePage)
+	constructor(dialog, xmppMessages, leaderboardPage, profilePage)
 	{
 		Engine.ProfileStart("Create LobbyPage");
 		const mapCache = new MapCache();
 		const buddyButton = new BuddyButton(xmppMessages);
 		const smurfButton = new SmurfButton(xmppMessages);
-		const accountSettingsButton = Engine.GetGUIObjectByName("accountSettingsButton");
-		accountSettingsButton.onPress = AccountSettingsPage.openPage.bind(null, xmppMessages);
 		const gameList = new GameList(xmppMessages, buddyButton, smurfButton, mapCache);
 		const playerList = new PlayerList(xmppMessages, buddyButton, smurfButton, gameList);
 
@@ -19,7 +17,6 @@ class LobbyPage
 			"buttons": {
 				"buddyButton": buddyButton,
 				"smurfButton": smurfButton,
-				"accountSettingsButton": accountSettingsButton,
 				"joinButton": new JoinButton(dialog, gameList),
 				"hostButton": new HostButton(dialog, xmppMessages,
 					Engine.GetGUIObjectByName("hostButton"), false),
@@ -33,7 +30,7 @@ class LobbyPage
 				"profileButton": new ProfileButton(xmppMessages, profilePage),
 				"replayButton": new ReplayButton(dialog),
 				"civilizationLobbyButton": new CivilizationLobbyButton(),
-				"quitButton": new QuitButton(closePageCallback, dialog, leaderboardPage,
+				"quitButton": new QuitButton(dialog, leaderboardPage,
 					profilePage)
 			},
 			"panels": {

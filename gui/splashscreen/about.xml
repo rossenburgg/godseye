@@ -2,27 +2,15 @@
 <objects>
 
 	<script directory="gui/common/"/>
-	<script directory="gui/security/"/>
-	<script file="gui/security/updatepassword.js"/>
 
 	<object type="image" style="ModernDialog" size="50%-230 50%-210 50%+230 50%+210">
 
 		<object style="ModernLabelText" type="text" size="50%-128 -18 50%+128 15">
-			<translatableAttribute id="caption">Change Password</translatableAttribute>
+			<translatableAttribute id="caption">Security</translatableAttribute>
 		</object>
 
-		<object size="0 30 100% 100">
-			<include file="gui/security/olddata.xml"/>
-		</object>
-
-		<object size="0 110 100% 140">
-			<include file="gui/security/confirmpassword.xml"/>
-		</object>
-
-		
-
-		<object size="0 295 100% 510">
-			<include file="gui/security/response.xml"/>
+		<object type="text" style="ModernLeftLabelText" size="30 40 100%-30 100%-30">
+			<translatableAttribute id="caption">Changing your lobby password is not possible inside 0 A.D. Password resets are handled by the Wildfire Games team: create an account on the Wildfire Games forum and ask user1 to reset your lobby password.</translatableAttribute>
 		</object>
 
 	</object>
