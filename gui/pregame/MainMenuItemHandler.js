@@ -37,9 +37,10 @@ export class MainMenuItemHandler
 
 	setupMenuButtons(buttons, menuItems, isTopLevel)
 	{
-		// Horizontal layout: tiles centered as a row.
-		const tileW = isTopLevel ? 9 : 7;      // % width per tile
-		const gap = 1.2;                        // % gap
+		// Horizontal layout: tiles in a centered row.
+		// Container is full-width, so % units are screen-relative.
+		const tileW = isTopLevel ? 8 : 7;
+		const gap = 1.2;
 		const totalW = menuItems.length * tileW + (menuItems.length - 1) * gap;
 		let left = 50 - totalW / 2;
 
