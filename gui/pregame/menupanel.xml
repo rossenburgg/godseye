@@ -63,8 +63,8 @@
 	</object>
 
 	<!-- Bottom-center ornament + tagline -->
-	<object type="image" size="35% 80.5% 65% 84%" sprite="DashboardOrnament" ghost="true"/>
-	<object type="text" size="0 84% 100% 86.5%" font="sans-bold-13" textcolor="212 175 55" text_align="center" text_valign="center">
+	<object type="image" size="38% 80% 62% 85.33%" sprite="DashboardOrnament" ghost="true"/>
+	<object type="text" size="0 85.5% 100% 88%" font="sans-bold-13" textcolor="212 175 55" text_align="center" text_valign="center">
 		<translatableAttribute id="caption">FORGE YOUR LEGEND</translatableAttribute>
 	</object>
 
