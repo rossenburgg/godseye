@@ -785,4 +785,84 @@
 		/>
 	</sprite>
 
+	<!--
+	==========================================
+	GODSEYE DASHBOARD (PS5-style main menu)
+	==========================================
+	-->
+
+	<sprite name="DashboardBackground">
+		<image texture="pregame/dashboard/dashboard_bg.png"
+			texture_size="0 0 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="DashboardTile">
+		<image texture="pregame/dashboard/tile_center.png"
+			size="16 16 100%-16 100%-16"
+		/>
+		<image texture="pregame/dashboard/tile_edge.png"
+			size="0 16 16 100%-16"
+		/>
+		<image texture="pregame/dashboard/tile_edge.png"
+			size="16 0 100%-16 16"
+		/>
+		<image texture="pregame/dashboard/tile_edge.png"
+			size="100%-16 16 100% 100%-16"
+		/>
+		<image texture="pregame/dashboard/tile_edge.png"
+			size="16 100%-16 100%-16 100%"
+		/>
+		<image texture="pregame/dashboard/tile_corner.png"
+			size="0 0 16 16"
+		/>
+		<image texture="pregame/dashboard/tile_corner.png"
+			size="100%-16 0 100% 16"
+		/>
+		<image texture="pregame/dashboard/tile_corner.png"
+			size="0 100%-16 16 100%"
+		/>
+		<image texture="pregame/dashboard/tile_corner.png"
+			size="100%-16 100%-16 100% 100%"
+		/>
+	</sprite>
+
+	<sprite name="DashboardTileOver">
+		<image texture="pregame/dashboard/tile_center.png"
+			size="16 16 100%-16 100%-16"
+		/>
+		<!-- gold glow on hover via overlay -->
+	</sprite>
+
+	<sprite name="DashboardIconLearn">
+		<image texture="pregame/dashboard/icon_learn.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconCampaign">
+		<image texture="pregame/dashboard/icon_campaign.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconSingleplayer">
+		<image texture="pregame/dashboard/icon_singleplayer.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconMultiplayer">
+		<image texture="pregame/dashboard/icon_multiplayer.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconSettings">
+		<image texture="pregame/dashboard/icon_settings.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconEditor">
+		<image texture="pregame/dashboard/icon_editor.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconCredits">
+		<image texture="pregame/dashboard/icon_credits.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconCivtree">
+		<image texture="pregame/dashboard/icon_civtree.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconManual">
+		<image texture="pregame/dashboard/icon_manual.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardIconExit">
+		<image texture="pregame/dashboard/icon_exit.png" texture_size="0 0 100% 100%"/>
+	</sprite>
+
 </sprites>

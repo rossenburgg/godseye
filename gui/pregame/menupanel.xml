@@ -3,33 +3,55 @@
 
 	<object name="pgToolTip" style="TranslucentPanel" type="text" hidden="true" size="100%-290 25 100% 140" ghost="true"/>
 
-	<object name="mainMenu" type="image" style="MainMenuPanel" size="60 -2 300 100%+2" z="50">
-		<object type="text" size="8 18 100%-8 64" font="godseye-bold-30" textcolor="212 175 55" text_align="center">
-			<translatableAttribute id="caption">GOD'S EYE</translatableAttribute>
-		</object>
+	<!-- PS5-style dashboard background -->
+	<object type="image" sprite="DashboardBackground" size="0 0 100% 100%"/>
 
-		<object name="mainMenuButtons" size="8 146 100%-8 346">
+	<!-- Header -->
+	<object type="text" size="0 5% 100% 12%" font="sans-bold-36" textcolor="white" text_align="center" text_valign="center">
+		<translatableAttribute id="caption">Welcome</translatableAttribute>
+	</object>
+	<object type="text" size="0 12% 100% 16%" font="godseye-bold-30" textcolor="212 175 55" text_align="center" text_valign="center">
+		<translatableAttribute id="caption">GOD'S EYE</translatableAttribute>
+	</object>
+
+	<!-- Main tile row -->
+	<object name="mainMenu" size="0 0 100% 100%">
+		<object name="mainMenuButtons" size="15% 30% 85% 58%">
 			<repeat count="10">
-				<object name="mainMenuButton[n]" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="StoneButtonFancy" tooltip_style="pgToolTip"/>
+				<object name="mainMenuButton[n]" type="button"
+					sprite="DashboardTile" sprite_over="DashboardTile" sprite_pressed="DashboardTile" sprite_disabled="DashboardTile"
+					textcolor="white" textcolor_disabled="150 150 150" font="sans-bold-13"
+					text_align="center" text_valign="bottom" tooltip_style="pgToolTip"
+					buffer_zone="4">
+					<object name="mainMenuTileIcon[n]" type="image" size="30% 6% 70% 62%" sprite="DashboardIconLearn" ghost="true"/>
+				</object>
 			</repeat>
 		</object>
-
-		<!-- These are used to make the right side blend in with the submenu -->
-		<object name="MainMenuPanelRightBorderTop" type="image" sprite="MainMenuPanelRightBorder" ghost="true" size="100%-2 0 100% 100%"/>
-		<object name="MainMenuPanelRightBorderBottom" type="image" sprite="MainMenuPanelRightBorder" ghost="true" size="100%-2 0 100% 100%"/>
-
-		<include file="gui/pregame/ProjectInformation.xml"/>
 	</object>
 
-	<object name="submenu" type="image" style="SubmenuPanel" size="60 0 300 0%" hidden="true">
-		<object name="submenuButtons" type="image" size="0 4 100%-4 100%-4" tooltip_style="pgToolTip">
+	<!-- Submenu tile row (appears below main row) -->
+	<object name="submenu" size="15% 62% 85% 78%" hidden="true">
+		<object name="submenuButtons" size="0 0 100% 100%" tooltip_style="pgToolTip">
 			<repeat count="30">
-				<object type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" style="StoneButtonFancy" tooltip_style="pgToolTip"/>
+				<object type="button"
+					sprite="DashboardTile" sprite_over="DashboardTile" sprite_pressed="DashboardTile" sprite_disabled="DashboardTile"
+					textcolor="white" textcolor_disabled="150 150 150" font="sans-12"
+					text_align="center" text_valign="center" tooltip_style="pgToolTip"
+					buffer_zone="4"/>
 			</repeat>
 		</object>
 	</object>
 
-	<!-- Hide submenu when user clicks on the background -->
-	<object name="closeMenuButton" type="button" sprite="GodseyeButton" sprite_over="GodseyeButtonOver" sprite_pressed="GodseyeButtonPressed" sprite_disabled="GodseyeButtonDisabled" hotkey="cancel"/>
+	<!-- Bottom info bar -->
+	<object type="text" size="0 100%-40 100% 100%-12" font="sans-12" textcolor="160 180 220" text_align="center" text_valign="center">
+		<translatableAttribute id="caption">God's Eye mod for 0 A.D. 0.28</translatableAttribute>
+	</object>
+
+	<!-- Click-catcher to close submenu -->
+	<object name="closeMenuButton" type="button" sprite="TransparentButton" hotkey="cancel"/>
+
+	<!-- These are required by MainMenuItemHandler but unused in dashboard mode -->
+	<object name="MainMenuPanelRightBorderTop" size="0 0 0 0" hidden="true"/>
+	<object name="MainMenuPanelRightBorderBottom" size="0 0 0 0" hidden="true"/>
 
 </object>
