@@ -47,6 +47,18 @@
 		<translatableAttribute id="caption">God's Eye mod for 0 A.D. 0.28</translatableAttribute>
 	</object>
 
+	<!-- Required by MainMenuPage.js (project information) -->
+	<object name="organizationName" type="text" size="8 100%-36 200 100%-20" font="sans-10" textcolor="120 140 180" text_align="left" hidden="true"/>
+	<object name="organizationLogo" type="image" size="8 100%-60 40 100%-28" hidden="true"/>
+	<object name="productLogo" type="image" size="48 100%-60 80 100%-28" hidden="true"/>
+	<object name="productBuild" type="text" size="88 100%-36 300 100%-20" font="sans-10" textcolor="120 140 180" text_align="left" hidden="true"/>
+	<object name="productDescription" type="text" size="8 100%-80 400 100%-40" font="sans-10" textcolor="120 140 180" hidden="true"/>
+	<object name="communityButtons" size="100%-420 100%-40 100%-8 100%-8">
+		<repeat count="6">
+			<object type="button" sprite="DashboardTile" font="sans-10" textcolor="160 180 220" text_align="center" hidden="true"/>
+		</repeat>
+	</object>
+
 	<!-- Click-catcher to close submenu -->
 	<object name="closeMenuButton" type="button" sprite="TransparentButton" hotkey="cancel"/>
 
