@@ -5,6 +5,8 @@
 
 	<!-- PS5-style dashboard background -->
 	<object type="image" sprite="DashboardBackground" size="0 0 100% 100%"/>
+	<!-- Cross-fade overlay: per-tile art fades in on hover -->
+	<object name="dashboardBackgroundOverlay" type="image" sprite="DashboardBackground" size="0 0 100% 100%" ghost="true" hidden="true"/>
 
 	<!-- Header -->
 	<object type="text" size="0 5% 100% 12%" font="sans-bold-36" textcolor="white" text_align="center" text_valign="center">

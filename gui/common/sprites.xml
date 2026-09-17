@@ -798,6 +798,38 @@
 		/>
 	</sprite>
 
+	<!-- Per-tile background art for PS5-style hover cross-fade -->
+	<sprite name="DashboardBackgroundLearn">
+		<image texture="pregame/dashboard/dashboard_bg_learn.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundCampaign">
+		<image texture="pregame/dashboard/dashboard_bg_campaign.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundSingleplayer">
+		<image texture="pregame/dashboard/dashboard_bg_singleplayer.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundMultiplayer">
+		<image texture="pregame/dashboard/dashboard_bg_multiplayer.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundSettings">
+		<image texture="pregame/dashboard/dashboard_bg_settings.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundEditor">
+		<image texture="pregame/dashboard/dashboard_bg_editor.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundCredits">
+		<image texture="pregame/dashboard/dashboard_bg_credits.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundCivtree">
+		<image texture="pregame/dashboard/dashboard_bg_civtree.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundManual">
+		<image texture="pregame/dashboard/dashboard_bg_manual.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardBackgroundExit">
+		<image texture="pregame/dashboard/dashboard_bg_exit.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+
 	<sprite name="DashboardTile">
 		<image texture="pregame/dashboard/tile_center.png"
 			size="16 16 100%-16 100%-16"
