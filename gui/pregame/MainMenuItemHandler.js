@@ -43,8 +43,10 @@ export class MainMenuItemHandler
 			"DashboardCardArtExit"
 		];
 
-		// PS5-style hover: smooth 400ms ease-out, no overshoot.
-		// Focus scale 1.5x (PS5 uses ~1.56x).
+		// Dashboard: PS5-style focus zoom. Top-level cards are large portraits,
+		// so their zoom stays subtle (1.12x); small submenu cards keep 1.5x.
+		this.hoverScaleTop = 1.12;
+		this.hoverScaleSub = 1.5;
 		// Must init before setupMenuButtons (it registers animations).
 		// Card descriptions in the mockup's navy/gold language (two lines each).
 		this.tileSubtitles = [
@@ -456,7 +458,7 @@ export class MainMenuItemHandler
 				"rbottom": row * (rowH + gapY) + rowH
 			};
 			button.size = origSize;
-			// PS5-style hover: smooth 400ms ease-out to 1.5x.
+			// PS5-style hover: smooth 400ms ease-out to the focus scale.
 			this.buttonAnims.set(button, {
 				"scale": 1.0,
 				"startScale": 1.0,
@@ -467,7 +469,7 @@ export class MainMenuItemHandler
 			button.onMouseEnter = () => {
 				const anim = this.buttonAnims.get(button);
 				anim.startScale = anim.scale;
-				anim.target = 1.5;
+				anim.target = isTopLevel ? this.hoverScaleTop : this.hoverScaleSub;
 				anim.startTime = Date.now();
 				button.z = 100;
 				this.animatingButtons.add(button);
