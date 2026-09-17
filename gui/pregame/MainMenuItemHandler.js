@@ -36,6 +36,8 @@ export class MainMenuItemHandler
 
 		// Spring physics for PS5-style hover animations.
 		// Stiffness 350, damping 22: snappy with a hint of overshoot.
+		// Animation state stored here (GUI objects have no userData).
+		this.buttonAnims = new Map();
 		this.animatingButtons = new Set();
 		this.lastTick = Date.now();
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
@@ -55,7 +57,7 @@ export class MainMenuItemHandler
 
 		for (const button of this.animatingButtons)
 		{
-			const anim = button.userData.anim;
+			const anim = this.buttonAnims.get(button);
 			// Spring: F = -k(x - target) - c*v
 			const F_spring = -stiffness * (anim.scale - anim.target);
 			const F_damp = -damping * anim.velocity;
@@ -114,22 +116,20 @@ export class MainMenuItemHandler
 			};
 			button.size = origSize;
 			// PS5-style hover: spring-physics scale animation.
-			button.userData = {
-				"anim": {
-					"scale": 1.0,
-					"velocity": 0.0,
-					"target": 1.0,
-					"origSize": origSize
-				}
-			};
+			this.buttonAnims.set(button, {
+				"scale": 1.0,
+				"velocity": 0.0,
+				"target": 1.0,
+				"origSize": origSize
+			});
 			button.onMouseEnter = () => {
-				button.userData.anim.target = 1.18;
+				this.buttonAnims.get(button).target = 1.18;
 				button.z = 100;
 				this.animatingButtons.add(button);
 				this.lastTick = Date.now();
 			};
 			button.onMouseLeave = () => {
-				button.userData.anim.target = 1.0;
+				this.buttonAnims.get(button).target = 1.0;
 				this.animatingButtons.add(button);
 				this.lastTick = Date.now();
 			};
