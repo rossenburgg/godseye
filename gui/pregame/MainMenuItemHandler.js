@@ -237,9 +237,20 @@ export class MainMenuItemHandler
 					Engine.ConnectXmppClient();
 			}
 			else
+			{
+				// Mirror the stock login page: StartXmppClient takes
+				// (username, encryptedPassword, room, nick, history), and the
+				// connection itself is opened by ConnectXmppClient.
+				// lobby.password is stored encrypted; pass it through as-is.
+				const login = Engine.ConfigDB_GetValue("user", "lobby.login");
 				Engine.StartXmppClient(
-					Engine.ConfigDB_GetValue("user", "lobby.login"),
-					Engine.ConfigDB_GetValue("user", "lobby.password"));
+					login,
+					Engine.ConfigDB_GetValue("user", "lobby.password"),
+					Engine.ConfigDB_GetValue("user", "lobby.room"),
+					login,
+					+Engine.ConfigDB_GetValue("user", "lobby.history"));
+				Engine.ConnectXmppClient();
+			}
 			this.lobbyWidgetState = "connecting";
 		}
 		catch (e)
