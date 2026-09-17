@@ -14,9 +14,9 @@
 		<translatableAttribute id="caption">GOD'S EYE</translatableAttribute>
 	</object>
 
-	<!-- Main tile row: 1:2 cards to match 1024x2048 art perfectly -->
+	<!-- Main tile row: 1:1 square PS5-style cards -->
 	<object name="mainMenu" size="0 0 100% 100%">
-		<object name="mainMenuButtons" size="0 30% 100% 58%">
+		<object name="mainMenuButtons" size="0 34% 100% 48%">
 			<repeat count="10">
 				<object name="mainMenuButton[n]" type="button"
 					sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton" sprite_disabled="TransparentButton"
