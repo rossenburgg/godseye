@@ -36,7 +36,8 @@ export class MainMenuItemHandler
 		this.animatingButtons = new Set();
 
 		// Per-tile background art: instant re-theme on hover (PS5-style).
-		// (0ad GUI has no opacity property, so no cross-fade possible.)
+		// (0ad GUI has no opacity property, so the swap is masked by a
+		// smooth zoom punch instead of a cross-fade.)
 		this.bgBase = Engine.GetGUIObjectByName("dashboardBackground");
 		this.tileBackgrounds = [
 			"DashboardBackgroundLearn",
@@ -50,6 +51,7 @@ export class MainMenuItemHandler
 			"DashboardBackgroundManual",
 			"DashboardBackgroundExit"
 		];
+		this.bgZoom = { "scale": 1.0, "startScale": 1.0, "target": 1.0, "startTime": 0 };
 
 		this.setupMenuButtons(this.mainMenuButtons.children, this.menuItems, true);
 		this.setupHotkeys(this.menuItems);
@@ -62,6 +64,44 @@ export class MainMenuItemHandler
 	tickAnimations()
 	{
 		this.tickButtonAnims();
+		this.tickBackgroundZoom();
+	}
+
+	/**
+	 * Smooth zoom punch that masks the instant background sprite swap.
+	 * 350ms ease-out, settles at 1.06 while a tile is hovered.
+	 */
+	swapBackground(spriteName, zoomTarget)
+	{
+		if (!this.bgBase)
+			return;
+		this.bgBase.sprite = spriteName;
+		this.bgZoom.startScale = this.bgZoom.scale;
+		this.bgZoom.target = zoomTarget;
+		this.bgZoom.startTime = Date.now();
+	}
+
+	tickBackgroundZoom()
+	{
+		if (!this.bgBase)
+			return;
+		const z = this.bgZoom;
+		if (z.scale === z.target)
+			return;
+
+		const duration = 350;
+		const t = Math.min((Date.now() - z.startTime) / duration, 1.0);
+		const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+		z.scale = z.startScale + (z.target - z.startScale) * eased;
+
+		// Centered zoom via relative size (matches tile animation pattern).
+		const m = (z.scale - 1.0) * 50; // margin % on each side
+		this.bgBase.size = {
+			"rleft": -m, "rtop": -m, "rright": 100 + m, "rbottom": 100 + m
+		};
+
+		if (t >= 1.0)
+			z.scale = z.target;
 	}
 
 	tickButtonAnims()
@@ -146,7 +186,7 @@ export class MainMenuItemHandler
 				button.z = 100;
 				this.animatingButtons.add(button);
 				if (isTopLevel && this.tileBackgrounds[i] && this.bgBase)
-					this.bgBase.sprite = this.tileBackgrounds[i];
+					this.swapBackground(this.tileBackgrounds[i], 1.06);
 			};
 			button.onMouseLeave = () => {
 				const anim = this.buttonAnims.get(button);
@@ -155,7 +195,7 @@ export class MainMenuItemHandler
 				anim.startTime = Date.now();
 				this.animatingButtons.add(button);
 				if (isTopLevel && this.bgBase)
-					this.bgBase.sprite = "DashboardBackground";
+					this.swapBackground("DashboardBackground", 1.0);
 			};
 			left += tileW + gap;
 
