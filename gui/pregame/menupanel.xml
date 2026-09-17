@@ -24,6 +24,7 @@
 					text_align="center" text_valign="bottom"
 					buffer_zone="4">
 					<object name="mainMenuTileIcon[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardIconLearn" ghost="true"/>
+					<object name="mainMenuTileDim[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardTileDim" ghost="true" hidden="true"/>
 					<object name="mainMenuTileCaptionShadow[n]" type="text" size="2 81% 100% 100%"
 						font="godseye-bold-14" textcolor="0 0 0" text_align="center" text_valign="center" ghost="true"/>
 					<object name="mainMenuTileCaption[n]" type="text" size="0% 80% 100% 100%"
@@ -39,12 +40,12 @@
 
 	<!-- Submenu tile row (appears below main row) -->
 	<object name="submenu" size="0 60% 100% 74%" hidden="true">
-		<object name="submenuButtons" size="0 0 100% 100%" tooltip_style="pgToolTip">
+		<object name="submenuButtons" size="0 0 100% 100%">
 			<repeat count="30">
 				<object type="button"
 					sprite="DashboardSubcard" sprite_over="DashboardSubcardOver" sprite_pressed="DashboardSubcardOver" sprite_disabled="DashboardSubcard"
 					textcolor="white" textcolor_disabled="150 150 150" font="godseye-bold-13"
-					text_align="center" text_valign="center" tooltip_style="pgToolTip"
+					text_align="center" text_valign="center"
 					buffer_zone="4"/>
 			</repeat>
 		</object>
@@ -62,8 +63,7 @@
 	<!-- PS5-style top-right utilities: player profile + quick settings -->
 	<object name="playerNameLabel" type="text" size="100%-220 90 100%-60 112" font="sans-bold-12" textcolor="200 210 230" text_align="right" text_valign="center" ghost="true"/>
 	<object name="quickSettingsButton" type="button" size="100%-52 88 100%-8 132"
-		sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton"
-		tooltip="Change game options." tooltip_style="pgToolTip">
+		sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton">
 		<object type="image" size="0% 0% 100% 100%" sprite="DashboardIconSettings" ghost="true"/>
 	</object>
 

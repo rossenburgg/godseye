@@ -75,6 +75,8 @@ export class MainMenuItemHandler
 		// PS5-style info panel + top-right utilities.
 		this.tileInfoTitle = Engine.GetGUIObjectByName("tileInfoTitle");
 		this.tileInfoDesc = Engine.GetGUIObjectByName("tileInfoDesc");
+		this.hoveredButton = null; // any-level hover, for flicker-free idle resets
+		this.infoPanelDefault = true;
 		this.resetInfoPanel();
 
 		const playerNameLabel = Engine.GetGUIObjectByName("playerNameLabel");
@@ -87,9 +89,11 @@ export class MainMenuItemHandler
 		const quickSettings = Engine.GetGUIObjectByName("quickSettingsButton");
 		if (quickSettings)
 			quickSettings.onPress = () => {
-				const settingsItem = this.menuItems[4];
-				if (settingsItem)
-					this.performButtonAction(settingsItem, 4);
+				// Find the Settings item by its Options submenu (robust to reorder).
+				const idx = this.menuItems.findIndex(item =>
+					item.submenu && item.submenu.some(sub => sub.caption === translate("Options")));
+				if (idx >= 0)
+					this.pressButton(this.menuItems[idx], idx, true); // toggles like the tile
 			};
 
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
@@ -101,6 +105,7 @@ export class MainMenuItemHandler
 			this.tileInfoTitle.caption = translate("Choose your path");
 		if (this.tileInfoDesc)
 			this.tileInfoDesc.caption = translate("Hover a tile to see what lies ahead.");
+		this.infoPanelDefault = true;
 	}
 
 	updateInfoPanel(item)
@@ -109,12 +114,52 @@ export class MainMenuItemHandler
 			this.tileInfoTitle.caption = item.caption;
 		if (this.tileInfoDesc)
 			this.tileInfoDesc.caption = item.tooltip;
+		this.infoPanelDefault = false;
 	}
 
 	tickAnimations()
 	{
 		this.tickButtonAnims();
 		this.tickBackgroundZoom();
+		this.tickSubmenuSlide();
+		// Deferred idle reset: only when the mouse has truly left every button.
+		// (Avoids flicker when moving directly between neighboring tiles.)
+		if (!this.hoveredButton)
+		{
+			if (!this.infoPanelDefault)
+				this.resetInfoPanel();
+			// Background: while a submenu is open, keep its parent tile's art
+			// (PS5 keeps the game backdrop across its hub). Otherwise base.
+			const parentIdx = !this.submenu.hidden && this.lastOpenItem
+				? this.menuItems.indexOf(this.lastOpenItem) : -1;
+			if (parentIdx >= 0)
+			{
+				if (this.bgZoom.target !== 1.06)
+					this.swapBackground(this.tileBackgrounds[parentIdx], 1.06);
+			}
+			else if (this.bgBase && this.bgZoom.target !== 1.0)
+				this.swapBackground("DashboardBackground", 1.0);
+		}
+	}
+
+	/**
+	 * Submenu slides up gently on open (250ms ease-out).
+	 */
+	tickSubmenuSlide()
+	{
+		if (!this.submenuAnim || this.submenu.hidden)
+		{
+			this.submenuAnim = null;
+			return;
+		}
+		const t = Math.min((Date.now() - this.submenuAnim.startTime) / 250, 1.0);
+		const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+		const off = 4 * (1 - eased); // starts 4% lower, settles into place
+		this.submenu.size = {
+			"rleft": 0, "rtop": 60 + off, "rright": 100, "rbottom": 74 + off
+		};
+		if (t >= 1.0)
+			this.submenuAnim = null;
 	}
 
 	/**
@@ -235,6 +280,7 @@ export class MainMenuItemHandler
 				anim.startTime = Date.now();
 				button.z = 100;
 				this.animatingButtons.add(button);
+				this.hoveredButton = button;
 				this.updateInfoPanel(item);
 				if (isTopLevel && this.tileBackgrounds[i] && this.bgBase)
 					this.swapBackground(this.tileBackgrounds[i], 1.06);
@@ -246,10 +292,10 @@ export class MainMenuItemHandler
 				anim.startTime = Date.now();
 				button.z = 10; // drop behind immediately so the newly hovered card draws on top
 				this.animatingButtons.add(button);
-				if (isTopLevel)
-					this.resetInfoPanel();
-				if (isTopLevel && this.bgBase)
-					this.swapBackground("DashboardBackground", 1.0);
+				// Idle reset (panel + background) is deferred to tickAnimations so
+				// moving between buttons doesn't flicker. See tickAnimations.
+				if (this.hoveredButton === button)
+					this.hoveredButton = null;
 			};
 			left += tileW + gap;
 
@@ -263,6 +309,13 @@ export class MainMenuItemHandler
 			if (labelShadow)
 				labelShadow.caption = item.caption;
 			button.enabled = item.enabled === undefined || item.enabled();
+			// Dim disabled tiles (e.g. Continue Campaign with no save) so they read as unavailable.
+			if (isTopLevel)
+			{
+				const dim = Engine.GetGUIObjectByName("mainMenuTileDim[" + i + "]");
+				if (dim)
+					dim.hidden = button.enabled;
+			}
 
 			if (isTopLevel && this.tileIcons[i])
 			{
@@ -331,6 +384,7 @@ export class MainMenuItemHandler
 
 		this.setupMenuButtons(this.submenuButtons.children, sub, false);
 		this.submenu.hidden = false;
+		this.submenuAnim = { "startTime": Date.now() }; // gentle slide-up
 	}
 
 	closeSubmenu()
