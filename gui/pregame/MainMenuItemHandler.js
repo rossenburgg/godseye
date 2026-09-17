@@ -113,6 +113,17 @@ export class MainMenuItemHandler
 		this.lobbyWidgetState = "off"; // off | nocreds | connecting | connected | error
 		this.lobbyWidgetTick = 0; // roster refresh countdown (ticks)
 
+		// Tagline readout: hovering a card shows its title down here.
+		this.dashboardTagline = Engine.GetGUIObjectByName("dashboardTagline");
+		// Section header stays above hovered cards (declared after the grid too,
+		// belt and suspenders: z when the engine honors it, order when it doesn't).
+		const sectionTick = Engine.GetGUIObjectByName("dashboardSectionTick");
+		const sectionLabel = Engine.GetGUIObjectByName("dashboardSectionLabel");
+		if (sectionTick)
+			sectionTick.z = 200;
+		if (sectionLabel)
+			sectionLabel.z = 200;
+
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
 	}
 
@@ -301,18 +312,7 @@ export class MainMenuItemHandler
 			if (this.lobbyWidgetIsConnected())
 			{
 				count.caption = translate("0 online");
-				// Debug: reveal the raw roster shape so normalization can be fixed.
-				try
-				{
-					const first = players[0];
-					const shape = first === undefined ? "undefined" :
-						typeof first != "object" ? typeof first :
-						"keys(" + Object.keys(first).join(",") + ")";
-					log("Godseye roster: n=" + players.length + " shape=" + shape +
-						" first=" + JSON.stringify(first).slice(0, 500));
-					names.caption = players.length ? "shape: " + shape : "";
-				}
-				catch (e) { names.caption = ""; }
+				names.caption = "";
 			}
 			else
 			{
@@ -500,6 +500,9 @@ export class MainMenuItemHandler
 				button.z = 100;
 				this.animatingButtons.add(button);
 				this.hoveredButton = button;
+				// Tagline readout: show the hovered card's title.
+				if (isTopLevel && this.dashboardTagline)
+					this.dashboardTagline.caption = this.resolveCaption(item).toUpperCase();
 				if (isTopLevel && this.tileBackgrounds[i] && this.bgBase)
 					this.swapBackground(this.tileBackgrounds[i], 1.06);
 				// Gold frame glow on hover (mockup card language).
@@ -527,6 +530,9 @@ export class MainMenuItemHandler
 				// moving between buttons doesn't flicker. See tickAnimations.
 				if (this.hoveredButton === button)
 					this.hoveredButton = null;
+				// Tagline readout: restore the default once no card is hovered.
+				if (!this.hoveredButton && this.dashboardTagline)
+					this.dashboardTagline.caption = translate("FORGE YOUR LEGEND");
 				if (isTopLevel)
 				{
 					const frameOver = Engine.GetGUIObjectByName("mainMenuTileFrameOver[" + i + "]");

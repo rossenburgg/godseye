@@ -920,6 +920,11 @@
 		<image texture="pregame/dashboard/card_frame_over.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
 
+	<!-- Thin gold divider hairline (lobby panel etc.) -->
+	<sprite name="DashboardHairline">
+		<image texture="pregame/dashboard/hairline_gold.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+
 	<!-- Portrait menu cards: art over navy strip (mockup language) -->
 	<sprite name="DashboardCardArtLearn">
 		<image texture="pregame/dashboard/card_art_learn.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>

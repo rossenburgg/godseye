@@ -18,12 +18,6 @@
 		<translatableAttribute id="caption">Choose your path, build your legend.</translatableAttribute>
 	</object>
 
-	<!-- Section header: gold tick + label, aligned to the card grid -->
-	<object type="text" size="18.45% 27.5% 19.6% 30%" font="sans-bold-20" textcolor="212 175 55" text_align="left" text_valign="center">|</object>
-	<object type="text" size="20.2% 27.5% 60% 30%" font="sans-bold-16" textcolor="255 255 255" text_align="left" text_valign="center">
-		<translatableAttribute id="caption">CHOOSE YOUR PATH</translatableAttribute>
-	</object>
-
 	<!-- Main card grid: 2 rows x 5 portrait cards (mockup layout) -->
 	<object name="mainMenu" size="0 0 100% 100%">
 		<object name="mainMenuButtons" size="0 30% 100% 78.6%">
@@ -48,6 +42,13 @@
 		</object>
 	</object>
 
+	<!-- Section header: gold tick + label, aligned to the card grid.
+	     Declared after the grid so hovered cards tuck UNDER it, never over it. -->
+	<object name="dashboardSectionTick" type="text" size="18.45% 27.5% 19.6% 30%" font="sans-bold-20" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true">|</object>
+	<object name="dashboardSectionLabel" type="text" size="20.2% 27.5% 60% 30%" font="sans-bold-16" textcolor="255 255 255" text_align="left" text_valign="center" ghost="true">
+		<translatableAttribute id="caption">CHOOSE YOUR PATH</translatableAttribute>
+	</object>
+
 	<!-- Submenu: floating panel over a dimmed menu -->
 	<object name="submenuBackdrop" type="image" size="0 0 100% 100%" sprite="DashboardDim" ghost="true" hidden="true"/>
 	<object name="submenu" size="17.5% 42% 82.5% 58%" hidden="true">
@@ -62,36 +63,38 @@
 		</object>
 	</object>
 
-	<!-- Bottom-center ornament + tagline -->
+	<!-- Bottom-center ornament + tagline (tagline shows the hovered card's title) -->
 	<object type="image" size="38% 80% 62% 85.33%" sprite="DashboardOrnament" ghost="true"/>
-	<object type="text" size="0 85.5% 100% 88%" font="sans-bold-13" textcolor="212 175 55" text_align="center" text_valign="center">
+	<object name="dashboardTagline" type="text" size="0 85.5% 100% 88%" font="sans-bold-13" textcolor="212 175 55" text_align="center" text_valign="center" ghost="true">
 		<translatableAttribute id="caption">FORGE YOUR LEGEND</translatableAttribute>
 	</object>
 
 	<!-- Bottom info bar -->
-	<object type="text" size="0 100%-40 100% 100%-12" font="sans-12" textcolor="160 180 220" text_align="center" text_valign="center">
+	<object type="text" size="0 96.3% 100% 98.9%" font="sans-12" textcolor="160 180 220" text_align="center" text_valign="center" ghost="true">
 		<translatableAttribute id="caption">God's Eye mod for 0 A.D. 0.28</translatableAttribute>
 	</object>
 
 	<!-- 0AD logo: top-right, honoring the base game -->
-	<object name="productLogo" type="image" size="100%-120 8 100%-8 64" ghost="true"/>
-	<object name="productBuild" type="text" size="100%-120 66 100%-8 82" font="sans-10" textcolor="120 140 180" text_align="right" ghost="true"/>
+	<object name="productLogo" type="image" size="93.75% 0.7% 99.6% 5.9%" ghost="true"/>
+	<object name="productBuild" type="text" size="93.75% 6.1% 99.6% 7.6%" font="sans-10" textcolor="120 140 180" text_align="right" ghost="true"/>
 
 	<!-- Top-right: quick settings gear -->
-	<object name="quickSettingsButton" type="button" size="100%-52 88 100%-8 132"
+	<object name="quickSettingsButton" type="button" size="97.7% 8.1% 99.6% 12.2%"
 		sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton">
 		<object type="image" size="0% 0% 100% 100%" sprite="DashboardIconSettings" ghost="true"/>
 	</object>
 
 	<!-- Bottom-right player plate: crown + name -->
-	<object type="image" size="100%-212 100%-62 100%-164 100%-14" sprite="DashboardCrown" ghost="true"/>
-	<object name="playerPlateName" type="text" size="100%-156 100%-60 100%-12 100%-16" font="sans-bold-13" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true"/>
+	<object type="image" size="89% 94.3% 91.5% 98.7%" sprite="DashboardCrown" ghost="true"/>
+	<object name="playerPlateName" type="text" size="91.9% 94.4% 99.4% 98.5%" font="sans-bold-13" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true"/>
 
-	<!-- Lobby widget: who's online in the multiplayer lobby (opt-in, display only) -->
-	<object name="lobbyWidget" size="12 100%-224 312 100%-48" hidden="true" ghost="true">
-		<object name="lobbyWidgetTitle" type="text" size="0 0 100% 24" font="godseye-bold-13" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true"/>
-		<object name="lobbyWidgetCount" type="text" size="0 24 100% 46" font="sans-bold-12" textcolor="white" text_align="left" text_valign="center" ghost="true"/>
-		<object name="lobbyWidgetNames" type="text" size="0 46 100% 100%" font="sans-11" textcolor="160 180 210" text_align="left" text_valign="top" ghost="true"/>
+	<!-- Lobby widget: proper panel (dark glass + gold hairline), who's online -->
+	<object name="lobbyWidget" size="1% 79% 17% 96%" hidden="true" ghost="true">
+		<object type="image" size="0 0 100% 100%" sprite="DashboardSubcard" ghost="true"/>
+		<object name="lobbyWidgetTitle" type="text" size="6% 4% 94% 16%" font="godseye-bold-13" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true"/>
+		<object name="lobbyWidgetCount" type="text" size="6% 17% 94% 29%" font="sans-bold-12" textcolor="white" text_align="left" text_valign="center" ghost="true"/>
+		<object type="image" size="6% 33% 94% 34%" sprite="DashboardHairline" ghost="true"/>
+		<object name="lobbyWidgetNames" type="text" size="6% 37% 94% 95%" font="sans-11" textcolor="160 180 210" text_align="left" text_valign="top" ghost="true"/>
 	</object>
 
 	<!-- Required by MainMenuPage.js (hidden) -->
