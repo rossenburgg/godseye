@@ -216,6 +216,10 @@ export class MainMenuItemHandler
 
 			button.caption = item.caption;
 			button.tooltip = item.tooltip;
+			// Label drawn on top of the card art (button caption is hidden behind the art image).
+			const label = Engine.GetGUIObjectByName("mainMenuTileCaption[" + i + "]");
+			if (label)
+				label.caption = item.caption;
 			button.enabled = item.enabled === undefined || item.enabled();
 
 			if (isTopLevel && this.tileIcons[i])
