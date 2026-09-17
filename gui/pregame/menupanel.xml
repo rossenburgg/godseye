@@ -21,7 +21,7 @@
 				<object name="mainMenuButton[n]" type="button"
 					sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton" sprite_disabled="TransparentButton"
 					textcolor="white" textcolor_disabled="150 150 150" font="sans-bold-13"
-					text_align="center" text_valign="bottom" tooltip_style="pgToolTip"
+					text_align="center" text_valign="bottom"
 					buffer_zone="4">
 					<object name="mainMenuTileIcon[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardIconLearn" ghost="true"/>
 					<object name="mainMenuTileCaptionShadow[n]" type="text" size="2 81% 100% 100%"
