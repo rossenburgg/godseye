@@ -269,6 +269,13 @@ export const mainMenuItems = [
 				"onPress": () => {
 					Engine.OpenChildPage("page_splashscreen.xml");
 				}
+			},
+			{
+				"caption": () => translate("Help Improve 0 A.D.") + ": " + (Engine.IsUserReportEnabled() ? translate("On") : translate("Off")),
+				"tooltip": translate("Toggle anonymous feedback that helps the 0 A.D. team fix bugs and improve performance."),
+				"onPress": () => {
+					Engine.SetUserReportEnabled(!Engine.IsUserReportEnabled());
+				}
 			}
 		]
 	},

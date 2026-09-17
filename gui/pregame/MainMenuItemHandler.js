@@ -111,14 +111,32 @@ export class MainMenuItemHandler
 	updateInfoPanel(item)
 	{
 		if (this.tileInfoTitle)
-			this.tileInfoTitle.caption = item.caption;
+			this.tileInfoTitle.caption = this.resolveCaption(item);
 		if (this.tileInfoDesc)
 			this.tileInfoDesc.caption = item.tooltip;
 		this.infoPanelDefault = false;
 	}
 
+	// Menu item captions are usually strings, but some (like the feedback
+	// toggle) are functions so they can reflect live state each time they draw.
+	resolveCaption(item)
+	{
+		return typeof item.caption == "function" ? item.caption() : item.caption;
+	}
+
 	tickAnimations()
 	{
+		// The stock user-report panel ("Help improve 0 A.D.") lives in the base
+		// game's userreport.xml, outside our menupanel override. Hide it once here:
+		// the first tick runs after the whole page (including userreport.xml) is
+		// loaded, and the stock init code never unhides it, so this is stable.
+		if (!this.userReportHidden)
+		{
+			this.userReportHidden = true;
+			const userReport = Engine.GetGUIObjectByName("userReport");
+			if (userReport)
+				userReport.hidden = true;
+		}
 		this.tickButtonAnims();
 		this.tickBackgroundZoom();
 		this.tickSubmenuSlide();
@@ -299,15 +317,15 @@ export class MainMenuItemHandler
 			};
 			left += tileW + gap;
 
-			button.caption = item.caption;
+			button.caption = this.resolveCaption(item);
 			button.tooltip = item.tooltip;
 			// Label drawn on top of the card art (button caption is hidden behind the art image).
 			const label = Engine.GetGUIObjectByName("mainMenuTileCaption[" + i + "]");
 			if (label)
-				label.caption = item.caption;
+				label.caption = this.resolveCaption(item);
 			const labelShadow = Engine.GetGUIObjectByName("mainMenuTileCaptionShadow[" + i + "]");
 			if (labelShadow)
-				labelShadow.caption = item.caption;
+				labelShadow.caption = this.resolveCaption(item);
 			button.enabled = item.enabled === undefined || item.enabled();
 			// Dim disabled tiles (e.g. Continue Campaign with no save) so they read as unavailable.
 			if (isTopLevel)
