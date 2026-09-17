@@ -920,6 +920,52 @@
 		<image texture="pregame/dashboard/card_frame_over.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
 
+	<!-- Portrait menu cards: art over navy strip (mockup language) -->
+	<sprite name="DashboardCardArtLearn">
+		<image texture="pregame/dashboard/card_art_learn.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtCampaign">
+		<image texture="pregame/dashboard/card_art_campaign.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtSingleplayer">
+		<image texture="pregame/dashboard/card_art_singleplayer.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtMultiplayer">
+		<image texture="pregame/dashboard/card_art_multiplayer.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtSettings">
+		<image texture="pregame/dashboard/card_art_settings.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtEditor">
+		<image texture="pregame/dashboard/card_art_editor.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtCredits">
+		<image texture="pregame/dashboard/card_art_credits.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtCivtree">
+		<image texture="pregame/dashboard/card_art_civtree.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtManual">
+		<image texture="pregame/dashboard/card_art_manual.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardArtExit">
+		<image texture="pregame/dashboard/card_art_exit.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+
+	<!-- Header emblem, player crown, bottom ornament, submenu dim -->
+	<sprite name="DashboardEmblem">
+		<image texture="pregame/dashboard/emblem_gold.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCrown">
+		<image texture="pregame/dashboard/crown_gold.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardOrnament">
+		<image texture="pregame/dashboard/ornament_divider.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardDim">
+		<image backcolor="4 6 12 170" size="0 0 100% 100%"/>
+	</sprite>
+
 	<sprite name="DashboardIconLearn">
 		<image texture="pregame/dashboard/icon_learn.png" texture_size="0 0 100% 100%"/>
 	</sprite>

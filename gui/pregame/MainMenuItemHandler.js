@@ -29,35 +29,35 @@ export class MainMenuItemHandler
 			"DashboardIconExit"
 		];
 
-		// GTA-style card art per tile.
+		// Portrait card art per tile (art over navy strip).
 		this.tileArt = [
-			"DashboardArtLearn",
-			"DashboardArtCampaign",
-			"DashboardArtSingleplayer",
-			"DashboardArtMultiplayer",
-			"DashboardArtSettings",
-			"DashboardArtEditor",
-			"DashboardArtCredits",
-			"DashboardArtCivtree",
-			"DashboardArtManual",
-			"DashboardArtExit"
+			"DashboardCardArtLearn",
+			"DashboardCardArtCampaign",
+			"DashboardCardArtSingleplayer",
+			"DashboardCardArtMultiplayer",
+			"DashboardCardArtSettings",
+			"DashboardCardArtEditor",
+			"DashboardCardArtCredits",
+			"DashboardCardArtCivtree",
+			"DashboardCardArtManual",
+			"DashboardCardArtExit"
 		];
 
 		// PS5-style hover: smooth 400ms ease-out, no overshoot.
 		// Focus scale 1.5x (PS5 uses ~1.56x).
 		// Must init before setupMenuButtons (it registers animations).
-		// Card subtitles in the mockup's navy/gold language (one line each).
+		// Card descriptions in the mockup's navy/gold language (two lines each).
 		this.tileSubtitles = [
-			"Master the basics of war.",
-			"Rewrite history's battles.",
-			"Challenge the Petra AI.",
-			"Face commanders worldwide.",
-			"Tune your war machine.",
-			"Craft your own battlefields.",
-			"Honor those who built it.",
-			"Study every civilization.",
-			"Read the art of war.",
-			"Leave the battlefield."
+			"Master the basics\nof warfare.",
+			"Rewrite history's\ngreatest battles.",
+			"Challenge the\nPetra AI.",
+			"Face commanders\nfrom around the world.",
+			"Tune your\nwar machine.",
+			"Craft your own\nbattlefields.",
+			"Honor those\nwho built it.",
+			"Study every\ncivilization.",
+			"Read the art\nof war.",
+			"Leave the\nbattlefield."
 		];
 		this.buttonAnims = new Map();
 		this.animatingButtons = new Set();
@@ -85,18 +85,14 @@ export class MainMenuItemHandler
 
 		Engine.GetGUIObjectByName("closeMenuButton").onPress = this.closeSubmenu.bind(this);
 
-		// PS5-style info panel + top-right utilities.
-		this.tileInfoTitle = Engine.GetGUIObjectByName("tileInfoTitle");
-		this.tileInfoDesc = Engine.GetGUIObjectByName("tileInfoDesc");
 		this.hoveredButton = null; // any-level hover, for flicker-free idle resets
-		this.infoPanelDefault = true;
-		this.resetInfoPanel();
+		this.submenuBackdrop = Engine.GetGUIObjectByName("submenuBackdrop");
 
-		const playerNameLabel = Engine.GetGUIObjectByName("playerNameLabel");
-		if (playerNameLabel)
+		const playerPlateName = Engine.GetGUIObjectByName("playerPlateName");
+		if (playerPlateName)
 		{
 			const playerName = Engine.ConfigDB_GetValue("user", "player.name") || "Player";
-			playerNameLabel.caption = playerName;
+			playerPlateName.caption = playerName;
 		}
 
 		const quickSettings = Engine.GetGUIObjectByName("quickSettingsButton");
@@ -116,24 +112,6 @@ export class MainMenuItemHandler
 		this.lobbyWidgetTick = 0; // roster refresh countdown (ticks)
 
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
-	}
-
-	resetInfoPanel()
-	{
-		if (this.tileInfoTitle)
-			this.tileInfoTitle.caption = translate("Survey the battlefield");
-		if (this.tileInfoDesc)
-			this.tileInfoDesc.caption = translate("Hover a tile to see what lies ahead.");
-		this.infoPanelDefault = true;
-	}
-
-	updateInfoPanel(item)
-	{
-		if (this.tileInfoTitle)
-			this.tileInfoTitle.caption = this.resolveCaption(item);
-		if (this.tileInfoDesc)
-			this.tileInfoDesc.caption = item.tooltip;
-		this.infoPanelDefault = false;
 	}
 
 	// Menu item captions are usually strings, but some (like the feedback
@@ -164,10 +142,8 @@ export class MainMenuItemHandler
 		// (Avoids flicker when moving directly between neighboring tiles.)
 		if (!this.hoveredButton)
 		{
-			if (!this.infoPanelDefault)
-				this.resetInfoPanel();
-			// Background: while a submenu is open, keep its parent tile's art
-			// (PS5 keeps the game backdrop across its hub). Otherwise base.
+			// Background: while a submenu is open, keep its parent tile's art.
+			// Otherwise base.
 			const parentIdx = !this.submenu.hidden && this.lastOpenItem
 				? this.menuItems.indexOf(this.lastOpenItem) : -1;
 			if (parentIdx >= 0)
@@ -364,7 +340,7 @@ export class MainMenuItemHandler
 		const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
 		const off = 4 * (1 - eased); // starts 4% lower, settles into place
 		this.submenu.size = {
-			"rleft": 0, "rtop": 60 + off, "rright": 100, "rbottom": 74 + off
+			"rleft": 17.5, "rtop": 42 + off, "rright": 82.5, "rbottom": 58 + off
 		};
 		if (t >= 1.0)
 			this.submenuAnim = null;
@@ -453,12 +429,17 @@ export class MainMenuItemHandler
 
 	setupMenuButtons(buttons, menuItems, isTopLevel)
 	{
-		// Horizontal layout: tiles in a centered row.
-		// Use rleft/rright for percentage positioning.
-		const tileW = isTopLevel ? 8 : 7;
-		const gap = 1.2;
-		const totalW = menuItems.length * tileW + (menuItems.length - 1) * gap;
-		let left = 50 - totalW / 2;
+		// Top level: 2 rows x 5 portrait cards (mockup layout), centered.
+		// Submenus: single centered row (unchanged).
+		const cols = isTopLevel ? 5 : menuItems.length;
+		const tileW = isTopLevel ? 11.5 : 7;
+		const gapX = isTopLevel ? 1.4 : 1.2;
+		const totalW = cols * tileW + (cols - 1) * gapX;
+		const startLeft = 50 - totalW / 2;
+		// Row geometry is relative to the mainMenuButtons container (30-78.6%
+		// of the screen); each row is 47.5% of it with a 5% gutter.
+		const rowH = isTopLevel ? 47.5 : 100;
+		const gapY = 5;
 
 		buttons.forEach((button, i) => {
 			const item = menuItems[i];
@@ -466,11 +447,13 @@ export class MainMenuItemHandler
 			if (button.hidden)
 				return;
 
+			const row = isTopLevel ? Math.floor(i / 5) : 0;
+			const col = isTopLevel ? i % 5 : i;
 			const origSize = {
-				"rleft": left,
-				"rright": left + tileW,
-				"rtop": 0,
-				"rbottom": 100
+				"rleft": startLeft + col * (tileW + gapX),
+				"rright": startLeft + col * (tileW + gapX) + tileW,
+				"rtop": row * (rowH + gapY),
+				"rbottom": row * (rowH + gapY) + rowH
 			};
 			button.size = origSize;
 			// PS5-style hover: smooth 400ms ease-out to 1.5x.
@@ -489,7 +472,6 @@ export class MainMenuItemHandler
 				button.z = 100;
 				this.animatingButtons.add(button);
 				this.hoveredButton = button;
-				this.updateInfoPanel(item);
 				if (isTopLevel && this.tileBackgrounds[i] && this.bgBase)
 					this.swapBackground(this.tileBackgrounds[i], 1.06);
 				// Gold frame glow on hover (mockup card language).
@@ -518,8 +500,6 @@ export class MainMenuItemHandler
 						frameOver.hidden = true;
 				}
 			};
-			left += tileW + gap;
-
 			button.caption = this.resolveCaption(item);
 			button.tooltip = item.tooltip;
 			// Label drawn on top of the card art (button caption is hidden behind the art image).
@@ -610,6 +590,10 @@ export class MainMenuItemHandler
 			return;
 
 		this.setupMenuButtons(this.submenuButtons.children, sub, false);
+		// Dim the menu and park the card grid so hover can't leak through.
+		if (this.submenuBackdrop)
+			this.submenuBackdrop.hidden = false;
+		this.mainMenuButtons.hidden = true;
 		this.submenu.hidden = false;
 		this.submenuAnim = { "startTime": Date.now() }; // gentle slide-up
 	}
@@ -617,6 +601,9 @@ export class MainMenuItemHandler
 	closeSubmenu()
 	{
 		this.submenu.hidden = true;
+		if (this.submenuBackdrop)
+			this.submenuBackdrop.hidden = true;
+		this.mainMenuButtons.hidden = false;
 		this.lastOpenItem = undefined;
 	}
 }

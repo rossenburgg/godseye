@@ -6,52 +6,51 @@
 	<!-- PS5-style dashboard background -->
 	<object name="dashboardBackground" type="image" sprite="DashboardBackground" size="0 0 100% 100%"/>
 
-	<!-- Header: hero title, top-left in the mockup's navy/gold language -->
-	<object type="text" size="4% 4% 60% 8%" font="sans-bold-18" textcolor="255 255 255" text_align="left" text_valign="center">
+	<!-- Header: gold emblem + hero title, top-left -->
+	<object name="dashboardEmblem" type="image" size="4% 5% 8% 12.1%" sprite="DashboardEmblem" ghost="true"/>
+	<object type="text" size="9.5% 4.5% 60% 8%" font="sans-bold-18" textcolor="255 255 255" text_align="left" text_valign="center">
 		<translatableAttribute id="caption">Welcome</translatableAttribute>
 	</object>
-	<object type="text" size="4% 8% 60% 15%" font="godseye-bold-44" textcolor="212 175 55" text_align="left" text_valign="center">
+	<object type="text" size="9.5% 8% 60% 15%" font="godseye-bold-44" textcolor="212 175 55" text_align="left" text_valign="center">
 		<translatableAttribute id="caption">GOD'S EYE</translatableAttribute>
 	</object>
-	<object type="text" size="4% 15% 60% 18%" font="sans-14" textcolor="160 180 210" text_align="left" text_valign="center">
+	<object type="text" size="9.5% 15% 60% 18%" font="sans-14" textcolor="160 180 210" text_align="left" text_valign="center">
 		<translatableAttribute id="caption">Choose your path, build your legend.</translatableAttribute>
 	</object>
 
-	<!-- Section header: gold tick + label, aligned to the tile row -->
-	<object type="text" size="4.6% 29.5% 60% 32.5%" font="sans-bold-16" textcolor="212 175 55" text_align="left" text_valign="center">
-		<translatableAttribute id="caption">|   CHOOSE YOUR PATH</translatableAttribute>
+	<!-- Section header: gold tick + label, aligned to the card grid -->
+	<object type="text" size="18.45% 27.5% 19.6% 30%" font="sans-bold-20" textcolor="212 175 55" text_align="left" text_valign="center">|</object>
+	<object type="text" size="20.2% 27.5% 60% 30%" font="sans-bold-16" textcolor="255 255 255" text_align="left" text_valign="center">
+		<translatableAttribute id="caption">CHOOSE YOUR PATH</translatableAttribute>
 	</object>
 
-	<!-- Main tile row: 1:1 square PS5-style cards -->
+	<!-- Main card grid: 2 rows x 5 portrait cards (mockup layout) -->
 	<object name="mainMenu" size="0 0 100% 100%">
-		<object name="mainMenuButtons" size="0 34% 100% 48%">
+		<object name="mainMenuButtons" size="0 30% 100% 78.6%">
 			<repeat count="10">
 				<object name="mainMenuButton[n]" type="button"
 					sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton" sprite_disabled="TransparentButton"
 					textcolor="white" textcolor_disabled="150 150 150" font="sans-bold-13"
 					text_align="center" text_valign="bottom"
 					buffer_zone="4">
-					<object name="mainMenuTileIcon[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardIconLearn" ghost="true"/>
+					<object name="mainMenuTileIcon[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardCardArtLearn" ghost="true"/>
 					<object name="mainMenuTileDim[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardTileDim" ghost="true" hidden="true"/>
 					<object name="mainMenuTileFrame[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardCardFrame" ghost="true"/>
 					<object name="mainMenuTileFrameOver[n]" type="image" size="0% 0% 100% 100%" sprite="DashboardCardFrameOver" ghost="true" hidden="true"/>
-					<object name="mainMenuTileCaptionShadow[n]" type="text" size="2 74% 100% 87%"
-						font="godseye-bold-13" textcolor="0 0 0" text_align="center" text_valign="center" ghost="true"/>
-					<object name="mainMenuTileCaption[n]" type="text" size="0% 73% 100% 87%"
-						font="godseye-bold-13" textcolor="white" text_align="center" text_valign="center" ghost="true"/>
-					<object name="mainMenuTileSubtitle[n]" type="text" size="0% 86% 100% 98%"
-						font="sans-10" textcolor="160 180 210" text_align="center" text_valign="center" ghost="true"/>
+					<object name="mainMenuTileCaptionShadow[n]" type="text" size="8% 71% 94% 80%"
+						font="sans-bold-14" textcolor="0 0 0" text_align="left" text_valign="center" ghost="true"/>
+					<object name="mainMenuTileCaption[n]" type="text" size="7% 70% 93% 79%"
+						font="sans-bold-14" textcolor="white" text_align="left" text_valign="center" ghost="true"/>
+					<object name="mainMenuTileSubtitle[n]" type="text" size="7% 79% 93% 96%"
+						font="sans-11" textcolor="160 180 210" text_align="left" text_valign="top" ghost="true"/>
 				</object>
 			</repeat>
 		</object>
 	</object>
 
-	<!-- PS5-style info panel: hovered tile name + description -->
-	<object name="tileInfoTitle" type="text" size="0 50% 100% 55%" font="godseye-bold-26" textcolor="212 175 55" text_align="center" text_valign="center" ghost="true"/>
-	<object name="tileInfoDesc" type="text" size="15% 55% 85% 59%" font="sans-14" textcolor="180 190 210" text_align="center" text_valign="top" ghost="true"/>
-
-	<!-- Submenu tile row (appears below main row) -->
-	<object name="submenu" size="0 60% 100% 74%" hidden="true">
+	<!-- Submenu: floating panel over a dimmed menu -->
+	<object name="submenuBackdrop" type="image" size="0 0 100% 100%" sprite="DashboardDim" ghost="true" hidden="true"/>
+	<object name="submenu" size="17.5% 42% 82.5% 58%" hidden="true">
 		<object name="submenuButtons" size="0 0 100% 100%">
 			<repeat count="30">
 				<object type="button"
@@ -63,6 +62,12 @@
 		</object>
 	</object>
 
+	<!-- Bottom-center ornament + tagline -->
+	<object type="image" size="35% 80.5% 65% 84%" sprite="DashboardOrnament" ghost="true"/>
+	<object type="text" size="0 84% 100% 86.5%" font="sans-bold-13" textcolor="212 175 55" text_align="center" text_valign="center">
+		<translatableAttribute id="caption">FORGE YOUR LEGEND</translatableAttribute>
+	</object>
+
 	<!-- Bottom info bar -->
 	<object type="text" size="0 100%-40 100% 100%-12" font="sans-12" textcolor="160 180 220" text_align="center" text_valign="center">
 		<translatableAttribute id="caption">God's Eye mod for 0 A.D. 0.28</translatableAttribute>
@@ -72,15 +77,18 @@
 	<object name="productLogo" type="image" size="100%-120 8 100%-8 64" ghost="true"/>
 	<object name="productBuild" type="text" size="100%-120 66 100%-8 82" font="sans-10" textcolor="120 140 180" text_align="right" ghost="true"/>
 
-	<!-- PS5-style top-right utilities: player profile + quick settings -->
-	<object name="playerNameLabel" type="text" size="100%-220 90 100%-60 112" font="sans-bold-12" textcolor="212 175 55" text_align="right" text_valign="center" ghost="true"/>
+	<!-- Top-right: quick settings gear -->
 	<object name="quickSettingsButton" type="button" size="100%-52 88 100%-8 132"
 		sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton">
 		<object type="image" size="0% 0% 100% 100%" sprite="DashboardIconSettings" ghost="true"/>
 	</object>
 
+	<!-- Bottom-right player plate: crown + name -->
+	<object type="image" size="100%-212 100%-62 100%-164 100%-14" sprite="DashboardCrown" ghost="true"/>
+	<object name="playerPlateName" type="text" size="100%-156 100%-60 100%-12 100%-16" font="sans-bold-13" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true"/>
+
 	<!-- Lobby widget: who's online in the multiplayer lobby (opt-in, display only) -->
-	<object name="lobbyWidget" size="100%-300 100%-224 100%-12 100%-48" hidden="true" ghost="true">
+	<object name="lobbyWidget" size="12 100%-224 312 100%-48" hidden="true" ghost="true">
 		<object name="lobbyWidgetTitle" type="text" size="0 0 100% 24" font="godseye-bold-13" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true"/>
 		<object name="lobbyWidgetCount" type="text" size="0 24 100% 46" font="sans-bold-12" textcolor="white" text_align="left" text_valign="center" ghost="true"/>
 		<object name="lobbyWidgetNames" type="text" size="0 46 100% 100%" font="sans-11" textcolor="160 180 210" text_align="left" text_valign="top" ghost="true"/>
