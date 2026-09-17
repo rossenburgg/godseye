@@ -400,8 +400,10 @@ export class MainMenuItemHandler
 			// Ease-out cubic: 1 - (1-t)^3. Smooth glide, no overshoot.
 			const eased = 1 - Math.pow(1 - t, 3);
 			anim.scale = anim.startScale + (anim.target - anim.startScale) * eased;
+			anim.yOff = anim.yOffStart + (anim.yOffTarget - anim.yOffStart) * eased;
 
-			// Apply scale to button size (centered)
+			// Apply scale (centered) + lift to button size.
+			// Lift is in % of the button row height; -1.0 reads as a clear rise.
 			const o = anim.origSize;
 			const w = o.rright - o.rleft;
 			const h = o.rbottom - o.rtop;
@@ -412,13 +414,30 @@ export class MainMenuItemHandler
 			button.size = {
 				"rleft": cx - nw / 2,
 				"rright": cx + nw / 2,
-				"rtop": cy - nh / 2,
-				"rbottom": cy + nh / 2
+				"rtop": cy - nh / 2 + anim.yOff,
+				"rbottom": cy + nh / 2 + anim.yOff
 			};
+
+			// Hover ring: settle from 104% down to 100% so its arrival has a curve.
+			if (anim.frameOver)
+			{
+				const ft = Math.min((now - anim.frameStart) / 250, 1.0);
+				const fe = 1 - Math.pow(1 - ft, 3);
+				const pad = -2 * (1 - fe);
+				anim.frameOver.size = {
+					"rleft": pad,
+					"rtop": pad,
+					"rright": 100 - pad,
+					"rbottom": 100 - pad
+				};
+				if (ft >= 1.0)
+					anim.frameOver = null;
+			}
 
 			if (t >= 1.0)
 			{
 				anim.scale = anim.target;
+				anim.yOff = anim.yOffTarget;
 				if (anim.target === 1.0)
 				{
 					button.size = anim.origSize; // snap to exact
@@ -463,6 +482,11 @@ export class MainMenuItemHandler
 				"scale": 1.0,
 				"startScale": 1.0,
 				"target": 1.0,
+				"yOff": 0.0,
+				"yOffStart": 0.0,
+				"yOffTarget": 0.0,
+				"frameOver": null,
+				"frameStart": 0,
 				"startTime": 0,
 				"origSize": origSize
 			});
@@ -470,6 +494,8 @@ export class MainMenuItemHandler
 				const anim = this.buttonAnims.get(button);
 				anim.startScale = anim.scale;
 				anim.target = isTopLevel ? this.hoverScaleTop : this.hoverScaleSub;
+				anim.yOffStart = anim.yOff;
+				anim.yOffTarget = isTopLevel ? -1.0 : 0.0;
 				anim.startTime = Date.now();
 				button.z = 100;
 				this.animatingButtons.add(button);
@@ -481,13 +507,19 @@ export class MainMenuItemHandler
 				{
 					const frameOver = Engine.GetGUIObjectByName("mainMenuTileFrameOver[" + i + "]");
 					if (frameOver)
+					{
 						frameOver.hidden = false;
+						anim.frameOver = frameOver;
+						anim.frameStart = Date.now();
+					}
 				}
 			};
 			button.onMouseLeave = () => {
 				const anim = this.buttonAnims.get(button);
 				anim.startScale = anim.scale;
 				anim.target = 1.0;
+				anim.yOffStart = anim.yOff;
+				anim.yOffTarget = 0.0;
 				anim.startTime = Date.now();
 				button.z = 10; // drop behind immediately so the newly hovered card draws on top
 				this.animatingButtons.add(button);
@@ -500,6 +532,7 @@ export class MainMenuItemHandler
 					const frameOver = Engine.GetGUIObjectByName("mainMenuTileFrameOver[" + i + "]");
 					if (frameOver)
 						frameOver.hidden = true;
+					anim.frameOver = null;
 				}
 			};
 			button.caption = this.resolveCaption(item);
