@@ -34,12 +34,10 @@ export class MainMenuItemHandler
 
 		Engine.GetGUIObjectByName("closeMenuButton").onPress = this.closeSubmenu.bind(this);
 
-		// Spring physics for PS5-style hover animations.
-		// Stiffness 350, damping 22: snappy with a hint of overshoot.
-		// Animation state stored here (GUI objects have no userData).
+		// PS5-style hover: smooth 400ms ease-out, no overshoot.
+		// Focus scale 1.5x (PS5 uses ~1.56x).
 		this.buttonAnims = new Map();
 		this.animatingButtons = new Set();
-		this.lastTick = Date.now();
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
 	}
 
@@ -49,21 +47,15 @@ export class MainMenuItemHandler
 			return;
 
 		const now = Date.now();
-		const dt = Math.min((now - this.lastTick) / 1000, 0.05); // clamp to 50ms
-		this.lastTick = now;
-
-		const stiffness = 350;
-		const damping = 22;
+		const duration = 400; // PS5 signature: 400ms
 
 		for (const button of this.animatingButtons)
 		{
 			const anim = this.buttonAnims.get(button);
-			// Spring: F = -k(x - target) - c*v
-			const F_spring = -stiffness * (anim.scale - anim.target);
-			const F_damp = -damping * anim.velocity;
-			const a = F_spring + F_damp;
-			anim.velocity += a * dt;
-			anim.scale += anim.velocity * dt;
+			const t = Math.min((now - anim.startTime) / duration, 1.0);
+			// Ease-out cubic: 1 - (1-t)^3. Smooth glide, no overshoot.
+			const eased = 1 - Math.pow(1 - t, 3);
+			anim.scale = anim.startScale + (anim.target - anim.startScale) * eased;
 
 			// Apply scale to button size (centered)
 			const o = anim.origSize;
@@ -80,14 +72,14 @@ export class MainMenuItemHandler
 				"rbottom": cy + nh / 2
 			};
 
-			// Stop when settled
-			if (Math.abs(anim.scale - anim.target) < 0.001 && Math.abs(anim.velocity) < 0.001)
+			if (t >= 1.0)
 			{
 				anim.scale = anim.target;
-				anim.velocity = 0;
-				button.size = anim.origSize; // snap to exact
 				if (anim.target === 1.0)
+				{
+					button.size = anim.origSize; // snap to exact
 					button.z = 10;
+				}
 				this.animatingButtons.delete(button);
 			}
 		}
@@ -115,23 +107,28 @@ export class MainMenuItemHandler
 				"rbottom": 100
 			};
 			button.size = origSize;
-			// PS5-style hover: spring-physics scale animation.
+			// PS5-style hover: smooth 400ms ease-out to 1.5x.
 			this.buttonAnims.set(button, {
 				"scale": 1.0,
-				"velocity": 0.0,
+				"startScale": 1.0,
 				"target": 1.0,
+				"startTime": 0,
 				"origSize": origSize
 			});
 			button.onMouseEnter = () => {
-				this.buttonAnims.get(button).target = 1.18;
+				const anim = this.buttonAnims.get(button);
+				anim.startScale = anim.scale;
+				anim.target = 1.5;
+				anim.startTime = Date.now();
 				button.z = 100;
 				this.animatingButtons.add(button);
-				this.lastTick = Date.now();
 			};
 			button.onMouseLeave = () => {
-				this.buttonAnims.get(button).target = 1.0;
+				const anim = this.buttonAnims.get(button);
+				anim.startScale = anim.scale;
+				anim.target = 1.0;
+				anim.startTime = Date.now();
 				this.animatingButtons.add(button);
-				this.lastTick = Date.now();
 			};
 			left += tileW + gap;
 
