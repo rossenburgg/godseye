@@ -23,7 +23,7 @@
 					textcolor="white" textcolor_disabled="150 150 150" font="sans-bold-13"
 					text_align="center" text_valign="bottom" tooltip_style="pgToolTip"
 					buffer_zone="4">
-					<object name="mainMenuTileIcon[n]" type="image" size="28% 8% 72% 68%" sprite="DashboardIconLearn" ghost="true"/>
+					<object name="mainMenuTileIcon[n]" type="image" size="6% 4% 94% 76%" sprite="DashboardIconLearn" ghost="true"/>
 				</object>
 			</repeat>
 		</object>

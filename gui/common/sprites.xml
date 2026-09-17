@@ -830,6 +830,35 @@
 		<image texture="pregame/dashboard/dashboard_bg_exit.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
 
+	<!-- GTA-style tile card art (1024x2048 portrait) -->
+	<sprite name="DashboardArtLearn">
+		<image texture="pregame/dashboard/tile_art_learn.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardArtSingleplayer">
+		<image texture="pregame/dashboard/tile_art_singleplayer.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardArtMultiplayer">
+		<image texture="pregame/dashboard/tile_art_multiplayer.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardArtSettings">
+		<image texture="pregame/dashboard/tile_art_settings.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardArtEditor">
+		<image texture="pregame/dashboard/tile_art_editor.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardArtCredits">
+		<image texture="pregame/dashboard/tile_art_credits.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardArtCivtree">
+		<image texture="pregame/dashboard/tile_art_civtree.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardArtManual">
+		<image texture="pregame/dashboard/tile_art_manual.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardArtExit">
+		<image texture="pregame/dashboard/tile_art_exit.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+
 	<sprite name="DashboardTile">
 		<image texture="pregame/dashboard/tile_center.png"
 			size="16 16 100%-16 100%-16"

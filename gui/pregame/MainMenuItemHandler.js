@@ -29,6 +29,20 @@ export class MainMenuItemHandler
 			"DashboardIconExit"
 		];
 
+		// GTA-style card art per tile (campaign art was blocked, falls back to icon).
+		this.tileArt = [
+			"DashboardArtLearn",
+			null,
+			"DashboardArtSingleplayer",
+			"DashboardArtMultiplayer",
+			"DashboardArtSettings",
+			"DashboardArtEditor",
+			"DashboardArtCredits",
+			"DashboardArtCivtree",
+			"DashboardArtManual",
+			"DashboardArtExit"
+		];
+
 		// PS5-style hover: smooth 400ms ease-out, no overshoot.
 		// Focus scale 1.5x (PS5 uses ~1.56x).
 		// Must init before setupMenuButtons (it registers animations).
@@ -207,7 +221,7 @@ export class MainMenuItemHandler
 			{
 				const icon = Engine.GetGUIObjectByName("mainMenuTileIcon[" + i + "]");
 				if (icon)
-					icon.sprite = this.tileIcons[i];
+					icon.sprite = this.tileArt[i] || this.tileIcons[i];
 			}
 
 			button.onPress = this.pressButton.bind(this, item, i, isTopLevel);
