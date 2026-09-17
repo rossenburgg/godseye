@@ -33,6 +33,62 @@ export class MainMenuItemHandler
 		this.setupHotkeys(this.menuItems);
 
 		Engine.GetGUIObjectByName("closeMenuButton").onPress = this.closeSubmenu.bind(this);
+
+		// Spring physics for PS5-style hover animations.
+		// Stiffness 350, damping 22: snappy with a hint of overshoot.
+		this.animatingButtons = new Set();
+		this.lastTick = Date.now();
+		this.mainMenu.onTick = this.tickAnimations.bind(this);
+	}
+
+	tickAnimations()
+	{
+		if (this.animatingButtons.size === 0)
+			return;
+
+		const now = Date.now();
+		const dt = Math.min((now - this.lastTick) / 1000, 0.05); // clamp to 50ms
+		this.lastTick = now;
+
+		const stiffness = 350;
+		const damping = 22;
+
+		for (const button of this.animatingButtons)
+		{
+			const anim = button.userData.anim;
+			// Spring: F = -k(x - target) - c*v
+			const F_spring = -stiffness * (anim.scale - anim.target);
+			const F_damp = -damping * anim.velocity;
+			const a = F_spring + F_damp;
+			anim.velocity += a * dt;
+			anim.scale += anim.velocity * dt;
+
+			// Apply scale to button size (centered)
+			const o = anim.origSize;
+			const w = o.rright - o.rleft;
+			const h = o.rbottom - o.rtop;
+			const cx = (o.rleft + o.rright) / 2;
+			const cy = (o.rtop + o.rbottom) / 2;
+			const nw = w * anim.scale;
+			const nh = h * anim.scale;
+			button.size = {
+				"rleft": cx - nw / 2,
+				"rright": cx + nw / 2,
+				"rtop": cy - nh / 2,
+				"rbottom": cy + nh / 2
+			};
+
+			// Stop when settled
+			if (Math.abs(anim.scale - anim.target) < 0.001 && Math.abs(anim.velocity) < 0.001)
+			{
+				anim.scale = anim.target;
+				anim.velocity = 0;
+				button.size = anim.origSize; // snap to exact
+				if (anim.target === 1.0)
+					button.z = 10;
+				this.animatingButtons.delete(button);
+			}
+		}
 	}
 
 	setupMenuButtons(buttons, menuItems, isTopLevel)
@@ -57,27 +113,25 @@ export class MainMenuItemHandler
 				"rbottom": 100
 			};
 			button.size = origSize;
-			// PS5-style hover: tile scales up when hovered.
-			// Store original for restore on mouse leave.
+			// PS5-style hover: spring-physics scale animation.
+			button.userData = {
+				"anim": {
+					"scale": 1.0,
+					"velocity": 0.0,
+					"target": 1.0,
+					"origSize": origSize
+				}
+			};
 			button.onMouseEnter = () => {
-				const w = origSize.rright - origSize.rleft;
-				const h = origSize.rbottom - origSize.rtop;
-				const cx = (origSize.rleft + origSize.rright) / 2;
-				const cy = (origSize.rtop + origSize.rbottom) / 2;
-				const scale = 1.18;
-				const nw = w * scale;
-				const nh = h * scale;
-				button.size = {
-					"rleft": cx - nw / 2,
-					"rright": cx + nw / 2,
-					"rtop": cy - nh / 2,
-					"rbottom": cy + nh / 2
-				};
+				button.userData.anim.target = 1.18;
 				button.z = 100;
+				this.animatingButtons.add(button);
+				this.lastTick = Date.now();
 			};
 			button.onMouseLeave = () => {
-				button.size = origSize;
-				button.z = 10;
+				button.userData.anim.target = 1.0;
+				this.animatingButtons.add(button);
+				this.lastTick = Date.now();
 			};
 			left += tileW + gap;
 
