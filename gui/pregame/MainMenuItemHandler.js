@@ -50,11 +50,34 @@ export class MainMenuItemHandler
 			if (button.hidden)
 				return;
 
-			button.size = {
+			const origSize = {
 				"rleft": left,
 				"rright": left + tileW,
 				"rtop": 0,
 				"rbottom": 100
+			};
+			button.size = origSize;
+			// PS5-style hover: tile scales up when hovered.
+			// Store original for restore on mouse leave.
+			button.onMouseEnter = () => {
+				const w = origSize.rright - origSize.rleft;
+				const h = origSize.rbottom - origSize.rtop;
+				const cx = (origSize.rleft + origSize.rright) / 2;
+				const cy = (origSize.rtop + origSize.rbottom) / 2;
+				const scale = 1.18;
+				const nw = w * scale;
+				const nh = h * scale;
+				button.size = {
+					"rleft": cx - nw / 2,
+					"rright": cx + nw / 2,
+					"rtop": cy - nh / 2,
+					"rbottom": cy + nh / 2
+				};
+				button.z = 100;
+			};
+			button.onMouseLeave = () => {
+				button.size = origSize;
+				button.z = 10;
 			};
 			left += tileW + gap;
 
