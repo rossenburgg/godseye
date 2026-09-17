@@ -46,6 +46,19 @@ export class MainMenuItemHandler
 		// PS5-style hover: smooth 400ms ease-out, no overshoot.
 		// Focus scale 1.5x (PS5 uses ~1.56x).
 		// Must init before setupMenuButtons (it registers animations).
+		// Card subtitles in the mockup's navy/gold language (one line each).
+		this.tileSubtitles = [
+			"Master the basics of war.",
+			"Rewrite history's battles.",
+			"Challenge the Petra AI.",
+			"Face commanders worldwide.",
+			"Tune your war machine.",
+			"Craft your own battlefields.",
+			"Honor those who built it.",
+			"Study every civilization.",
+			"Read the art of war.",
+			"Leave the battlefield."
+		];
 		this.buttonAnims = new Map();
 		this.animatingButtons = new Set();
 
@@ -108,7 +121,7 @@ export class MainMenuItemHandler
 	resetInfoPanel()
 	{
 		if (this.tileInfoTitle)
-			this.tileInfoTitle.caption = translate("Choose your path");
+			this.tileInfoTitle.caption = translate("Survey the battlefield");
 		if (this.tileInfoDesc)
 			this.tileInfoDesc.caption = translate("Hover a tile to see what lies ahead.");
 		this.infoPanelDefault = true;
@@ -479,6 +492,13 @@ export class MainMenuItemHandler
 				this.updateInfoPanel(item);
 				if (isTopLevel && this.tileBackgrounds[i] && this.bgBase)
 					this.swapBackground(this.tileBackgrounds[i], 1.06);
+				// Gold frame glow on hover (mockup card language).
+				if (isTopLevel)
+				{
+					const frameOver = Engine.GetGUIObjectByName("mainMenuTileFrameOver[" + i + "]");
+					if (frameOver)
+						frameOver.hidden = false;
+				}
 			};
 			button.onMouseLeave = () => {
 				const anim = this.buttonAnims.get(button);
@@ -491,6 +511,12 @@ export class MainMenuItemHandler
 				// moving between buttons doesn't flicker. See tickAnimations.
 				if (this.hoveredButton === button)
 					this.hoveredButton = null;
+				if (isTopLevel)
+				{
+					const frameOver = Engine.GetGUIObjectByName("mainMenuTileFrameOver[" + i + "]");
+					if (frameOver)
+						frameOver.hidden = true;
+				}
 			};
 			left += tileW + gap;
 
@@ -503,6 +529,12 @@ export class MainMenuItemHandler
 			const labelShadow = Engine.GetGUIObjectByName("mainMenuTileCaptionShadow[" + i + "]");
 			if (labelShadow)
 				labelShadow.caption = this.resolveCaption(item);
+			if (isTopLevel && this.tileSubtitles[i])
+			{
+				const subtitle = Engine.GetGUIObjectByName("mainMenuTileSubtitle[" + i + "]");
+				if (subtitle)
+					subtitle.caption = translate(this.tileSubtitles[i]);
+			}
 			button.enabled = item.enabled === undefined || item.enabled();
 			// Dim disabled tiles (e.g. Continue Campaign with no save) so they read as unavailable.
 			if (isTopLevel)

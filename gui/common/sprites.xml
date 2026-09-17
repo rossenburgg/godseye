@@ -912,6 +912,14 @@
 		<image texture="pregame/dashboard/subcard_over.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
 
+	<!-- Gold hairline frames for the main menu cards (transparent center) -->
+	<sprite name="DashboardCardFrame">
+		<image texture="pregame/dashboard/card_frame.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardCardFrameOver">
+		<image texture="pregame/dashboard/card_frame_over.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+
 	<sprite name="DashboardIconLearn">
 		<image texture="pregame/dashboard/icon_learn.png" texture_size="0 0 100% 100%"/>
 	</sprite>
