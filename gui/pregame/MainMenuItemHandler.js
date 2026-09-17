@@ -99,7 +99,7 @@ export class MainMenuItemHandler
 		// Lobby widget: who's online (opt-in). The handler owns the XMPP
 		// connection; the Settings toggle only persists the preference.
 		this.lobbyWidgetOptIn = false; // last seen toggle state
-		this.lobbyWidgetState = "off"; // off | nocreds | connecting | connected | error | unavailable
+		this.lobbyWidgetState = "off"; // off | nocreds | connecting | connected | error
 		this.lobbyWidgetTick = 0; // roster refresh countdown (ticks)
 
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
@@ -179,8 +179,9 @@ export class MainMenuItemHandler
 		if (!widget)
 			return;
 
-		const xmppAvailable = typeof Engine.StartXmppClient == "function";
-		const optIn = xmppAvailable &&
+		const rosterAvailable = typeof Engine.GetPlayerList == "function" &&
+			typeof Engine.StartXmppClient == "function";
+		const optIn = rosterAvailable &&
 			Engine.ConfigDB_GetValue("user", "godseye.lobby_widget") === "true";
 
 		// Toggle changed: connect or disconnect to match.
@@ -191,6 +192,7 @@ export class MainMenuItemHandler
 				this.lobbyWidgetConnect();
 			else
 				this.lobbyWidgetDisconnect();
+			this.lobbyWidgetTick = 0; // refresh immediately
 		}
 
 		widget.hidden = !optIn;
@@ -207,76 +209,54 @@ export class MainMenuItemHandler
 			--this.lobbyWidgetTick;
 	}
 
+	lobbyWidgetWantsConnection()
+	{
+		return this.lobbyWidgetOptIn &&
+			!!Engine.ConfigDB_GetValue("user", "lobby.login") &&
+			!!Engine.ConfigDB_GetValue("user", "lobby.password");
+	}
+
+	lobbyWidgetIsConnected()
+	{
+		try { return typeof Engine.IsXmppClientConnected == "function" && Engine.IsXmppClientConnected(); }
+		catch (e) { return false; }
+	}
+
 	lobbyWidgetConnect()
 	{
-		if (typeof Engine.LobbyGetPlayerList != "function")
-		{
-			this.lobbyWidgetState = "unavailable";
-			this.lobbyWidgetRefresh();
-			return;
-		}
-		const login = Engine.ConfigDB_GetValue("user", "lobby.login");
-		const password = Engine.ConfigDB_GetValue("user", "lobby.password");
-		if (!login || !password)
+		if (!this.lobbyWidgetWantsConnection())
 		{
 			this.lobbyWidgetState = "nocreds";
-			this.lobbyWidgetRefresh();
 			return;
 		}
 		try
 		{
-			Engine.StartXmppClient(login, password);
+			if (typeof Engine.HasXmppClient == "function" && Engine.HasXmppClient())
+			{
+				if (!this.lobbyWidgetIsConnected() && typeof Engine.ConnectXmppClient == "function")
+					Engine.ConnectXmppClient();
+			}
+			else
+				Engine.StartXmppClient(
+					Engine.ConfigDB_GetValue("user", "lobby.login"),
+					Engine.ConfigDB_GetValue("user", "lobby.password"));
 			this.lobbyWidgetState = "connecting";
-			this.lobbyWidgetConnectTime = Date.now();
 		}
 		catch (e)
 		{
 			this.lobbyWidgetState = "error";
 		}
-		this.lobbyWidgetRefresh();
 	}
 
 	lobbyWidgetDisconnect()
 	{
-		if (typeof Engine.StopXmppClient == "function")
+		// Disconnect is enough for the toggle; the Game Lobby button uses a
+		// full Stop so the stock flow starts from a clean slate.
+		if (typeof Engine.DisconnectXmppClient == "function")
+			try { Engine.DisconnectXmppClient(); } catch (e) {}
+		else if (typeof Engine.StopXmppClient == "function")
 			try { Engine.StopXmppClient(); } catch (e) {}
 		this.lobbyWidgetState = "off";
-	}
-
-	/**
-	 * List every Engine property that looks lobby-related, so we can find
-	 * the real roster function on builds where LobbyGetPlayerList is missing.
-	 */
-	lobbyWidgetProbeEngine()
-	{
-		const found = [];
-		const candidates = [
-			"LobbyGetPlayerList", "GetLobbyPlayerList", "LobbyGetPlayers",
-			"GetPlayerList", "LobbyGetRoster", "GetLobbyRoster",
-			"LobbyGetPresence", "XmppGetPlayerList", "LobbyListPlayers"
-		];
-		for (const name of candidates)
-			try { if (typeof Engine[name] == "function") found.push(name + "()"); } catch (e) {}
-		try
-		{
-			let props = [];
-			try { props = Object.getOwnPropertyNames(Engine); } catch (e) {}
-			if (!props.length)
-				try { props = Object.keys(Engine); } catch (e) {}
-			if (!props.length)
-				try { for (const k in Engine) props.push(k); } catch (e) {}
-			for (const k of props)
-			{
-				if (!/lobby|xmpp|roster|presence/i.test(k))
-					continue;
-				let label = k;
-				try { if (typeof Engine[k] == "function") label += "()"; } catch (e) {}
-				if (found.indexOf(label) === -1)
-					found.push(label);
-			}
-		}
-		catch (e) {}
-		return found;
 	}
 
 	lobbyWidgetRefresh()
@@ -289,21 +269,6 @@ export class MainMenuItemHandler
 
 		title.caption = translate("LOBBY");
 
-		if (this.lobbyWidgetState == "unavailable")
-		{
-			count.caption = translate("Unavailable");
-			// Probe the Engine for any lobby/roster API so we can wire up the
-			// real function name. Shown here and in the log for copy-paste.
-			if (!this.lobbyWidgetProbeResult)
-			{
-				this.lobbyWidgetProbeResult = this.lobbyWidgetProbeEngine();
-				try { log("Godseye lobby probe: " + this.lobbyWidgetProbeResult.join(", ")); } catch (e) {}
-			}
-			names.caption = this.lobbyWidgetProbeResult.length
-				? translate("Lobby API found:") + "\n" + this.lobbyWidgetProbeResult.join("\n")
-				: translate("No lobby roster API found on Engine.");
-			return;
-		}
 		if (this.lobbyWidgetState == "nocreds")
 		{
 			count.caption = translate("Not connected");
@@ -317,8 +282,12 @@ export class MainMenuItemHandler
 			return;
 		}
 
+		// Self-heal: re-establish a dropped session on each refresh.
+		if (this.lobbyWidgetWantsConnection() && !this.lobbyWidgetIsConnected())
+			this.lobbyWidgetConnect();
+
 		let players = [];
-		try { players = Engine.LobbyGetPlayerList() || []; }
+		try { players = Engine.GetPlayerList() || []; }
 		catch (e) { players = []; }
 		// Normalize: the roster may be strings or {name/nick} objects.
 		const nicks = players
@@ -327,9 +296,7 @@ export class MainMenuItemHandler
 
 		if (!nicks.length)
 		{
-			// The MUC roster fills in over a few seconds after connecting.
-			const waiting = Date.now() - (this.lobbyWidgetConnectTime || 0) < 30000;
-			count.caption = waiting ? translate("Connecting...") : translate("0 online");
+			count.caption = this.lobbyWidgetIsConnected() ? translate("0 online") : translate("Connecting...");
 			names.caption = "";
 			return;
 		}
