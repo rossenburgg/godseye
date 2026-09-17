@@ -11,7 +11,13 @@ class ProfilePage
 		this.profilePage = Engine.GetGUIObjectByName("profilePage");
 
 		this.fetchInput = Engine.GetGUIObjectByName("fetchInput");
+		this.fetchInputLabel = Engine.GetGUIObjectByName("fetchInputLabel");
+		resizeGUIObjectToCaption(this.fetchInputLabel, { "horizontal": "right" });
+		this.fetchInput.size.left = this.fetchInputLabel.size.right;
+
 		this.fetchInput.onPress = this.onPressLookup.bind(this);
+		this.fetchInput.onTab = this.autocomplete.bind(this);
+		this.fetchInput.tooltip = colorizeAutocompleteHotkey();
 
 		Engine.GetGUIObjectByName("viewProfileButton").onPress = this.onPressLookup.bind(this);
 		Engine.GetGUIObjectByName("profileBackButton").onPress = this.onPressClose.bind(this, true);
@@ -27,6 +33,11 @@ class ProfilePage
 		this.profileWindowArea = Engine.GetGUIObjectByName("profileWindowArea");
 
 		xmppMessages.registerXmppMessageHandler("game", "profile", this.onProfile.bind(this));
+
+		this.viewProfileButton = Engine.GetGUIObjectByName("viewProfileButton");
+		resizeGUIObjectToCaption(this.viewProfileButton, { "horizontal": "center" }, { "horizontal": 24 });
+		this.profileBackButton = Engine.GetGUIObjectByName("profileBackButton");
+		resizeGUIObjectToCaption(this.profileBackButton, { "horizontal": "center" }, { "horizontal": 24 });
 	}
 
 	registerClosePageHandler(handler)
@@ -46,21 +57,35 @@ class ProfilePage
 		Engine.SendGetProfile(this.requestedPlayer);
 	}
 
+	autocomplete()
+	{
+		const listPlayerNames = Engine.GetPlayerList().map(player => escapeText(player.name));
+		// Remove duplicates with the board list. The board list has lower case names.
+		const listPlayerNamesLower = listPlayerNames.map(playerName => playerName.toLowerCase());
+		for (const entry of Engine.GetBoardList())
+		{
+			const escapedName = escapeText(entry.name);
+			if (!listPlayerNamesLower.includes(escapedName))
+				listPlayerNames.push(escapedName);
+		}
+		autoCompleteText(this.fetchInput, listPlayerNames);
+	}
+
 	onPressClose()
 	{
 		this.profilePage.hidden = true;
 
-		for (let handler of this.closePageHandlers)
+		for (const handler of this.closePageHandlers)
 			handler();
 	}
 
 	onProfile()
 	{
-		let attributes = Engine.GetProfile()[0];
+		const attributes = Engine.GetProfile()[0];
 		if (this.profilePage.hidden || this.requestedPlayer != attributes.player)
 			return;
 
-		let profileFound = attributes.rating != "-2";
+		const profileFound = attributes.rating != "-2";
 		this.profileWindowArea.hidden = !profileFound;
 		this.profileErrorText.hidden = profileFound;
 

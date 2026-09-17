@@ -3,18 +3,43 @@
 <objects>
 
 	<script directory="gui/common/"/>
-	<script directory="gui/splashscreen/"/>
+	<script module="gui/splashscreen/splashscreen.js"/>
 
 	<!-- Add a translucent black background to fade out the menu page -->
 	<object type="image" sprite="ModernFade"/>
 
-	<object type="image" style="ModernDialog" size="50%-300 50%-225 50%+300 50%+225">
+	<object type="image" style="ModernDialog" size="50%-310 50%-225 50%+310 50%+225">
 
 		<object type="text" style="ModernLabelText" size="50%-128 -18 50%+128 14">
 			<translatableAttribute id="caption">Welcome to God's Eye!</translatableAttribute>
 		</object>
 
-		<object name="mainText" type="text" style="ModernTextPanel" size="20 20 100%-20 100%-52">
+		<object type="image" sprite="ModernDarkBox" size="20 20 100%-20 100%-52">
+			<object type="image" sprite="ModernDarkBoxGoldBorder"/>
+			<object type="text" style="ModernLabelText" size="10 8 100%-10 50" font="sans-bold-20" text_align="center">
+				<translatableAttribute id="caption">Thank you for installing 0 A.D. Empires Ascendant!</translatableAttribute>
+			</object>
+			<object name="paragraphs">
+				<object>
+					<object name="icon1" type="image" sprite="stretched:pregame/icons/experimental.png"/>
+					<object name="text1" type="text" textcolor="white" font="sans-16">
+						<translatableAttribute id="caption">This game is still in development. You may encounter bugs, and some features are not as fleshed out as we would like.</translatableAttribute>
+					</object>
+				</object>
+				<object>
+					<object name="icon2" type="image" sprite="stretched:pregame/icons/lag.png"/>
+					<object name="text2" type="text" textcolor="white" font="sans-16">
+						<translatableAttribute id="caption">The game can have performance problems, especially with large maps and a great number of units.</translatableAttribute>
+					</object>
+				</object>
+				<object>
+					<object name="icon3" type="image" sprite="stretched:pregame/icons/map.png"/>
+					<object name="text3" type="text" textcolor="white" font="sans-16">
+						<translatableAttribute id="caption">0 A.D. is Free Software: you can participate in its development. If you want to help with art, sound, gameplay or programming, make sure to join our official forum.</translatableAttribute>
+					</object>
+				</object>
+			</object>
+
 			<object name="displaySplashScreenText" size="30 100%-30 100% 100%-8" type="text" style="ModernLeftLabelText">
 				<translatableAttribute id="caption">Show this message in the future</translatableAttribute>
 			</object>
@@ -23,7 +48,6 @@
 
 		<object name="btnOK" type="button" style="ModernButtonRed" size="18 100%-45 50%-5 100%-17" hotkey="cancel">
 			<translatableAttribute id="caption">OK</translatableAttribute>
-			<action on="Press">closePage();</action>
 		</object>
 
 		<object type="button" style="ModernButtonRed" size="50%+5 100%-45 100%-18 100%-17">

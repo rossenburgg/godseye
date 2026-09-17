@@ -3,22 +3,23 @@
  */
 SetupWindowPages.GameSetupPage = class
 {
-	constructor(setupWindow)
+	constructor(setupWindow, isSavedGame)
 	{
 		Engine.ProfileStart("GameSetupPage");
 
 		// This class instance owns all game setting GUI controls such as dropdowns and checkboxes visible in this page.
-		this.gameSettingControlManager = new GameSettingControlManager(setupWindow);
+		this.gameSettingControlManager = new GameSettingControlManager(setupWindow, isSavedGame);
 
 		// These classes manage GUI buttons.
 		{
-			let startGameButton = new StartGameButton(setupWindow);
-			let getReadyButton = new GetReadyButton(setupWindow);
-			let readyButton = new ReadyButton(setupWindow);
+			const startGameButton = new StartGameButton(setupWindow);
+			const getReadyButton = new GetReadyButton(setupWindow);
+			const readyButton = new ReadyButton(setupWindow);
 			this.panelButtons = {
-				"cancelButton": new CancelButton(setupWindow, startGameButton, readyButton),
 				"civInfoButton": new CivInfoButton(),
 				"lobbyButton": new LobbyButton(),
+				"savedGameLabel": new SavedGameLabel(isSavedGame),
+				"cancelButton": new CancelButton(setupWindow, startGameButton, readyButton),
 				"getReadyButton": getReadyButton,
 				"readyButton": readyButton,
 				"startGameButton": startGameButton
@@ -27,23 +28,23 @@ SetupWindowPages.GameSetupPage = class
 
 		// These classes manage GUI Objects.
 		{
-			let gameSettingTabs = new GameSettingTabs(setupWindow, this.panelButtons.lobbyButton);
-			let gameSettingsPanel = new GameSettingsPanel(
+			const gameSettingTabs = new GameSettingTabs(setupWindow, this.panelButtons.lobbyButton);
+			const gameSettingsPanel = new GameSettingsPanel(
 				setupWindow, gameSettingTabs, this.gameSettingControlManager);
 
 			this.panels = {
 				"chatPanel": new ChatPanel(setupWindow, this.gameSettingControlManager, gameSettingsPanel),
-				"gameSettingWarning": new GameSettingWarning(setupWindow, this.panelButtons.cancelButton),
+				"gameSettingWarning": new GameSettingWarning(setupWindow),
 				"gameDescription": new GameDescription(setupWindow, gameSettingTabs),
 				"gameSettingsPanel": gameSettingsPanel,
 				"gameSettingsTabs": gameSettingTabs,
-				"mapPreview": new MapPreview(setupWindow),
-				"resetCivsButton": new ResetCivsButton(setupWindow),
-				//"resetTeamsButton": new ResetTeamsButton(setupWindow),
+				"mapPreview": new MapPreview(setupWindow, isSavedGame),
+				"resetCivsButton": new ResetCivsButton(setupWindow, isSavedGame),
+				//"resetTeamsButton": new ResetTeamsButton(setupWindow, isSavedGame),
 				"teamButton": new SetTeamsButton(setupWindow),
 				"soundNotification": new SoundNotification(setupWindow),
 				"tipsPanel": new TipsPanel(gameSettingsPanel),
-				"tooltip": new Tooltip(this.panelButtons.cancelButton)
+				"onscreenToolTip": new Tooltip()
 			};
 		}
 

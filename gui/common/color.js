@@ -1,7 +1,7 @@
 /**
  * Used to highlight hotkeys in tooltip descriptions.
  */
-var g_HotkeyTags = {"color": "255 251 131" };
+var g_HotkeyTags = { "color": "255 251 131" };
 
 /**
  * Used as fallback color.
@@ -30,7 +30,7 @@ function rgbToGuiColor(color, alpha)
 
 function guiToRgbColor(string)
 {
-	let color = string.split(" ");
+	const color = string.split(" ");
 	if (color.length != 3 && color.length != 4 ||
 	    color.some(num => !Number.isInteger(+num) || num < 0 || num > 255))
 		return undefined;
@@ -39,7 +39,7 @@ function guiToRgbColor(string)
 		"r": +color[0],
 		"g": +color[1],
 		"b": +color[2],
-		"alpha": color.length == 4 ? +color[3] : undefined
+		"a": color.length == 4 ? +color[3] : undefined
 	};
 }
 
@@ -82,7 +82,7 @@ function clampColorValue(value)
 /**
  * Convert color value from RGB to HSL space.
  *
- * @see {@link http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion}
+ * @see {@link https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion}
  * @param {number} r - red
  * @param {number} g - green
  * @param {number} b - blue
@@ -93,14 +93,20 @@ function rgbToHsl(r, g, b)
 	r /= 255;
 	g /= 255;
 	b /= 255;
-	let max = Math.max(r, g, b), min = Math.min(r, g, b);
-	let h, s, l = (max + min) / 2;
+	const max = Math.max(r, g, b), min = Math.min(r, g, b);
+	let h;
+	let s;
+	const l = (max + min) / 2;
 
 	if (max == min)
-		h = s = 0; // achromatic
+	{
+		// achromatic
+		h = 0;
+		s = 0;
+	}
 	else
 	{
-		let d = max - min;
+		const d = max - min;
 		s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 		switch (max)
 		{
@@ -113,7 +119,11 @@ function rgbToHsl(r, g, b)
 		case b:
 			h = (r - g) / d + 4;
 			break;
+		default:
+			error("rgbToHsl could not determine maximum!");
+			break;
 		}
+
 		h /= 6;
 	}
 
@@ -123,7 +133,7 @@ function rgbToHsl(r, g, b)
 /**
  * Convert color value from HSL to RGB space.
  *
- * @see {@link http://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion}
+ * @see {@link https://stackoverflow.com/questions/2353211/hsl-to-rgb-color-conversion}
  * @param {number} h - hueness
  * @param {number} s - saturation
  * @param {number} l - lightness
@@ -149,10 +159,16 @@ function hslToRgb(h, s, l)
 	[h, s, l] = [h, s, l].map(clampColorValue);
 	let r, g, b;
 	if (s == 0)
-		r = g = b = l; // achromatic
-	else {
-		let q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-		let p = 2 * l - q;
+	{
+		// achromatic
+		b = l;
+		r = l;
+		g = l;
+	}
+	else
+	{
+		const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+		const p = 2 * l - q;
 		r = hue2rgb(p, q, h + 1/3);
 		g = hue2rgb(p, q, h);
 		b = hue2rgb(p, q, h - 1/3);
@@ -192,7 +208,7 @@ function colorizeHotkey(text, hotkey)
  */
 function colorizeAutocompleteHotkey(string)
 {
-	return sprintf(string || translate("Press %(hotkey)s to autocomplete playernames."), {
+	return sprintf(string || translate("Press %(hotkey)s to autocomplete player names."), {
 		"hotkey":
 			setStringTags("\\[" + translateWithContext("hotkey", "Tab") + "]", g_HotkeyTags)
 	});
@@ -217,7 +233,7 @@ function escapeRegExp(string) {
 function matchPlayerName(name)
 {
 	let escapeRegExp2 = string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
-	return new RegExp('(^|\\W)(' + escapeRegExp2(name) + ')\(?=\\W|$\)', "g");
+	return new RegExp('(^|\\W)(' + escapeRegExp2(name) + ')(?=\\W|$)', "g");
 }
 
 function colorizeNameInText(text, name, color)

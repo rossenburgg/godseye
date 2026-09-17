@@ -1,14 +1,12 @@
-var g_aboutFile = "gui/splashscreen/manual_godseye.txt";
+var g_manualFile = "gui/splashscreen/manual_godseye.txt";
 
-function init(data)
+async function init(data, hotloadData)
 {
-	Engine.GetGUIObjectByName("manual_godseyeText").caption = Engine.TranslateLines(Engine.ReadFile(g_aboutFile));
-	// Engine.GetGUIObjectByName("displayAboutText") = Engine.ConfigDB_GetValue("user", "gui.splashscreen.enable") === "true";
-}
+	Engine.GetGUIObjectByName("manual_godseyeText").caption = Engine.TranslateLines(Engine.ReadFile(g_manualFile));
 
-function closePage()
-{
-	Engine.ConfigDB_CreateAndWriteValueToFile("user", "gui.splashscreen.enable", String(Engine.GetGUIObjectByName("displaySplashScreen").checked), "config/user.cfg");
-	Engine.ConfigDB_CreateAndWriteValueToFile("user", "gui.about.version", Engine.GetFileMTime(g_aboutFile), "config/user.cfg");
-	Engine.PopGuiPage();
+	// Keep the page open until the user presses OK (Escape works too via the cancel hotkey).
+	// Returning from init closes this child page and resolves Engine.OpenChildPage.
+	await new Promise(resolve => {
+		Engine.GetGUIObjectByName("btnOK").onPress = resolve;
+	});
 }

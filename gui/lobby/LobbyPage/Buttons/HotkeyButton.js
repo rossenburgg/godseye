@@ -12,6 +12,6 @@ class HotkeyButton
 
 	onPress()
 	{
-		Engine.PushGuiPage("hotkeys/page_hotkeys.xml");
+		Engine.OpenChildPage("hotkeys/page_hotkeys.xml");
 	}
 }

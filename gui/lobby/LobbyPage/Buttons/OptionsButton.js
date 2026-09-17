@@ -12,6 +12,6 @@ class OptionsButton
 
 	onPress()
 	{
-		Engine.PushGuiPage("page_options.xml");
+		Engine.OpenChildPage("page_options.xml");
 	}
 }

@@ -21,7 +21,7 @@ class Game
 		// Used to compare which part of the stanza data changed,
 		// perform partial updates and trigger event notifications.
 		this.stanza = {};
-		for (let name of this.StanzaKeys)
+		for (const name of this.StanzaKeys)
 			this.stanza[name] = "";
 
 		// This will be displayed in the GameList and GameDetails
@@ -34,7 +34,8 @@ class Game
 		this.sortValues = {
 			"state": "",
 			"compatibility": "",
-			"hasBuddyString": ""
+			"hasBuddyString": "",
+			"hasSmurfString": ""
 		};
 
 		// Array of objects, result of stringifiedTeamListToPlayerData
@@ -75,9 +76,9 @@ class Game
 	 */
 	update(newStanza, sortKey)
 	{
-		let oldStanza = this.stanza;
-		let displayData = this.displayData;
-		let sortValues = this.sortValues;
+		const oldStanza = this.stanza;
+		const displayData = this.displayData;
+		const sortValues = this.sortValues;
 
 		if (oldStanza.name != newStanza.name)
 		{
@@ -134,7 +135,7 @@ class Game
 			Engine.ProfileStop();
 		}
 
-		let playersChanged = oldStanza.players != newStanza.players;
+		const playersChanged = oldStanza.players != newStanza.players;
 		if (playersChanged)
 		{
 			Engine.ProfileStart("playerData");
@@ -159,6 +160,7 @@ class Game
 			Engine.ProfileStop();
 		}
 
+		sortValues.private = newStanza.hasPassword;
 		displayData.private = newStanza.hasPassword ? '[icon="icon_private"]' : '';
 
 		this.stanza = newStanza;
@@ -179,11 +181,12 @@ class Game
 			Engine.ProfileStart("parsePlayers");
 			let observerCount = 0;
 			let hasBuddies = 0;
+			let hasSmurfs = 0;
 
 			let playerRatingTotal = 0;
-			for (let player of players)
+			for (const player of players)
 			{
-				let playerNickRating = splitRatingFromNick(player.Name);
+				const playerNickRating = splitRatingFromNick(player.Name);
 
 				if (player.Team == "observer")
 					++observerCount;
@@ -193,19 +196,27 @@ class Game
 				// Sort games with playing buddies above games with spectating buddies
 				if (hasBuddies < 2 && g_Buddies.indexOf(playerNickRating.nick) != -1)
 					hasBuddies = player.Team == "observer" ? 1 : 2;
+
+				// Sort games with playing smurfs above games with spectating smurfs
+				if (hasSmurfs < 2 && g_Smurfs.indexOf(playerNickRating.nick) != -1)
+					hasSmurfs = player.Team == "observer" ? 1 : 2;
 			}
 
 			this.observerCount = observerCount;
 			this.hasBuddies = hasBuddies;
+			this.hasSmurfs = hasSmurfs;
 
-			let displayData = this.displayData;
-			let sortValues = this.sortValues;
+			const displayData = this.displayData;
+			const sortValues = this.sortValues;
 			displayData.buddy = this.hasBuddies ? setStringTags(g_BuddySymbol, displayData.tags) : "";
+			displayData.smurf = this.hasSmurfs ? setStringTags(g_SmurfSymbol, displayData.tags) : "";
 			sortValues.hasBuddyString = String(hasBuddies);
+			sortValues.hasSmurfString = String(hasSmurfs);
 			sortValues.buddy = sortValues.hasBuddyString + sortValues.gameName;
+			sortValues.smurf = sortValues.hasSmurfString + sortValues.gameName;
 
-			let playerCount = players.length - observerCount;
-			let gameRating =
+			const playerCount = players.length - observerCount;
+			const gameRating =
 				playerCount ?
 					Math.round(playerRatingTotal / playerCount) :
 					g_DefaultLobbyRating;
@@ -232,7 +243,7 @@ class Game
 
 		{
 			Engine.ProfileStart("hasSameMods");
-			let isCompatible = this.mods && hasSameMods(this.mods, Engine.GetEngineInfo().mods);
+			const isCompatible = this.mods && hasSameMods(this.mods, Engine.GetEngineInfo().mods);
 			if (this.isCompatible != isCompatible)
 			{
 				this.isCompatible = isCompatible;
@@ -245,7 +256,7 @@ class Game
 
 	updateGameTags(newStanza)
 	{
-		let displayData = this.displayData;
+		const displayData = this.displayData;
 		displayData.tags = this.isCompatible ? this.StateTags[newStanza.state] : this.IncompatibleTags;
 		displayData.buddy = this.hasBuddies ? setStringTags(g_BuddySymbol, displayData.tags) : "";
 		displayData.smurf = this.hasSmurfs ? setStringTags(g_SmurfSymbol, displayData.tags) : "";
@@ -254,10 +265,10 @@ class Game
 
 	updateGameName(newStanza)
 	{
-		let displayData = this.displayData;
+		const displayData = this.displayData;
 		displayData.gameName = setStringTags(escapeText(newStanza.name), displayData.tags);
 
-		let sortValues = this.sortValues;
+		const sortValues = this.sortValues;
 		sortValues.gameName = sortValues.compatibility + sortValues.state + sortValues.gameName;
 		sortValues.buddy = sortValues.hasBuddyString + sortValues.gameName;
 		sortValues.smurf = sortValues.hasSmurfString + sortValues.gameName;
@@ -265,7 +276,7 @@ class Game
 
 	getTranslatedPlayerCount(newStanza)
 	{
-		let playerCountArgs = this.playerCountArgs;
+		const playerCountArgs = this.playerCountArgs;
 		playerCountArgs.current = setStringTags(escapeText(newStanza.nbp), this.PlayerCountTags.CurrentPlayers);
 		playerCountArgs.max = setStringTags(escapeText(newStanza.maxnbp), this.PlayerCountTags.MaxPlayers);
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <objects>
 
 	<script directory="gui/common/"/>
@@ -11,11 +10,7 @@
 
 	<object name="multiplayerPages" type="image" style="ModernDialog" size="50%-230 50%-120 50%+230 53%+120">
 
-		<action on="Tick">
-			onTick();
-		</action>
-
-		<object style="ModernLabelText" type="text" size="50%-128 0%-16 50%+128 16">
+		<object style="ModernLabelText" type="text" size="50%-128 -18 50%+128 14">
 			<translatableAttribute id="caption">Multiplayer</translatableAttribute>
 		</object>
 
@@ -121,40 +116,22 @@
 				</object>
 			</object>
 
-			<object name="hostSTUNWrapper" size="120 136 100% 180">
-				<object name="useSTUN" size="0 10 32 100%" type="checkbox" style="ModernTickBox">
-					<action on="Press">Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.stun.enabled", String(this.checked), "config/user.cfg");</action>
-				</object>
-				<object type="text" size="26 0 100% 100%" style="ModernLeftLabelText">
-					<translatableAttribute id="caption">Use STUN to work around firewalls</translatableAttribute>
+			<!-- God's Eye note: lobby authentication is enforced by 0 A.D. A28, so impersonation is blocked by the game itself. The old toggle wrote a config key that no longer exists. -->
+			<object name="hostLobbyAuthNote" size="120 160 100% 210" >
+				<object type="text" size="0 10 100% 100%" style="ModernLeftLabelText" >
+					<translatableAttribute id="caption">Impersonation Blocker: the lobby server confirms every player's identity before they join, so impersonation is already prevented. No toggle needed.</translatableAttribute>
 				</object>
 			</object>
-
-
-			<object name="hostLobbyAuthWrapper" size="120 160 100% 210" >
-				<object name="useLobbyAuth" size="0 10 32 100%" type="checkbox" style="ModernTickBox">
-					<action on="Press">Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.secureauth", String(this.checked), "config/user.cfg");</action>
-				</object>
-				<object type="text" size="26 0 100% 100%" style="ModernLeftLabelText" >
-				<translatableAttribute id="caption">Impersonation Blocker (Prevent Players from using different nicks in game)</translatableAttribute>
-					<translatableAttribute id="tooltip">If enable, this prevents the impersonation of other players, so no name change possible.\n\nThe lobby server confirms the identity of the player before they join.\n\nBut also no replace player functionality in game.</translatableAttribute>
-				</object>
-			</object>
-
-
-		
 		</object>
 
 		<object name="hostFeedback" type="text" style="ModernLabelText" size="50 100%-80 100%-50 100%-45" textcolor="red"/>
 
 		<object name="continueButton" hotkey="confirm" type="button" size="50%+5 100%-45 100%-18 100%-17" style="ModernButtonRed">
 			<translatableAttribute id="caption">Continue</translatableAttribute>
-			<action on="Press">confirmSetup();</action>
 		</object>
 
-		<object type="button" style="ModernButtonRed" size="18 100%-45 50%-5 100%-17" hotkey="cancel">
+		<object name="cancelButton" type="button" style="ModernButtonRed" size="18 100%-45 50%-5 100%-17" hotkey="cancel">
 			<translatableAttribute id="caption">Cancel</translatableAttribute>
-			<action on="Press">cancelSetup();</action>
 		</object>
 
 		<object name="pageConnecting" hidden="true">
@@ -175,7 +152,6 @@
 			</object>
 			<object name="confirmPasswordButton" hotkey="confirm" type="button" size="50%+5 100%-45 100%-18 100%-17" style="ModernButtonRed">
 				<translatableAttribute id="caption">Confirm</translatableAttribute>
-				<action on="Press">confirmPassword();</action>
 			</object>
 		</object>
 	</object>

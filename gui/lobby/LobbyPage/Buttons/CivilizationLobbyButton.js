@@ -24,20 +24,26 @@ class CivilizationLobbyButton
 
 	openPage(page)
 	{
-		Engine.PushGuiPage(
+		Engine.OpenChildPage(
 			page,
-			{ "civ": this.civInfo.civ },
-			this.storeCivInfoPage.bind(this));
+			{ "civ": this.civInfo.civ }
+		).then(this.storeCivInfoPage.bind(this));
 	}
 
 	storeCivInfoPage(data)
 	{
+		if (!data)
+			return;
+
 		if (data.nextPage)
-			Engine.PushGuiPage(
+			Engine.OpenChildPage(
 				data.nextPage,
-				{ "civ": data.civ },
-				this.storeCivInfoPage.bind(this));
+				{ "civ": data.args && data.args.civ }
+			).then(this.storeCivInfoPage.bind(this));
 		else
-			this.civInfo = data;
+			this.civInfo = {
+				"civ": data.args && data.args.civ || "",
+				"page": data.page || "page_civinfo.xml"
+			};
 	}
 }

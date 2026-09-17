@@ -15,11 +15,11 @@
 	</sprite>
 
 	<sprite name="Empires_Ascendant">
-		<image texture="pregame/shell/logo/Empires-Ascendant.png"
+		<image texture="pregame/shell/logo/Empires-Ascendant-256.png"
 			texture_size="0 0 256 128"
 		/>
 	</sprite>
-	
+
 	<sprite name="WildfireGamesLogo">
 		<image texture="pregame/shell/logo/wfg_logo_white.png"
 			real_texture_placement="0 0 32 32"
@@ -228,6 +228,138 @@
 	==========================================
 	-->
 
+	<sprite name="BrownButton">
+		<image texture="global/button/button_brown/base/center.png"
+			size="5 5 100%-5 100%-5"
+		/>
+
+		<image texture="global/button/button_brown/base/left_edge.png"
+			size="0 5 8 100%-5"
+		/>
+		<image texture="global/button/button_brown/base/top_edge.png"
+			size="5 0 100%-5 8"
+		/>
+		<image texture="global/button/button_brown/base/right_edge.png"
+			size="100%-8 5 100% 100%-5"
+		/>
+		<image texture="global/button/button_brown/base/bottom_edge.png"
+			size="5 100%-8 100%-5 100%"
+		/>
+
+		<image texture="global/button/button_brown/base/top_left_corner.png"
+			size="0 0 8 8"
+		/>
+		<image texture="global/button/button_brown/base/top_right_corner.png"
+			size="100%-8 0 100% 8"
+		/>
+		<image texture="global/button/button_brown/base/bottom_right_corner.png"
+			size="100%-8 100%-8 100% 100%"
+		/>
+		<image texture="global/button/button_brown/base/bottom_left_corner.png"
+			size="0 100%-8 8 100%"
+		/>
+	</sprite>
+
+	<sprite name="BrownButtonOver">
+		<image texture="global/button/button_brown/over/center.png"
+			size="5 5 100%-5 100%-5"
+		/>
+
+		<image texture="global/button/button_brown/over/left_edge.png"
+			size="0 5 8 100%-5"
+		/>
+		<image texture="global/button/button_brown/over/top_edge.png"
+			size="5 0 100%-5 8"
+		/>
+		<image texture="global/button/button_brown/over/right_edge.png"
+			size="100%-8 5 100% 100%-5"
+		/>
+		<image texture="global/button/button_brown/over/bottom_edge.png"
+			size="5 100%-8 100%-5 100%"
+		/>
+
+		<image texture="global/button/button_brown/over/top_left_corner.png"
+			size="0 0 8 8"
+		/>
+		<image texture="global/button/button_brown/over/top_right_corner.png"
+			size="100%-8 0 100% 8"
+		/>
+		<image texture="global/button/button_brown/over/bottom_right_corner.png"
+			size="100%-8 100%-8 100% 100%"
+		/>
+		<image texture="global/button/button_brown/over/bottom_left_corner.png"
+			size="0 100%-8 8 100%"
+		/>
+	</sprite>
+
+	<sprite name="BrownButtonPressed">
+		<image texture="global/button/button_brown/pressed/center.png"
+			size="5 5 100%-5 100%-5"
+		/>
+
+		<image texture="global/button/button_brown/pressed/left_edge.png"
+			size="0 5 8 100%-5"
+		/>
+		<image texture="global/button/button_brown/pressed/top_edge.png"
+			size="5 0 100%-5 8"
+		/>
+		<image texture="global/button/button_brown/pressed/right_edge.png"
+			size="100%-8 5 100% 100%-5"
+		/>
+		<image texture="global/button/button_brown/pressed/bottom_edge.png"
+			size="5 100%-8 100%-5 100%"
+		/>
+
+		<image texture="global/button/button_brown/pressed/top_left_corner.png"
+			size="0 0 8 8"
+		/>
+		<image texture="global/button/button_brown/pressed/top_right_corner.png"
+			size="100%-8 0 100% 8"
+		/>
+		<image texture="global/button/button_brown/pressed/bottom_right_corner.png"
+			size="100%-8 100%-8 100% 100%"
+		/>
+		<image texture="global/button/button_brown/pressed/bottom_left_corner.png"
+			size="0 100%-8 8 100%"
+		/>
+	</sprite>
+
+	<sprite name="BrownButtonDisabled">
+		<effect grayscale=""/>
+
+		<image texture="global/button/button_brown/base/center.png"
+			size="5 5 100%-5 100%-5"
+		/>
+
+		<image texture="global/button/button_brown/base/left_edge.png"
+			size="0 5 8 100%-5"
+		/>
+		<image texture="global/button/button_brown/base/top_edge.png"
+			size="5 0 100%-5 8"
+		/>
+		<image texture="global/button/button_brown/base/right_edge.png"
+			size="100%-8 5 100% 100%-5"
+		/>
+		<image texture="global/button/button_brown/base/bottom_edge.png"
+			size="5 100%-8 100%-5 100%"
+		/>
+
+		<image texture="global/button/button_brown/base/top_left_corner.png"
+			size="0 0 8 8"
+		/>
+		<image texture="global/button/button_brown/base/top_right_corner.png"
+			size="100%-8 0 100% 8"
+		/>
+		<image texture="global/button/button_brown/base/bottom_right_corner.png"
+			size="100%-8 100%-8 100% 100%"
+		/>
+		<image texture="global/button/button_brown/base/bottom_left_corner.png"
+			size="0 100%-8 8 100%"
+		/>
+
+		<image backcolor="100 100 100 60"/>
+	</sprite>
+
 	<sprite name="TransparentButton">
 		<image backcolor="0 0 0 0" size="0 0 100% 100%"/>
 	</sprite>
@@ -339,6 +471,7 @@
 		<effect add_color="42 42 42 0"/>
 		<image backcolor="0 0 0 0" size="0 0 100% 100%"/>
 	</sprite>
+
 
 	<sprite name="StoneArrowUp">
 		<image texture="global/button/arrowbox_up.dds"

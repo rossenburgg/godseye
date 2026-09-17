@@ -21,11 +21,12 @@
 		<object name="civInfoButton" type="button" style="IconButton" sprite="iconInfoGold" sprite_over="iconInfoWhite" size="85%-37 0 85%-21 16"/>
 		<object name="civResetButton" type="button" style="IconButton" sprite="iconResetGold" sprite_over="iconResetWhite" size="85%-16 0 85% 16"/>
 
-		<object name="teamButton" type="dropdown" style="ModernDropDown" size="85%+5 2 100%-5 30" tooltip_style="onscreenToolTip">
-			<translatableAttribute id="tooltip">Select teamsize.</translatableAttribute>
-		</object>
 		<object name="playerTeamHeading" type="text" style="ModernLabelText" size="85%+5 0 100%-21 100%">
 			<translatableAttribute id="caption">Team</translatableAttribute>
+		</object>
+
+		<object name="teamButton" type="dropdown" style="ModernDropDown" size="85%+5 2 100%-5 30" tooltip_style="onscreenToolTip">
+			<translatableAttribute id="tooltip">Select teamsize.</translatableAttribute>
 		</object>
 
 		<!-- <object name="teamResetButton" type="button" style="IconButton" sprite="iconResetGold" sprite_over="iconResetWhite" size="100%-21 0 100%-5 16" /> -->
@@ -39,7 +40,7 @@
 
 			<object name="playerName[n]" type="text" style="ModernLabelText" size="0 2 22% 30"/>
 
-			<object name="playerColor[n]" type="dropdown" style="ModernDropDown" size="22%+5 2 22%+33 30" sprite="" sprite_overlay="" scrollbar="false" button_width="22" font="sans-stroke-14" tooltip_style="onscreenToolTip"/>
+			<object name="playerColor[n]" type="dropdown" style="ModernDropDown" size="22%+5 2 22%+33 30" scrollbar="false" button_width="22" font="sans-stroke-14" tooltip_style="onscreenToolTip" text_align="center" sprite="" sprite_overlay=""/>
 
 			<object name="playerAssignment[n]" type="dropdown" style="ModernDropDown" size="22%+37 2 50%+35 30" tooltip_style="onscreenToolTip"/>
 			<object name="playerAssignmentText[n]" type="text" style="ModernLabelText" size="22%+37 0 50%+35 30"/>

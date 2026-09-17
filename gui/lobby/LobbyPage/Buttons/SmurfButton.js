@@ -53,11 +53,11 @@
 		 else
 			 g_Smurfs.push(this.playerName);
  
-		 Engine.ConfigDB_CreateAndWriteValueToFile(
+		 Engine.ConfigDB_CreateAndSaveValue(
 			 "user",
 			 "lobby.smurfs",
-			 g_Smurfs.filter(nick => nick).join(g_SmurfListDelimiter) || g_SmurfListDelimiter,
-			 "config/user.cfg");
+			 g_Smurfs.filter(nick => nick).join(g_SmurfListDelimiter) || g_SmurfListDelimiter
+		);
  
 		 this.rebuild();
  

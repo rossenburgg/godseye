@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <object>
 
+	<object name="pgToolTip" style="TranslucentPanel" type="text" hidden="true" size="100%-290 25 100% 140" ghost="true"/>
 
-<object name="pgToolTip"
-			style="TranslucentPanel"
-			type="text"
-			hidden="true"
-			size="100%-290 25 100% 140"
-			ghost="true"
-		/>
-
-		
 	<object name="mainMenu" type="image" style="MainMenuPanel" size="60 -2 300 100%+2" z="50">
-
-		<object name="mainMenuButtons" size="8 156 100%-8 356">
+		<object name="mainMenuButtons" size="8 146 100%-8 346">
 			<repeat count="10">
 				<object name="mainMenuButton[n]" type="button" style="StoneButtonFancy" tooltip_style="pgToolTip"/>
 			</repeat>

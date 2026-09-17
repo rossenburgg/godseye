@@ -45,11 +45,9 @@ class PlayerList
 		this.rebuildPlayerList();
 	}
 
-
 	selectPlayer()
 	{
-		let index = this.playersBox.list.indexOf(this.playersFilter.caption);
-		
+		const index = this.playersBox.list.indexOf(this.playersFilter.caption);
 		if (index != -1)
 			this.playersBox.selected = index;
 	}
@@ -86,25 +84,23 @@ class PlayerList
 		this.rebuildPlayerList();
 	}
 
-
 	onMouseLeftDoubleClickItem()
 	{
-		for (let handler of this.mouseLeftDoubleClickItemHandlers)
+		for (const handler of this.mouseLeftDoubleClickItemHandlers)
 			handler();
 	}
-
 
 	onMouseRightDoubleClickItem()
 	{
-		for (let handler of this.mouseRightDoubleClickItemHandlers)
+		for (const handler of this.mouseRightDoubleClickItemHandlers)
 			handler();
 	}
+
 	onMouseLeftClickItem()
 	{
 		// In case of clicking on the same player again
 		this.gameList.selectGameFromPlayername(this.selectedPlayer);
 	}
-
 
 
 	onPlayerListSelection()
@@ -116,7 +112,7 @@ class PlayerList
 
 		this.gameList.selectGameFromPlayername(this.selectedPlayer);
 
-		for (let handler of this.selectionChangeHandlers)
+		for (const handler of this.selectionChangeHandlers)
 			handler(this.selectedPlayer);
 	}
 
@@ -130,7 +126,7 @@ class PlayerList
 		case 'buddy':
 			player.sortValue = (player.isBuddy ? 1 : 2) + this.statusOrder.indexOf(player.presence) + player.name.toLowerCase();
 			break;
-			case 'smurf':
+		case 'smurf':
 			player.sortValue = (player.isSmurf ? 1 : 2) + this.statusOrder.indexOf(player.presence) + player.name.toLowerCase();
 			break;
 		case 'rating':
@@ -156,7 +152,7 @@ class PlayerList
 		Engine.ProfileStart("rebuildPlayersList");
 
 		Engine.ProfileStart("getPlayerList");
-		let playerList = Engine.GetPlayerList();
+		const playerList = Engine.GetPlayerList();
 		Engine.ProfileStop();
 
 		Engine.ProfileStart("parsePlayers");
@@ -168,7 +164,7 @@ class PlayerList
 		Engine.ProfileStop();
 
 		Engine.ProfileStart("prepareList");
-		let length = playerList.length;
+		const length = playerList.length;
 		this.buddyStatusList.length = length;
 		this.smurfStatusList.length = length;
 		this.playerList.length = length;
@@ -178,14 +174,13 @@ class PlayerList
 
 		playerList.forEach((player, i) => {
 			// TODO: COList.cpp columns should support horizontal center align
-			let rating = player.rating ? ("     " + player.rating).substr(-5) : "     -";
+			const rating = player.rating ? ("     " + player.rating).substr(-5) : "     -";
 
-			let presence = this.PlayerStatuses[player.presence] ? player.presence : "unknown";
+			const presence = this.PlayerStatuses[player.presence] ? player.presence : "unknown";
 			if (presence == "unknown")
 				warn("Unknown presence:" + player.presence);
 
-			let statusTags = this.PlayerStatuses[presence].tags;
-			
+			const statusTags = this.PlayerStatuses[presence].tags;
 			this.buddyStatusList[i] = player.isBuddy ? setStringTags(g_BuddySymbol, statusTags) : "";
 			this.smurfStatusList[i] = player.isSmurf ? setStringTags(g_SmurfSymbol, statusTags) : "";
 			this.playerList[i] = PlayerColor.ColorPlayerName(player.name, "", player.role);

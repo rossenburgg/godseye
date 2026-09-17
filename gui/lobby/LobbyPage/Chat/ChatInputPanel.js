@@ -16,7 +16,7 @@ class ChatInputPanel
 		this.chatInput.onTab = this.autocomplete.bind(this);
 		this.chatInput.tooltip = colorizeAutocompleteHotkey();
 
-		let update = this.update.bind(this);
+		const update = this.update.bind(this);
 		xmppMessages.registerXmppMessageHandler("system", "connected", update);
 		xmppMessages.registerXmppMessageHandler("system", "disconnected", update);
 		xmppMessages.registerXmppMessageHandler("chat", "role", update);
@@ -26,7 +26,7 @@ class ChatInputPanel
 
 	update()
 	{
-		let hidden = !Engine.IsXmppClientConnected() || Engine.LobbyGetPlayerRole(g_Nickname) == "visitor";
+		const hidden = !Engine.IsXmppClientConnected() || Engine.LobbyGetPlayerRole(g_Nickname) == "visitor";
 		this.chatInput.hidden = hidden;
 		this.chatSubmit.hidden = hidden;
 	}
@@ -34,7 +34,7 @@ class ChatInputPanel
 	submitChatInput()
 	{
 		Engine.PlayUISound("audio/interface/ui/Ugggsentmessage.ogg", false);
-		let text = this.chatInput.caption;
+		const text = this.chatInput.caption;
 		if (!text.length)
 			return;
 
@@ -42,6 +42,9 @@ class ChatInputPanel
 			Engine.LobbySendMessage(text);
 
 		this.chatInput.caption = "";
+
+		if (typeof onLobbyUserActivity == "function")
+			onLobbyUserActivity();
 	}
 
 	autocomplete()

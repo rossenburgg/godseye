@@ -1,13 +1,13 @@
-var g_MainMenuItems = [
+export const mainMenuItems = [
 	{
 		"caption": translate("Learn to Play"),
 		"tooltip": translate("Learn how to play, start the tutorial, discover the technology trees, and the history behind the civilizations."),
 		"submenu": [
 			{
 				"caption": translate("Manual"),
-				"tooltip": translate("Open the 0 A.D. Game Manual."),
+				"tooltip": translate("Open the 0 A.D. Game Manual."),
 				"onPress": () => {
-					Engine.PushGuiPage("page_manual.xml");
+					Engine.OpenChildPage("page_manual.xml");
 				}
 			},
 			{
@@ -15,51 +15,59 @@ var g_MainMenuItems = [
 				"tooltip": translate("Start the economic tutorial."),
 				"onPress": () => {
 					Engine.SwitchGuiPage("page_autostart.xml", {
-						"mapType": "scenario",
-						"map": "maps/tutorials/starting_economy_walkthrough",
-						"settings": {
-							"CheatsEnabled": true
-						}
+						"attribs": {
+							"mapType": "scenario",
+							"map": "maps/tutorials/starting_economy_walkthrough",
+							"settings": {
+								"CheatsEnabled": true
+							},
+						},
+						"playerAssignments": {
+							"local": {
+								"player": 1,
+								"name": Engine.ConfigDB_GetValue("user", "playername.singleplayer") || Engine.GetSystemUsername()
+							}
+						},
+						"storeReplay": true
 					});
 				}
 			},
 			{
+				"caption": translate("Tips and Tricks"),
+				"tooltip": translate("Discover simple tips, tricks, and game mechanics."),
+				"onPress": Engine.OpenChildPage.bind(null, "page_tips.xml", {
+					"tipScrolling": true
+				})
+			},
+			{
 				"caption": translate("Structure Tree"),
-				"tooltip": colorizeHotkey(translate("%(hotkey)s: View the structure tree of civilizations featured in 0 A.D."), "structree"),
+				"tooltip": colorizeHotkey(translate("%(hotkey)s: View the structure tree of civilizations featured in 0 A.D."), "structree"),
 				"hotkey": "structree",
 				"onPress": () => {
-					let callback = data => {
-						if (data.nextPage)
-							Engine.PushGuiPage(data.nextPage, { "civ": data.civ }, callback);
-					};
-					Engine.PushGuiPage("page_structree.xml", {}, callback);
-				},
+					pageLoop("page_structree.xml");
+				}
 			},
 			{
 				"caption": translate("Civilization Overview"),
-				"tooltip": colorizeHotkey(translate("%(hotkey)s: Learn about the civilizations featured in 0 A.D."), "civinfo"),
+				"tooltip": colorizeHotkey(translate("%(hotkey)s: Learn about the civilizations featured in 0 A.D."), "civinfo"),
 				"hotkey": "civinfo",
 				"onPress": () => {
-					let callback = data => {
-						if (data.nextPage)
-							Engine.PushGuiPage(data.nextPage, { "civ": data.civ }, callback);
-					};
-					Engine.PushGuiPage("page_civinfo.xml", {}, callback);
+					pageLoop("page_civinfo.xml");
 				}
 			},
 			{
 				"caption": translate("Catafalque Overview"),
-				"tooltip": translate("Compare the bonuses of catafalques featured in 0 A.D."),
+				"tooltip": translate("Compare the bonuses of catafalques featured in 0 A.D."),
 				"onPress": () => {
-					Engine.PushGuiPage("page_catafalque.xml");
+					Engine.OpenChildPage("page_catafalque.xml");
 				}
 			},
 			{
 				"caption": translate("Map Overview"),
-				"tooltip": translate("View the different maps featured in 0 A.D."),
+				"tooltip": translate("View the different maps featured in 0 A.D."),
 				"onPress": () => {
-					Engine.PushGuiPage("page_mapbrowser.xml");
-				},
+					Engine.OpenChildPage("page_mapbrowser.xml");
+				}
 			}
 		]
 	},
@@ -71,9 +79,9 @@ var g_MainMenuItems = [
 			{
 				Engine.SwitchGuiPage(CampaignRun.getCurrentRun().getMenuPath());
 			}
-			catch(err)
+			catch (err)
 			{
-				error(translate("Error opening campaign run:"));
+				error("Error opening campaign run:");
 				error(err.toString());
 			}
 		},
@@ -93,8 +101,31 @@ var g_MainMenuItems = [
 			{
 				"caption": translate("Load Game"),
 				"tooltip": translate("Load a saved game."),
-				"onPress": () => {
-					Engine.PushGuiPage("page_loadgame.xml");
+				"onPress": async() => {
+					const gameId = await Engine.OpenChildPage("page_loadgame.xml");
+
+					if (!gameId)
+						return;
+
+					const metadata = Engine.StartSavedGame(gameId);
+					if (!metadata)
+					{
+						error("Could not load saved game: " + gameId);
+						return;
+					}
+
+					Engine.SwitchGuiPage("page_loading.xml", {
+						"attribs": metadata.initAttributes,
+						"playerAssignments": {
+							"local": {
+								"name": metadata.initAttributes.settings.
+									PlayerData[metadata.playerID]?.Name ??
+									singleplayerName(),
+								"player": metadata.playerID
+							}
+						},
+						"savedGUIData": metadata.gui
+					});
 				}
 			},
 			{
@@ -105,9 +136,9 @@ var g_MainMenuItems = [
 					{
 						Engine.SwitchGuiPage(CampaignRun.getCurrentRun().getMenuPath());
 					}
-					catch(err)
+					catch (err)
 					{
-						error(translate("Error opening campaign run:"));
+						error("Error opening campaign run:");
 						error(err.toString());
 					}
 				},
@@ -150,25 +181,6 @@ var g_MainMenuItems = [
 		"tooltip": translate("Fight against one or more human players in a multiplayer game."),
 		"submenu": [
 			{
-				// Translation: Join a game by specifying the host's IP address.
-				"caption": translate("Join Game"),
-				"tooltip": translate("Joining an existing multiplayer game."),
-				"onPress": () => {
-					Engine.PushGuiPage("page_gamesetup_mp.xml", {
-						"multiplayerGameType": "join"
-					});
-				}
-			},
-			{
-				"caption": translate("Host Game"),
-				"tooltip": translate("Host a multiplayer game."),
-				"onPress": () => {
-					Engine.PushGuiPage("page_gamesetup_mp.xml", {
-						"multiplayerGameType": "host"
-					});
-				}
-			},
-			{
 				"caption": translate("Game Lobby"),
 				"tooltip":
 					colorizeHotkey(translate("%(hotkey)s: Launch the multiplayer lobby to join and host publicly visible games and chat with other players."), "lobby") +
@@ -176,9 +188,33 @@ var g_MainMenuItems = [
 				"enabled": () => !!Engine.StartXmppClient,
 				"hotkey": "lobby",
 				"onPress": () => {
-					 if (Engine.StartXmppClient)
-						 Engine.PushGuiPage("page_prelobby_entrance.xml");
+					if (Engine.StartXmppClient)
+						Engine.OpenChildPage("page_prelobby_entrance.xml");
 				}
+			},
+			{
+				// Translation: Join a game by specifying the host's IP address.
+				"caption": translate("Connect by IP"),
+				"tooltip": translate("Joining an existing multiplayer game at a given IP address."),
+				"onPress": Engine.OpenChildPage.bind(null, "page_gamesetup_mp.xml", {
+					"multiplayerGameType": "join"
+				})
+			},
+			{
+				"caption": translate("Host New Game"),
+				"tooltip": translate("Host a new multiplayer game. Other players can connect directly to you via your IP address."),
+				"onPress": Engine.OpenChildPage.bind(null, "page_gamesetup_mp.xml", {
+					"multiplayerGameType": "host",
+					"loadSavedGame": false
+				})
+			},
+			{
+				"caption": translate("Host Saved Game"),
+				"tooltip": translate("Continue playing a game from a savegame."),
+				"onPress": Engine.OpenChildPage.bind(null, "page_gamesetup_mp.xml", {
+					"multiplayerGameType": "host",
+					"loadSavedGame": true
+				})
 			},
 			{
 				"caption": translate("Replays"),
@@ -202,25 +238,22 @@ var g_MainMenuItems = [
 			{
 				"caption": translate("Options"),
 				"tooltip": translate("Adjust game settings."),
-				"onPress": () => {
-					Engine.PushGuiPage(
-						"page_options.xml",
-						{},
-						fireConfigChangeHandlers);
+				"onPress": async() => {
+					fireConfigChangeHandlers(await Engine.OpenChildPage("page_options.xml"));
 				}
 			},
 			{
 				"caption": translate("Hotkeys"),
 				"tooltip": translate("Adjust hotkeys."),
 				"onPress": () => {
-					Engine.PushGuiPage("hotkeys/page_hotkeys.xml");
+					Engine.OpenChildPage("hotkeys/page_hotkeys.xml");
 				}
 			},
 			{
 				"caption": translate("Language"),
 				"tooltip": translate("Choose the language of the game."),
 				"onPress": () => {
-					Engine.PushGuiPage("page_locale.xml");
+					Engine.OpenChildPage("page_locale.xml");
 				}
 			},
 			{
@@ -234,7 +267,7 @@ var g_MainMenuItems = [
 				"caption": translate("Welcome Screen"),
 				"tooltip": translate("Show the Welcome Screen again. Useful if you hid it by mistake."),
 				"onPress": () => {
-					Engine.PushGuiPage("page_splashscreen.xml");
+					Engine.OpenChildPage("page_splashscreen.xml");
 				}
 			}
 		]
@@ -242,46 +275,59 @@ var g_MainMenuItems = [
 	{
 		"caption": translate("Scenario Editor"),
 		"tooltip": translate('Open the Atlas Scenario Editor in a new window. You can run this more reliably by starting the game with the command-line argument "-editor".'),
-		"onPress": () => {
-			if (Engine.AtlasIsAvailable())
-				messageBox(
-					400, 200,
-					translate("Are you sure you want to quit 0 A.D. and open the Scenario Editor?"),
-					translate("Confirmation"),
-					[translate("No"), translate("Yes")],
-					[null, Engine.RestartInAtlas]);
-			else
+		"onPress": async(closePageCallback) => {
+			if (!Engine.AtlasIsAvailable())
+			{
 				messageBox(
 					400, 200,
 					translate("The scenario editor is not available or failed to load. See the game logs for additional information."),
 					translate("Error"));
+				return;
+			}
+
+			const buttonIndex = await messageBox(
+				400, 200,
+				translate("Are you sure you want to quit 0 A.D. and open the Scenario Editor?"),
+				translate("Confirmation"),
+				[translate("No"), translate("Yes")]);
+
+			if (buttonIndex === 1)
+				closePageCallback(Engine.startAtlas);
 		}
 	},
 	{
 		"caption": translate("Credits"),
-		"tooltip": translate("Show the 0 A.D. credits."),
+		"tooltip": translate("Show the 0 A.D. credits."),
 		"onPress": () => {
-			Engine.PushGuiPage("page_credits.xml");
+			Engine.OpenChildPage("page_credits.xml");
 		}
 	},
 	{
 		"caption": translate("Civilization Tree (God's Eye)"),
-		"tooltip": translate("Get a deetailed tree of all the civilizations right from your main menu"),
+		"tooltip": translate("Get a detailed tree of all the civilizations right from your main menu"),
 		"onPress": () => {
-			
-			Engine.PushGuiPage("page_structree.xml", {});
+			pageLoop("page_structree.xml");
+		}
+	},
+	{
+		"caption": translate("God's Eye Manual"),
+		"tooltip": translate("Open the God's Eye manual."),
+		"onPress": () => {
+			Engine.OpenChildPage("pageManual_godseye.xml");
 		}
 	},
 	{
 		"caption": translate("Exit"),
 		"tooltip": translate("Exit the game."),
-		"onPress": () => {
-			messageBox(
+		"onPress": async(closePageCallback) => {
+			const buttonIndex = await messageBox(
 				400, 200,
-				translate("Are you sure you want to quit 0 A.D.?"),
+				translate("Are you sure you want to quit 0 A.D.?"),
 				translate("Confirmation"),
-				[translate("No"), translate("Yes")],
-				[null, Engine.Exit]);
+				[translate("No"), translate("Yes")]);
+
+			if (buttonIndex === 1)
+				closePageCallback();
 		}
 	}
 ];

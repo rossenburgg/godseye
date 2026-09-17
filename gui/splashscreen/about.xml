@@ -3,8 +3,6 @@
 
 	<script directory="gui/common/"/>
 	<script directory="gui/security/"/>
-	<script directory="gui/prelobby/common/feedback/"/>
-	<script directory="gui/prelobby/common/terms/"/>
 	<script file="gui/security/updatepassword.js"/>
 
 	<object type="image" style="ModernDialog" size="50%-230 50%-210 50%+230 50%+210">

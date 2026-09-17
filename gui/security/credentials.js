@@ -19,7 +19,7 @@ function checkPassword(register)
 			translateWithContext("register", "Please enter your password") :
 			translateWithContext("login", "Please enter your password");
 
-	if (register && password.length < 8)
+	if (register && password.length < minimumPasswordLength)
 		return translate("Please choose a longer password");
 
 	return "";
@@ -44,22 +44,26 @@ function initRememberPassword()
 		Engine.ConfigDB_GetValue("user", "lobby.rememberpassword") == "true";
 }
 
-function toggleRememberPassword()
+async function toggleRememberPassword()
 {
 	let checkbox = Engine.GetGUIObjectByName("rememberPassword");
 	let enabled = Engine.ConfigDB_GetValue("user", "lobby.rememberpassword") == "true";
 	if (!checkbox.checked && enabled && Engine.ConfigDB_GetValue("user", "lobby.password"))
-		messageBox(
+	{
+		let buttonIndex = await messageBox(
 			360, 160,
 			translate("Are you sure you want to delete the password after connecting?"),
 			translate("Confirmation"),
-			[translate("No"), translate("Yes")],
-			[
-				() => { checkbox.checked = true; },
-				() => { Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.rememberpassword", String(!enabled), "config/user.cfg"); }
-			]);
-	else
-		Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.rememberpassword", String(!enabled), "config/user.cfg");
+			[translate("No"), translate("Yes")]);
+
+		if (buttonIndex === 0)
+		{
+			checkbox.checked = true;
+			return;
+		}
+	}
+
+	Engine.ConfigDB_CreateAndSaveValue("user", "lobby.rememberpassword", String(!enabled));
 }
 
 function getEncryptedPassword()
@@ -78,14 +82,11 @@ function getEncryptedPassword()
 function saveCredentials()
 {
 	let username = Engine.GetGUIObjectByName("username").caption;
-	Engine.ConfigDB_CreateAndWriteValueToFile("user", "playername.multiplayer", username, "config/user.cfg");
-	Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.login", username, "config/user.cfg");
+	Engine.ConfigDB_CreateAndSaveValue("user", "playername.multiplayer", username);
+	Engine.ConfigDB_CreateAndSaveValue("user", "lobby.login", username);
 
 	if (Engine.ConfigDB_GetValue("user", "lobby.rememberpassword") == "true")
-		Engine.ConfigDB_CreateAndWriteValueToFile("user", "lobby.password", getEncryptedPassword(), "config/user.cfg");
+		Engine.ConfigDB_CreateAndSaveValue("user", "lobby.password", getEncryptedPassword());
 	else
-	{
-		Engine.ConfigDB_RemoveValue("user", "lobby.password");
-		Engine.ConfigDB_WriteFile("user", "config/user.cfg");
-	}
+		Engine.ConfigDB_RemoveValueAndSave("user", "lobby.password");
 }

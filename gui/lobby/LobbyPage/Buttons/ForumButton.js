@@ -12,6 +12,6 @@ class AboutButton
 
 	onPress()
 	{
-		Engine.PushGuiPage("pageAbout.xml");
+		Engine.OpenChildPage("pageAbout.xml");
 	}
 }

@@ -19,7 +19,6 @@ class ProfilePanel
 		this.totalGamesText = Engine.GetGUIObjectByName("totalGamesText");
 		this.highestRatingText = Engine.GetGUIObjectByName("highestRatingText");
 		this.rankText = Engine.GetGUIObjectByName("rankText");
-		this.fade = Engine.GetGUIObjectByName("fade");
 		this.playernameText = Engine.GetGUIObjectByName("playernameText");
 		this.profileArea = Engine.GetGUIObjectByName("profileArea");
 
@@ -87,7 +86,7 @@ class ProfilePanel
 
 	onProfile()
 	{
-		let attributes = Engine.GetProfile()[0];
+		const attributes = Engine.GetProfile()[0];
 		if (attributes.rating == "-2" || attributes.player != this.requestedPlayer)
 			return;
 

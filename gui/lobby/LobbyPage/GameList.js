@@ -26,7 +26,7 @@ class GameList
 		this.gamesBox = Engine.GetGUIObjectByName("gamesBox");
 		this.gamesBox.onSelectionChange = this.onSelectionChange.bind(this);
 		this.gamesBox.onSelectionColumnChange = this.onFilterChange.bind(this);
-		let ratingColumn = Engine.ConfigDB_GetValue("user", "lobby.columns.gamerating") == "true";
+		const ratingColumn = Engine.ConfigDB_GetValue("user", "lobby.columns.gamerating") == "true";
 		this.gamesBox.hidden_mapType = ratingColumn;
 		this.gamesBox.hidden_gameRating = !ratingColumn;
 
@@ -43,7 +43,7 @@ class GameList
 		this.list = [];
 
 		this.filters = [];
-		for (let name in GameListFilters)
+		for (const name in GameListFilters)
 			this.filters.push(new GameListFilters[name](this.onFilterChange.bind(this)));
 
 		xmppMessages.registerXmppMessageHandler("game", "gamelist", this.rebuildGameList.bind(this));
@@ -67,7 +67,7 @@ class GameList
 
 	onBuddyChange()
 	{
-		for (let name in this.games)
+		for (const name in this.games)
 			this.games[name].onBuddyChange();
 
 		this.rebuildGameList();
@@ -75,7 +75,7 @@ class GameList
 
 	onSmurfChange()
 	{
-		for (let name in this.games)
+		for (const name in this.games)
 			this.games[name].onSmurfChange();
 
 		this.rebuildGameList();
@@ -83,8 +83,8 @@ class GameList
 
 	onSelectionChange()
 	{
-		let game = this.selectedGame();
-		for (let handler of this.selectionChangeHandlers)
+		const game = this.selectedGame();
+		for (const handler of this.selectionChangeHandlers)
 			handler(game);
 	}
 
@@ -98,18 +98,18 @@ class GameList
 		Engine.ProfileStart("rebuildGameList");
 
 		Engine.ProfileStart("getGameList");
-		let selectedGame = this.selectedGame();
-		let gameListData = Engine.GetGameList();
+		const selectedGame = this.selectedGame();
+		const gameListData = Engine.GetGameList();
 		Engine.ProfileStop();
 
 		{
 			Engine.ProfileStart("updateGames");
-			let selectedColumn = this.gamesBox.selected_column;
-			let newGames = {};
-			for (let stanza of gameListData)
+			const selectedColumn = this.gamesBox.selected_column;
+			const newGames = {};
+			for (const stanza of gameListData)
 			{
 				let game = this.games[stanza.hostJID] || undefined;
-				let exists = !!game;
+				const exists = !!game;
 				if (!exists)
 					game = new Game(this.mapCache);
 
@@ -123,9 +123,9 @@ class GameList
 		{
 			Engine.ProfileStart("filterGameList");
 			this.gameList.length = 0;
-			for (let ip in this.games)
+			for (const ip in this.games)
 			{
-				let game = this.games[ip];
+				const game = this.games[ip];
 				if (this.filters.every(filter => filter.filter(game)))
 					this.gameList.push(game);
 			}
@@ -134,7 +134,7 @@ class GameList
 
 		{
 			Engine.ProfileStart("sortGameList");
-			let sortOrder = this.gamesBox.selected_column_order;
+			const sortOrder = this.gamesBox.selected_column_order;
 			this.gameList.sort((game1, game2) => {
 				if (game1.sortValue < game2.sortValue) return -sortOrder;
 				if (game1.sortValue > game2.sortValue) return +sortOrder;
@@ -147,7 +147,7 @@ class GameList
 
 		{
 			Engine.ProfileStart("setupGameList");
-			let length = this.gameList.length;
+			const length = this.gameList.length;
 			this.list_buddy.length = length;
 			this.list_smurf.length = length;
 			this.list_private.length = length;
@@ -161,7 +161,7 @@ class GameList
 
 			this.gameList.forEach((game, i) => {
 
-				let displayData = game.displayData;
+				const displayData = game.displayData;
 				this.list_buddy[i] = displayData.buddy || "";
 				this.list_smurf[i] = displayData.smurf || "";
 				this.list_private[i] = displayData.private || "";
@@ -180,7 +180,7 @@ class GameList
 
 		{
 			Engine.ProfileStart("copyToGUI");
-			let gamesBox = this.gamesBox;
+			const gamesBox = this.gamesBox;
 			gamesBox.list_private = this.list_private;
 			gamesBox.list_buddy = this.list_buddy;
 			gamesBox.list_smurf = this.list_smurf;
@@ -215,7 +215,7 @@ class GameList
 		let foundAsObserver = false;
 
 		for (let i = 0; i < this.gameList.length; ++i)
-			for (let player of this.gameList[i].players)
+			for (const player of this.gameList[i].players)
 			{
 				if (playerName != splitRatingFromNick(player.Name).nick)
 					continue;

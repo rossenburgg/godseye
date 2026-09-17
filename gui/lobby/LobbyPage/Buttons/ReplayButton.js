@@ -14,7 +14,7 @@ class ReplayButton
 	onPress()
 	{
 		Engine.LobbySetPlayerPresence("playing");
-		Engine.PushGuiPage("page_replaymenu.xml",
+		Engine.OpenChildPage("page_replaymenu.xml",
 			{
 				"replaySelectionData": {
 					"filters": {

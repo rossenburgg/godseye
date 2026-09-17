@@ -3,13 +3,14 @@
  */
 class QuitButton
 {
-	constructor(dialog, leaderboardPage, profilePage)
+	constructor(closePageCallback, dialog, leaderboardPage, profilePage)
 	{
-		let closeDialog = this.closeDialog.bind(this);
-		let returnToMainMenu = this.returnToMainMenu.bind(this);
-		let onPress = dialog ? closeDialog : returnToMainMenu;
+		this.closePageCallback = closePageCallback;
+		const closeDialog = this.closeDialog.bind(this);
+		const returnToMainMenu = this.returnToMainMenu.bind(this);
+		const onPress = dialog ? closeDialog : returnToMainMenu;
 
-		let leaveButton = Engine.GetGUIObjectByName("leaveButton");
+		const leaveButton = Engine.GetGUIObjectByName("leaveButton");
 		leaveButton.onPress = onPress;
 		leaveButton.caption = dialog ?
 			translateWithContext("previous page", "Back") :
@@ -20,7 +21,7 @@ class QuitButton
 			Engine.SetGlobalHotkey("lobby", "Press", onPress);
 			Engine.SetGlobalHotkey("cancel", "Press", onPress);
 
-			let cancelHotkey = Engine.SetGlobalHotkey.bind(Engine, "cancel", "Press", onPress);
+			const cancelHotkey = Engine.SetGlobalHotkey.bind(Engine, "cancel", "Press", onPress);
 			leaderboardPage.registerClosePageHandler(cancelHotkey);
 			profilePage.registerClosePageHandler(cancelHotkey);
 		}
@@ -29,7 +30,7 @@ class QuitButton
 	closeDialog()
 	{
 		Engine.LobbySetPlayerPresence("away");
-		Engine.PopGuiPage();
+		this.closePageCallback();
 	}
 
 	returnToMainMenu()

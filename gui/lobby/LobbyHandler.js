@@ -3,13 +3,13 @@
  */
 class LobbyHandler
 {
-	constructor(dialog)
+	constructor(closePageCallback, dialog)
 	{
 		this.xmppMessages = new XmppMessages();
 
 		this.profilePage = new ProfilePage(this.xmppMessages);
 		this.leaderboardPage = new LeaderboardPage(this.xmppMessages);
-		this.lobbyPage = new LobbyPage(dialog, this.xmppMessages, this.leaderboardPage, this.profilePage);
+		this.lobbyPage = new LobbyPage(closePageCallback, dialog, this.xmppMessages, this.leaderboardPage, this.profilePage);
 
 		this.xmppMessages.processHistoricMessages();
 

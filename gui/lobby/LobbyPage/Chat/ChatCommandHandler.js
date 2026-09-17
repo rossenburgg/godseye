@@ -19,11 +19,11 @@ class ChatCommandHandler
 		if (!text.startsWith('/'))
 			return false;
 
-		let index = text.indexOf(" ");
-		let command = text.substr(1, index == -1 ? undefined : index - 1);
-		let args = index == -1 ? "" : text.substr(index + 1);
+		const index = text.indexOf(" ");
+		const command = text.substr(1, index == -1 ? undefined : index - 1);
+		const args = index == -1 ? "" : text.substr(index + 1);
 
-		let commandObj = this.ChatCommands[command] || undefined;
+		const commandObj = this.ChatCommands[command] || undefined;
 		if (!commandObj)
 		{
 			this.chatMessagesPanel.addText(
@@ -48,7 +48,7 @@ class ChatCommandHandler
 			return true;
 		}
 
-		let handler = commandObj && commandObj.handler || undefined;
+		const handler = commandObj && commandObj.handler || undefined;
 		if (!handler)
 			return false;
 
@@ -100,7 +100,7 @@ ChatCommandHandler.prototype.ChatCommands = {
 	"kick": {
 		"description": translate("Kick a specified user from the lobby. Usage: /kick nick reason"),
 		"handler": function(args) {
-			let index = args.indexOf(" ");
+			const index = args.indexOf(" ");
 			if (index == -1)
 				Engine.LobbyKick(args, "");
 			else
@@ -112,7 +112,7 @@ ChatCommandHandler.prototype.ChatCommands = {
 	"ban": {
 		"description": translate("Ban a specified user from the lobby. Usage: /ban nick reason"),
 		"handler": function(args) {
-			let index = args.indexOf(" ");
+			const index = args.indexOf(" ");
 			if (index == -1)
 				Engine.LobbyBan(args, "");
 			else
@@ -124,9 +124,9 @@ ChatCommandHandler.prototype.ChatCommands = {
 	"help": {
 		"description": translate("Show this help."),
 		"handler": function(args) {
-			let isModerator = Engine.LobbyGetPlayerRole(g_Nickname) == "moderator";
+			const isModerator = Engine.LobbyGetPlayerRole(g_Nickname) == "moderator";
 			let txt = translate("Chat commands:");
-			for (let command in this.ChatCommands)
+			for (const command in this.ChatCommands)
 				if (!this.ChatCommands[command].moderatorOnly || isModerator)
 					// Translation: Chat command help format
 					txt += "\n" + sprintf(translate("%(command)s - %(description)s"), {
@@ -170,7 +170,7 @@ ChatCommandHandler.prototype.ChatCommands = {
 			const selfNick = Engine.LobbyGetNick();
 			const ignore = new Set([selfNick, "Ratings", "WFGBot", "Triumvir", "user1", "Dunedan", "Rollo", "defc0n"]);
 			const playersToBuzz = new Set();
-	
+
 			const gameList = g_LobbyHandler.lobbyPage.lobbyPage.panels.gameList.gameList;
 			for (let game of gameList)
 			{
@@ -182,24 +182,21 @@ ChatCommandHandler.prototype.ChatCommands = {
 					else if (player.Team == "observer")
 						playersToBuzz.add(splitRatingFromNick(player.Name).nick);
 			}
-	
+
 			for (let player of Engine.GetPlayerList())
 				if (player.presence == "available")
 					playersToBuzz.add(player.name);
-	
+
 			for (let v of ignore)
 				playersToBuzz.delete(v);
-	
-				
 
-			const annoyList = "Join " + Engine.LobbyGetNick(g_Nickname) + "'s game : (Godseye) " + Array.from(playersToBuzz).join(", ");
-	
+			const annoyList = "Join " + Engine.LobbyGetNick() + "'s game : (Godseye) " + Array.from(playersToBuzz).join(", ");
+
 			Engine.LobbySendMessage(annoyList);
 			if (args.trim())
-				Engine.LobbySendMessage(args)
-	
+				Engine.LobbySendMessage(args);
+
 			return true;
 		}
 	}
-	
 };

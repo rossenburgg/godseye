@@ -1,12 +1,15 @@
 var g_LobbyMessages = {
+	"registered": () => {
+		onPasswordChanged();
+	},
 	"error": message => {
 		setFeedback(message.text ||
 			translate("Unknown error. This usually occurs because the same IP address is not allowed to change password more than once within one hour."));
-		Engine.StopXmppClient();
+		Engine.GetGUIObjectByName("continue").enabled = true;
 	},
 	"disconnected": message => {
 		setFeedback(message.reason + message.certificate_status);
-		Engine.StopXmppClient();
+		Engine.GetGUIObjectByName("continue").enabled = true;
 	}
 };
 
@@ -23,7 +26,7 @@ function onTick()
 
 	for (let message of messages)
 	{
-		if (message.type == "system" && message.level)
+		if (message.type == "system" && message.level && g_LobbyMessages[message.level])
 			g_LobbyMessages[message.level](message);
 
 		if (!Engine.HasXmppClient())
@@ -39,7 +42,6 @@ function setFeedback(feedbackText)
 
 function cancelButton()
 {
-	if (Engine.HasXmppClient())
-		Engine.StopXmppClient();
-	Engine.PopGuiPage();
+	if (g_CloseSecurityPage)
+		g_CloseSecurityPage();
 }

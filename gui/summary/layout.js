@@ -13,19 +13,19 @@ var getScorePanelsData = () => [
 		"label": translate("Score"),
 		"headings": [
 			{ "identifier": "playername", "caption": translate("Player name"), "yStart": 26, "width": 200 },
-			{ "identifier": "totalScore", "caption": translate("Total score"), "yStart": 16, "width": 100 },
-			{ "identifier": "economyScore", "caption": translate("Economy score"), "yStart": 16, "width": 100 },
-			{ "identifier": "militaryScore", "caption": translate("Military score"), "yStart": 16, "width": 100 },
-			{ "identifier": "fightActivity", "caption": translate("Fight Activity Ratio"), "yStart": 16, "width": 100 },
-			{ "identifier": "explorationScore", "caption": translate("Exploration score"), "yStart": 16, "width": 100 }
+			{ "identifier": "totalScore", "caption": translate("Total score"), "yStart": 0, "width": 120 },
+			{ "identifier": "economyScore", "caption": translate("Economy score"), "yStart": 0, "width": 120 },
+			{ "identifier": "militaryScore", "caption": translate("Military score"), "yStart": 0, "width": 120 },
+			{ "identifier": "explorationScore", "caption": translate("Exploration score"), "yStart": 0, "width": 120 },
+			{ "identifier": "fightActivity", "caption": translate("Fight Activity Ratio"), "yStart": 0, "width": 120 }
 		],
 		"titleHeadings": [],
 		"counters": [
-			{ "width": 100, "fn": calculateScoreTotal, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateEconomyScore, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateMilitaryScore, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateFightActivityRatio, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateExplorationScore, "verticalOffset": 12 }
+			{ "width": 120, "fn": calculateScoreTotal },
+			{ "width": 120, "fn": calculateEconomyScore },
+			{ "width": 120, "fn": calculateMilitaryScore },
+			{ "width": 120, "fn": calculateExplorationScore },
+			{ "width": 120, "fn": calculateFightActivityRatio }
 		],
 		"teamCounterFn": calculateScoreTeam
 	},
@@ -33,14 +33,14 @@ var getScorePanelsData = () => [
 		"label": translate("Buildings"),
 		"headings": [
 			{ "identifier": "playername", "caption": translate("Player name"), "yStart": 26, "width": 200 },
-			{ "identifier": "total", "caption": translate("Total"), "yStart": 34, "width": 105 },
-			{ "identifier": "House", "caption": translate("Houses"), "yStart": 34, "width": 85 },
-			{ "identifier": "Economic", "caption": translate("Economic"), "yStart": 34, "width": 85 },
-			{ "identifier": "Outpost", "caption": translate("Outposts"), "yStart": 34, "width": 85 },
-			{ "identifier": "Military", "caption": translate("Military"), "yStart": 34, "width": 85 },
-			{ "identifier": "Fortress", "caption": translate("Fortresses"), "yStart": 34, "width": 85 },
-			{ "identifier": "CivCentre", "caption": translate("Civ centers"), "yStart": 34, "width": 85 },
-			{ "identifier": "Wonder", "caption": translate("Wonders"), "yStart": 34, "width": 85 }
+			{ "identifier": "Structure", "caption": translate("Total"), "yStart": 34, "width": 90 },
+			{ "identifier": "House", "caption": translate("Houses"), "yStart": 34, "width": 90 },
+			{ "identifier": "Economic", "caption": translate("Economic"), "yStart": 34, "width": 90 },
+			{ "identifier": "Outpost", "caption": translate("Outposts"), "yStart": 34, "width": 90 },
+			{ "identifier": "Military", "caption": translate("Military"), "yStart": 34, "width": 90 },
+			{ "identifier": "Fortress", "caption": translate("Fortresses"), "yStart": 34, "width": 90 },
+			{ "identifier": "CivCentre", "caption": translate("Civ centers"), "yStart": 34, "width": 90 },
+			{ "identifier": "Wonder", "caption": translate("Wonders"), "yStart": 34, "width": 90 }
 		],
 		"titleHeadings": [
 			{
@@ -52,18 +52,18 @@ var getScorePanelsData = () => [
 						"lost": getColoredTypeTranslation("lost")
 					}),
 				"yStart": 16,
-				"width": 85 * 7 + 105
-			},	// width = 700
+				"width": 90 * 8
+			},	// width = 720
 		],
 		"counters": [
-			{ "width": 105, "fn": calculateBuildings, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateBuildings, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateBuildings, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateBuildings, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateBuildings, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateBuildings, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateBuildings, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateBuildings, "verticalOffset": 3 }
+			{ "width": 90, "fn": calculateBuildings },
+			{ "width": 90, "fn": calculateBuildings },
+			{ "width": 90, "fn": calculateBuildings },
+			{ "width": 90, "fn": calculateBuildings },
+			{ "width": 90, "fn": calculateBuildings },
+			{ "width": 90, "fn": calculateBuildings },
+			{ "width": 90, "fn": calculateBuildings },
+			{ "width": 90, "fn": calculateBuildings }
 		],
 		"teamCounterFn": calculateBuildingsTeam
 	},
@@ -71,15 +71,15 @@ var getScorePanelsData = () => [
 		"label": translate("Units"),
 		"headings": [
 			{ "identifier": "playername", "caption": translate("Player name"), "yStart": 26, "width": 200 },
-			{ "identifier": "total", "caption": translate("Total"), "yStart": 34, "width": 105 },
-			{ "identifier": "Infantry", "caption": translate("Infantry"), "yStart": 34, "width": 85 },
-			{ "identifier": "Worker", "caption": translate("Worker"), "yStart": 34, "width": 85 },
-			{ "identifier": "Cavalry", "caption": translate("Cavalry"), "yStart": 34, "width": 85 },
-			{ "identifier": "Champion", "caption": translate("Champion"), "yStart": 34, "width": 85 },
-			{ "identifier": "Hero", "caption": translate("Heroes"), "yStart": 34, "width": 85 },
-			{ "identifier": "Siege", "caption": translate("Siege"), "yStart": 34, "width": 85 },
-			{ "identifier": "Ship", "caption": translate("Navy"), "yStart": 34, "width": 85 },
-			{ "identifier": "Trader", "caption": translate("Traders"), "yStart": 34, "width": 85 }
+			{ "identifier": "Unit", "caption": translate("Total"), "yStart": 34, "width": 90 },
+			{ "identifier": "Infantry", "caption": translate("Infantry"), "yStart": 34, "width": 90 },
+			{ "identifier": "Worker", "caption": translate("Worker"), "yStart": 34, "width": 90 },
+			{ "identifier": "Cavalry", "caption": translate("Cavalry"), "yStart": 34, "width": 90 },
+			{ "identifier": "Champion", "caption": translate("Champion"), "yStart": 34, "width": 90 },
+			{ "identifier": "Hero", "caption": translate("Heroes"), "yStart": 34, "width": 90 },
+			{ "identifier": "Siege", "caption": translate("Siege"), "yStart": 34, "width": 90 },
+			{ "identifier": "Ship", "caption": translate("Navy"), "yStart": 34, "width": 90 },
+			{ "identifier": "Trader", "caption": translate("Traders"), "yStart": 34, "width": 90 }
 		],
 		"titleHeadings": [
 			{
@@ -91,19 +91,20 @@ var getScorePanelsData = () => [
 						"lost": getColoredTypeTranslation("lost")
 					}),
 				"yStart": 16,
-				"width": 85 * 8 + 105
-			},	// width = 785
+				"width": 90 * 9
+			},	// width = 810
 		],
 		"counters": [
-			{ "width": 105, "fn": calculateUnitsWithCaptured, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateUnits, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateUnits, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateUnits, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateUnits, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateUnits, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateUnitsWithCaptured, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateUnits, "verticalOffset": 3 },
-			{ "width": 85, "fn": calculateUnits, "verticalOffset": 3 }
+			{ "width": 90, "fn": calculateUnitsWithCaptured },
+			{ "width": 90, "fn": calculateUnits },
+			{ "width": 90, "fn": calculateUnits },
+			{ "width": 90, "fn": calculateUnits },
+			{ "width": 90, "fn": calculateUnits },
+			{ "width": 90, "fn": calculateUnits },
+			{ "width": 90, "fn": calculateUnitsWithCaptured },
+			{ "width": 90, "fn": calculateUnits },
+			{ "width": 90, "fn": calculateUnits },
+			{ "width": 90, "fn": calculateUnits }
 		],
 		"teamCounterFn": calculateUnitsTeam
 	},
@@ -116,7 +117,7 @@ var getScorePanelsData = () => [
 				"identifier": res.code,
 				"caption": resourceNameFirstWord(res.code),
 				"yStart": 34,
-				"width": 100
+				"width": 110
 			})),
 			{
 				"identifier": "tributes",
@@ -126,12 +127,12 @@ var getScorePanelsData = () => [
 						"sent": getColoredTypeTranslation("sent"),
 						"received": getColoredTypeTranslation("received")
 					}),
-				"yStart": 16,
-				"width": 121
+				"yStart": 0,
+				"width": 110
 			},
-			{ "identifier": "treasuresCollected", "caption": translate("Treasures collected"), "yStart": 16, "width": 85 },
-			{ "identifier": "loot", "caption": translate("Loot"), "yStart": 16, "width": 85 },
-			{ "identifier": "livestock", "caption": translate("Livestock bred"), "yStart": 16, "width": 85 }
+			{ "identifier": "treasuresCollected", "caption": translate("Treasures collected"), "yStart": 0, "width": 85 },
+			{ "identifier": "loot", "caption": translate("Loot"), "yStart": 0, "width": 85 },
+			{ "identifier": "livestock", "caption": translate("Livestock bred"), "yStart": 0, "width": 85 }
 		],
 		"titleHeadings": [
 			{
@@ -141,20 +142,19 @@ var getScorePanelsData = () => [
 						"used": getColoredTypeTranslation("used")
 					}),
 				"yStart": 16,
-				"width": 100 * g_ResourceData.GetCodes().length + 110
+				"width": 110 * g_ResourceData.GetCodes().length + 110
 			},
 		],
 		"counters": [
-			{ "width": 110, "fn": calculateTotalResources, "verticalOffset": 12 },
+			{ "width": 110, "fn": calculateTotalResources },
 			...g_ResourceData.GetCodes().map(code => ({
 				"fn": calculateResources,
-				"verticalOffset": 12,
-				"width": 100
+				"width": 110
 			})),
-			{ "width": 121, "fn": calculateTributeSent, "verticalOffset": 12 },
-			{ "width": 85, "fn": calculateTreasureCollected, "verticalOffset": 12 },
-			{ "width": 85, "fn": calculateLootCollected, "verticalOffset": 12 },
-			{ "width": 85, "fn": calculateLivestockTrained, "verticalOffset": 12 }
+			{ "width": 110, "fn": calculateTributeSent },
+			{ "width": 85, "fn": calculateTreasureCollected },
+			{ "width": 85, "fn": calculateLootCollected },
+			{ "width": 85, "fn": calculateLivestockTrained }
 		],
 		"teamCounterFn": calculateResourcesTeam
 	},
@@ -162,8 +162,8 @@ var getScorePanelsData = () => [
 		"label": translate("Market"),
 		"headings": [
 			{ "identifier": "playername", "caption": translate("Player name"), "yStart": 26, "width": 200 },
-			{ "identifier": "tradeIncome", "caption": translate("Trade income"), "yStart": 16, "width": 100 },
-			{ "identifier": "barterEfficency", "caption": translate("Barter efficiency"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
+			{ "identifier": "tradeIncome", "caption": translate("Trade income"), "yStart": 0, "width": 120 },
+			{ "identifier": "barterEfficency", "caption": translate("Barter efficiency"), "yStart": 0, "width": 120, "format": "PERCENTAGE" },
 			...g_ResourceData.GetResources().map(res => {
 				return {
 					"identifier": res.code,
@@ -173,19 +173,18 @@ var getScorePanelsData = () => [
 							"resourceFirstWord": resourceNameFirstWord(res.code),
 							"resourceWithinSentence": resourceNameWithinSentence(res.code)
 						}),
-					"yStart": 16,
-					"width": 100
+					"yStart": 0,
+					"width": 120
 				};
 			})
 		],
 		"titleHeadings": [],
 		"counters": [
-			{ "width": 100, "fn": calculateTradeIncome, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateBarterEfficiency, "verticalOffset": 12 },
+			{ "width": 120, "fn": calculateTradeIncome },
+			{ "width": 120, "fn": calculateBarterEfficiency },
 			...g_ResourceData.GetCodes().map(code => ({
-				"width": 100,
-				"fn": calculateResourceExchanged,
-				"verticalOffset": 12
+				"width": 120,
+				"fn": calculateResourceExchanged
 			}))
 		],
 		"teamCounterFn": calculateMarketTeam
@@ -194,13 +193,13 @@ var getScorePanelsData = () => [
 		"label": translate("Miscellaneous"),
 		"headings": [
 			{ "identifier": "playername", "caption": translate("Player name"), "yStart": 26, "width": 200 },
-			{ "identifier": "killDeath", "caption": translate("Kill / Death ratio"), "yStart": 16, "width": 100, "format": "DECIMAL2" },
-			{ "identifier": "population", "caption": translate("Population"), "yStart": 16, "width": 100, "hideInSummary": true },
-			{ "identifier": "mapControlPeak", "caption": translate("Map control (peak)"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
-			{ "identifier": "mapControl", "caption": translate("Map control (finish)"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
-			{ "identifier": "mapExploration", "caption": translate("Map exploration"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
-			{ "identifier": "vegetarianRatio", "caption": translate("Vegetarian ratio"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
-			{ "identifier": "feminization", "caption": translate("Feminization"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
+			{ "identifier": "killDeath", "caption": translate("Kill / Death ratio"), "yStart": 0, "width": 110, "format": "DECIMAL2" },
+			{ "identifier": "population", "caption": translate("Population"), "yStart": 0, "width": 110, "hideInSummary": true },
+			{ "identifier": "mapControlPeak", "caption": translate("Map control (peak)"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
+			{ "identifier": "mapControl", "caption": translate("Map control (finish)"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
+			{ "identifier": "mapExploration", "caption": translate("Map exploration"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
+			{ "identifier": "vegetarianRatio", "caption": translate("Vegetarian ratio"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
+			{ "identifier": "civilianization", "caption": translate("Civilianization"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
 			{
 				"identifier": "bribes",
 				"caption": translate("Bribes"),
@@ -209,20 +208,20 @@ var getScorePanelsData = () => [
 						"succeeded": getColoredTypeTranslation("succeeded"),
 						"failed": getColoredTypeTranslation("failed")
 					}),
-				"yStart": 16,
-				"width": 139
+				"yStart": 0,
+				"width": 110
 			}
 		],
 		"titleHeadings": [],
 		"counters": [
-			{ "width": 100, "fn": calculateKillDeathRatio, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculatePopulationCount, "verticalOffset": 12, "hideInSummary": true },
-			{ "width": 100, "fn": calculateMapPeakControl, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateMapFinalControl, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateMapExploration, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateVegetarianRatio, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateFeminization, "verticalOffset": 12 },
-			{ "width": 139, "fn": calculateBribes, "verticalOffset": 12 }
+			{ "width": 110, "fn": calculateKillDeathRatio },
+			{ "width": 110, "fn": calculatePopulationCount, "hideInSummary": true },
+			{ "width": 110, "fn": calculateMapPeakControl },
+			{ "width": 110, "fn": calculateMapFinalControl },
+			{ "width": 110, "fn": calculateMapExploration },
+			{ "width": 110, "fn": calculateVegetarianRatio },
+			{ "width": 110, "fn": calculateCivilianization },
+			{ "width": 110, "fn": calculateBribes }
 		],
 		"teamCounterFn": calculateMiscellaneousTeam
 	},
@@ -232,13 +231,13 @@ var getScorePanelsData = () => [
 		"label": translate("Techs (GodsEye)"),
 		"headings": [
 			{ "identifier": "playername", "caption": translate("Player name"), "yStart": 26, "width": 200 },
-			{ "identifier": "killDeath", "caption": translate("Total"), "yStart": 16, "width": 100 },
-			{ "identifier": "population", "caption": translate("Population"), "yStart": 16, "width": 100, "hideInSummary": true },
-			{ "identifier": "mapControlPeak", "caption": translate("Map control (peak)"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
-			{ "identifier": "mapControl", "caption": translate("Map control (finish)"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
-			{ "identifier": "mapExploration", "caption": translate("Map exploration"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
-			{ "identifier": "vegetarianRatio", "caption": translate("Vegetarian ratio"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
-			{ "identifier": "feminization", "caption": translate("Feminization"), "yStart": 16, "width": 100, "format": "PERCENTAGE" },
+			{ "identifier": "killDeath", "caption": translate("Total"), "yStart": 0, "width": 110 },
+			{ "identifier": "population", "caption": translate("Population"), "yStart": 0, "width": 110, "hideInSummary": true },
+			{ "identifier": "mapControlPeak", "caption": translate("Map control (peak)"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
+			{ "identifier": "mapControl", "caption": translate("Map control (finish)"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
+			{ "identifier": "mapExploration", "caption": translate("Map exploration"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
+			{ "identifier": "vegetarianRatio", "caption": translate("Vegetarian ratio"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
+			{ "identifier": "civilianization", "caption": translate("Civilianization"), "yStart": 0, "width": 110, "format": "PERCENTAGE" },
 			{
 				"identifier": "bribes",
 				"caption": translate("Bribes"),
@@ -247,20 +246,20 @@ var getScorePanelsData = () => [
 						"succeeded": getColoredTypeTranslation("succeeded"),
 						"failed": getColoredTypeTranslation("failed")
 					}),
-				"yStart": 16,
-				"width": 139
+				"yStart": 0,
+				"width": 110
 			}
 		],
 		"titleHeadings": [],
 		"counters": [
-			{ "width": 100, "fn": calculateKillDeathRatio, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculatePopulationCount, "verticalOffset": 12, "hideInSummary": true },
-			{ "width": 100, "fn": calculateMapPeakControl, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateMapFinalControl, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateMapExploration, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateVegetarianRatio, "verticalOffset": 12 },
-			{ "width": 100, "fn": calculateFeminization, "verticalOffset": 12 },
-			{ "width": 139, "fn": calculateBribes, "verticalOffset": 12 }
+			{ "width": 110, "fn": calculateKillDeathRatio },
+			{ "width": 110, "fn": calculatePopulationCount, "hideInSummary": true },
+			{ "width": 110, "fn": calculateMapPeakControl },
+			{ "width": 110, "fn": calculateMapFinalControl },
+			{ "width": 110, "fn": calculateMapExploration },
+			{ "width": 110, "fn": calculateVegetarianRatio },
+			{ "width": 110, "fn": calculateCivilianization },
+			{ "width": 110, "fn": calculateBribes }
 		],
 		"teamCounterFn": calculateMiscellaneousTeam
 	}
@@ -271,8 +270,6 @@ var g_ChartPanelsData = [
 		"label": translate("Charts")
 	}
 ];
-
-
 
 function getColoredTypeTranslation(type)
 {
@@ -301,18 +298,18 @@ function resetGeneralPanel()
 
 function updateGeneralPanelHeadings(allHeadings)
 {
-	let headings = allHeadings.filter(heading => !heading.hideInSummary);
+	const headings = allHeadings.filter(heading => !heading.hideInSummary);
 
 	let left = 50;
-	for (let h in headings)
+	for (const h in headings)
 	{
 		let headerGUIName = "playerNameHeading";
 		if (h > 0)
 			headerGUIName = "Heading[" + (h - 1) + "]";
 
-		let headerGUI = Engine.GetGUIObjectByName(headerGUIName);
+		const headerGUI = Engine.GetGUIObjectByName(headerGUIName);
 		headerGUI.caption = headings[h].headerCaption || headings[h].caption;
-		headerGUI.size = left + " " + headings[h].yStart + " " + (left + headings[h].width) + " 100%";
+		headerGUI.size = (left - 4) + " " + headings[h].yStart + " " + (left + headings[h].width + 4) + " 69";
 		headerGUI.hidden = false;
 
 		if (headings[h].width < g_LongHeadingWidth)
@@ -323,7 +320,7 @@ function updateGeneralPanelHeadings(allHeadings)
 function updateGeneralPanelTitles(titleHeadings)
 {
 	let left = 250;
-	for (let th in titleHeadings)
+	for (const th in titleHeadings)
 	{
 		if (th >= g_MaxHeadingTitle)
 			break;
@@ -331,7 +328,7 @@ function updateGeneralPanelTitles(titleHeadings)
 		if (titleHeadings[th].xOffset)
 			left += titleHeadings[th].xOffset;
 
-		let headerGUI = Engine.GetGUIObjectByName("titleHeading[" + th + "]");
+		const headerGUI = Engine.GetGUIObjectByName("titleHeading[" + th + "]");
 		headerGUI.caption = titleHeadings[th].caption;
 		headerGUI.size = left + " " + titleHeadings[th].yStart + " " + (left + titleHeadings[th].width) + " 100%";
 		headerGUI.hidden = false;
@@ -343,19 +340,18 @@ function updateGeneralPanelTitles(titleHeadings)
 
 function updateGeneralPanelCounter(allCounters)
 {
-	let counters = allCounters.filter(counter => !counter.hideInSummary);
+	const counters = allCounters.filter(counter => !counter.hideInSummary);
 	let rowPlayerObjectWidth = 0;
-	let left = 0;
 
 	for (let p = 0; p < g_MaxPlayers; ++p)
 	{
-		left = 240;
+		let left = 240;
 		let counterObject;
 
-		for (let w in counters)
+		for (const w in counters)
 		{
 			counterObject = Engine.GetGUIObjectByName("valueData[" + p + "][" + w + "]");
-			counterObject.size = left + " " + counters[w].verticalOffset + " " + (left + counters[w].width) + " 100%";
+			counterObject.size = left + " 0 " + (left + counters[w].width) + " 100%";
 			counterObject.hidden = false;
 			left += counters[w].width;
 		}
@@ -367,17 +363,18 @@ function updateGeneralPanelCounter(allCounters)
 		for (let t = 0; t < g_MaxTeams; ++t)
 		{
 			left = 240;
-			for (let w in counters)
+			for (const w in counters)
 			{
 				counterObject = Engine.GetGUIObjectByName("valueDataTeam[" + t + "][" + p + "][" + w + "]");
-				counterObject.size = left + " " + counters[w].verticalOffset + " " + (left + counters[w].width) + " 100%";
+				counterObject.size = left + " 0 " + (left + counters[w].width) + " 100%";
 				counterObject.hidden = false;
 
 				if (g_Teams[t])
 				{
-					let yStart = 25 + g_Teams[t].length * (g_PlayerBoxYSize + g_PlayerBoxGap) + 3 + counters[w].verticalOffset;
+					const yStart = 25 + g_Teams[t].length * (g_PlayerBoxYSize + g_PlayerBoxGap) + 3;
 					counterTotalObject = Engine.GetGUIObjectByName("valueDataTeam[" + t + "][" + w + "]");
-					counterTotalObject.size = (left + 20) + " " + yStart + " " + (left + counters[w].width) + " 100%";
+					const yStartTotal = 14 + g_Teams[t].length * (g_PlayerBoxYSize + g_PlayerBoxGap) + 10;
+					counterTotalObject.size = (left + 20) + " " + yStartTotal + " " + (left + counters[w].width) + " " + (yStartTotal + 52);
 					counterTotalObject.hidden = false;
 				}
 
@@ -390,7 +387,7 @@ function updateGeneralPanelCounter(allCounters)
 
 function updateGeneralPanelTeams()
 {
-	let withoutTeam = !g_Teams[-1] ? 0 : g_Teams[-1].length;
+	const withoutTeam = !g_Teams[-1] ? 0 : g_Teams[-1].length;
 
 	if (!g_Teams || withoutTeam > 0)
 		Engine.GetGUIObjectByName("noTeamsBox").hidden = false;
@@ -399,24 +396,22 @@ function updateGeneralPanelTeams()
 		return;
 
 	let yStart = g_TeamsBoxYStart + withoutTeam * (g_PlayerBoxYSize + g_PlayerBoxGap) + (withoutTeam ? 30 : 0);
-	for (let i in g_Teams)
+	for (const i in g_Teams)
 	{
 		if (i == -1)
 			continue;
 
-		let teamBox = Engine.GetGUIObjectByName("teamBoxt["+i+"]");
+		const teamBox = Engine.GetGUIObjectByName("teamBoxt["+i+"]");
 		teamBox.hidden = false;
-		let teamBoxSize = teamBox.size;
-		teamBoxSize.top = yStart;
-		teamBox.size = teamBoxSize;
+		teamBox.size.top = yStart;
 
 		yStart += 30 + g_Teams[i].length * (g_PlayerBoxYSize + g_PlayerBoxGap) + 32;
 
 		Engine.GetGUIObjectByName("teamNameHeadingt[" + i + "]").caption = "Team " + (+i + 1);
 
-		let teamHeading = Engine.GetGUIObjectByName("teamHeadingt[" + i + "]");
-		let yStartTotal = 30 + g_Teams[i].length * (g_PlayerBoxYSize + g_PlayerBoxGap) + 10;
-		teamHeading.size = "50 " + yStartTotal + " 100% " + (yStartTotal + 20);
+		const teamHeading = Engine.GetGUIObjectByName("teamHeadingt[" + i + "]");
+		const yStartTotal = 14 + g_Teams[i].length * (g_PlayerBoxYSize + g_PlayerBoxGap) + 10;
+		teamHeading.size = "50 " + yStartTotal + " 100% " + (yStartTotal + 52);
 		teamHeading.caption = translate("Team total");
 	}
 
@@ -429,19 +424,15 @@ function initPlayerBoxPositions()
 {
 	for (let h = 0; h < g_MaxPlayers; ++h)
 	{
-		let playerBox = Engine.GetGUIObjectByName("playerBox[" + h + "]");
-		let boxSize = playerBox.size;
-		boxSize.top += h * (g_PlayerBoxYSize + g_PlayerBoxGap);
-		boxSize.bottom = boxSize.top + g_PlayerBoxYSize;
-		playerBox.size = boxSize;
+		const playerBox = Engine.GetGUIObjectByName("playerBox[" + h + "]");
+		playerBox.size.top += h * (g_PlayerBoxYSize + g_PlayerBoxGap);
+		playerBox.size.bottom = playerBox.size.top + g_PlayerBoxYSize;
 
 		for (let i = 0; i < g_MaxTeams; ++i)
 		{
-			let playerBoxt = Engine.GetGUIObjectByName("playerBoxt[" + i + "][" + h + "]");
-			boxSize = playerBoxt.size;
-			boxSize.top += h * (g_PlayerBoxYSize + g_PlayerBoxGap);
-			boxSize.bottom = boxSize.top + g_PlayerBoxYSize;
-			playerBoxt.size = boxSize;
+			const playerBoxt = Engine.GetGUIObjectByName("playerBoxt[" + i + "][" + h + "]");
+			playerBoxt.size.top += h * (g_PlayerBoxYSize + g_PlayerBoxGap);
+			playerBoxt.size.bottom = playerBoxt.size.top + g_PlayerBoxYSize;
 		}
 	}
 }

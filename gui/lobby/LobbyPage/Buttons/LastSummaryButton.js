@@ -45,7 +45,7 @@ class LastSummaryButton
 		}
 
 		Engine.LobbySetPlayerPresence("away");
-		Engine.PushGuiPage("page_summary.xml", {
+		Engine.OpenChildPage("page_summary.xml", {
 			"sim": simData,
 			"gui": {
 				"replayDirectory": lastReplay.directory,
