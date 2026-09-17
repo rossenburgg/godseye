@@ -899,6 +899,14 @@
 		<!-- gold glow on hover via overlay -->
 	</sprite>
 
+	<!-- PS5 hub-style submenu cards: dark glass, gold hairline -->
+	<sprite name="DashboardSubcard">
+		<image texture="pregame/dashboard/subcard.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardSubcardOver">
+		<image texture="pregame/dashboard/subcard_over.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+
 	<sprite name="DashboardIconLearn">
 		<image texture="pregame/dashboard/icon_learn.png" texture_size="0 0 100% 100%"/>
 	</sprite>

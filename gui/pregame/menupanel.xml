@@ -42,8 +42,8 @@
 		<object name="submenuButtons" size="0 0 100% 100%" tooltip_style="pgToolTip">
 			<repeat count="30">
 				<object type="button"
-					sprite="DashboardTile" sprite_over="DashboardTile" sprite_pressed="DashboardTile" sprite_disabled="DashboardTile"
-					textcolor="white" textcolor_disabled="150 150 150" font="sans-12"
+					sprite="DashboardSubcard" sprite_over="DashboardSubcardOver" sprite_pressed="DashboardSubcardOver" sprite_disabled="DashboardSubcard"
+					textcolor="white" textcolor_disabled="150 150 150" font="godseye-bold-13"
 					text_align="center" text_valign="center" tooltip_style="pgToolTip"
 					buffer_zone="4"/>
 			</repeat>
