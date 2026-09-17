@@ -14,9 +14,9 @@
 		<translatableAttribute id="caption">GOD'S EYE</translatableAttribute>
 	</object>
 
-	<!-- Main tile row -->
+	<!-- Main tile row: 1:2 cards to match 1024x2048 art perfectly -->
 	<object name="mainMenu" size="0 0 100% 100%">
-		<object name="mainMenuButtons" size="0 32% 100% 52%">
+		<object name="mainMenuButtons" size="0 30% 100% 58%">
 			<repeat count="10">
 				<object name="mainMenuButton[n]" type="button"
 					sprite="TransparentButton" sprite_over="TransparentButton" sprite_pressed="TransparentButton" sprite_disabled="TransparentButton"
@@ -30,7 +30,7 @@
 	</object>
 
 	<!-- Submenu tile row (appears below main row) -->
-	<object name="submenu" size="0 54% 100% 68%" hidden="true">
+	<object name="submenu" size="0 60% 100% 74%" hidden="true">
 		<object name="submenuButtons" size="0 0 100% 100%" tooltip_style="pgToolTip">
 			<repeat count="30">
 				<object type="button"
