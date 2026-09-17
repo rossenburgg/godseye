@@ -189,7 +189,14 @@ export const mainMenuItems = [
 				"hotkey": "lobby",
 				"onPress": () => {
 					if (Engine.StartXmppClient)
+					{
+						// Hand the XMPP session to the stock lobby: drop the widget's
+						// background connection first so the lobby connects cleanly.
+						// (The widget reconnects when you return to the main menu.)
+						if (typeof Engine.StopXmppClient == "function")
+							try { Engine.StopXmppClient(); } catch (e) {}
 						Engine.OpenChildPage("page_prelobby_entrance.xml");
+					}
 				}
 			},
 			{
@@ -275,6 +282,17 @@ export const mainMenuItems = [
 				"tooltip": translate("Toggle anonymous feedback that helps the 0 A.D. team fix bugs and improve performance."),
 				"onPress": () => {
 					Engine.SetUserReportEnabled(!Engine.IsUserReportEnabled());
+				}
+			},
+			{
+				"caption": () => translate("Lobby Players") + ": " + (Engine.ConfigDB_GetValue("user", "godseye.lobby_widget") === "true" ? translate("On") : translate("Off")),
+				"tooltip": translate("Show who's online in the multiplayer lobby on the main menu. Requires a lobby account with a saved login. While connected, other players will see you as online."),
+				"onPress": () => {
+					// The handler owns the connection; the toggle only persists the
+					// preference and it picks the change up on its next tick.
+					const enabled = Engine.ConfigDB_GetValue("user", "godseye.lobby_widget") !== "true";
+					Engine.ConfigDB_CreateValue("user", "godseye.lobby_widget", enabled ? "true" : "false");
+					Engine.ConfigDB_WriteValueToFile("user", "godseye.lobby_widget", enabled ? "true" : "false", "config/user.cfg");
 				}
 			}
 		]

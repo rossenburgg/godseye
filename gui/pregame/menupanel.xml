@@ -67,6 +67,13 @@
 		<object type="image" size="0% 0% 100% 100%" sprite="DashboardIconSettings" ghost="true"/>
 	</object>
 
+	<!-- Lobby widget: who's online in the multiplayer lobby (opt-in, display only) -->
+	<object name="lobbyWidget" size="100%-300 100%-224 100%-12 100%-48" hidden="true" ghost="true">
+		<object name="lobbyWidgetTitle" type="text" size="0 0 100% 24" font="godseye-bold-13" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true"/>
+		<object name="lobbyWidgetCount" type="text" size="0 24 100% 46" font="sans-bold-12" textcolor="white" text_align="left" text_valign="center" ghost="true"/>
+		<object name="lobbyWidgetNames" type="text" size="0 46 100% 100%" font="sans-11" textcolor="160 180 210" text_align="left" text_valign="top" ghost="true"/>
+	</object>
+
 	<!-- Required by MainMenuPage.js (hidden) -->
 	<object name="organizationName" type="text" size="0 0 0 0" hidden="true"/>
 	<object name="organizationLogo" type="image" size="0 0 0 0" hidden="true"/>

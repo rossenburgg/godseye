@@ -96,6 +96,12 @@ export class MainMenuItemHandler
 					this.pressButton(this.menuItems[idx], idx, true); // toggles like the tile
 			};
 
+		// Lobby widget: who's online (opt-in). The handler owns the XMPP
+		// connection; the Settings toggle only persists the preference.
+		this.lobbyWidgetOptIn = false; // last seen toggle state
+		this.lobbyWidgetState = "off"; // off | nocreds | connecting | connected | error | unavailable
+		this.lobbyWidgetTick = 0; // roster refresh countdown (ticks)
+
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
 	}
 
@@ -140,6 +146,7 @@ export class MainMenuItemHandler
 		this.tickButtonAnims();
 		this.tickBackgroundZoom();
 		this.tickSubmenuSlide();
+		this.tickLobbyWidget();
 		// Deferred idle reset: only when the mouse has truly left every button.
 		// (Avoids flicker when moving directly between neighboring tiles.)
 		if (!this.hoveredButton)
@@ -158,6 +165,134 @@ export class MainMenuItemHandler
 			else if (this.bgBase && this.bgZoom.target !== 1.0)
 				this.swapBackground("DashboardBackground", 1.0);
 		}
+	}
+
+	/**
+	 * Opt-in lobby widget: keeps a background XMPP session while the main
+	 * menu is open and shows who's online in the multiplayer lobby.
+	 * Runs off the persisted "godseye.lobby_widget" preference so the
+	 * Settings toggle needs no direct line to this handler.
+	 */
+	tickLobbyWidget()
+	{
+		const widget = Engine.GetGUIObjectByName("lobbyWidget");
+		if (!widget)
+			return;
+
+		const xmppAvailable = typeof Engine.StartXmppClient == "function";
+		const optIn = xmppAvailable &&
+			Engine.ConfigDB_GetValue("user", "godseye.lobby_widget") === "true";
+
+		// Toggle changed: connect or disconnect to match.
+		if (optIn !== this.lobbyWidgetOptIn)
+		{
+			this.lobbyWidgetOptIn = optIn;
+			if (optIn)
+				this.lobbyWidgetConnect();
+			else
+				this.lobbyWidgetDisconnect();
+		}
+
+		widget.hidden = !optIn;
+		if (widget.hidden)
+			return;
+
+		// Roster refresh roughly every 10 seconds (ticks run per frame).
+		if (this.lobbyWidgetTick <= 0)
+		{
+			this.lobbyWidgetTick = 600;
+			this.lobbyWidgetRefresh();
+		}
+		else
+			--this.lobbyWidgetTick;
+	}
+
+	lobbyWidgetConnect()
+	{
+		if (typeof Engine.LobbyGetPlayerList != "function")
+		{
+			this.lobbyWidgetState = "unavailable";
+			this.lobbyWidgetRefresh();
+			return;
+		}
+		const login = Engine.ConfigDB_GetValue("user", "lobby.login");
+		const password = Engine.ConfigDB_GetValue("user", "lobby.password");
+		if (!login || !password)
+		{
+			this.lobbyWidgetState = "nocreds";
+			this.lobbyWidgetRefresh();
+			return;
+		}
+		try
+		{
+			Engine.StartXmppClient(login, password);
+			this.lobbyWidgetState = "connecting";
+			this.lobbyWidgetConnectTime = Date.now();
+		}
+		catch (e)
+		{
+			this.lobbyWidgetState = "error";
+		}
+		this.lobbyWidgetRefresh();
+	}
+
+	lobbyWidgetDisconnect()
+	{
+		if (typeof Engine.StopXmppClient == "function")
+			try { Engine.StopXmppClient(); } catch (e) {}
+		this.lobbyWidgetState = "off";
+	}
+
+	lobbyWidgetRefresh()
+	{
+		const title = Engine.GetGUIObjectByName("lobbyWidgetTitle");
+		const count = Engine.GetGUIObjectByName("lobbyWidgetCount");
+		const names = Engine.GetGUIObjectByName("lobbyWidgetNames");
+		if (!title || !count || !names)
+			return;
+
+		title.caption = translate("LOBBY");
+
+		if (this.lobbyWidgetState == "unavailable")
+		{
+			count.caption = translate("Unavailable");
+			names.caption = translate("This build can't read the lobby roster.");
+			return;
+		}
+		if (this.lobbyWidgetState == "nocreds")
+		{
+			count.caption = translate("Not connected");
+			names.caption = translate("Log into the lobby once (remember password) to see who's online.");
+			return;
+		}
+		if (this.lobbyWidgetState == "error")
+		{
+			count.caption = translate("Connection failed");
+			names.caption = "";
+			return;
+		}
+
+		let players = [];
+		try { players = Engine.LobbyGetPlayerList() || []; }
+		catch (e) { players = []; }
+		// Normalize: the roster may be strings or {name/nick} objects.
+		const nicks = players
+			.map(p => typeof p == "string" ? p : (p && (p.name || p.nick || p.username)) || "")
+			.filter(n => !!n);
+
+		if (!nicks.length)
+		{
+			// The MUC roster fills in over a few seconds after connecting.
+			const waiting = Date.now() - (this.lobbyWidgetConnectTime || 0) < 30000;
+			count.caption = waiting ? translate("Connecting...") : translate("0 online");
+			names.caption = "";
+			return;
+		}
+		this.lobbyWidgetState = "connected";
+		count.caption = nicks.length + " " + translate("online");
+		const shown = nicks.slice(0, 8);
+		names.caption = shown.join("\n") +
+			(nicks.length > 8 ? "\n+" + (nicks.length - 8) + " " + translate("more") : "");
 	}
 
 	/**
