@@ -207,6 +207,7 @@ export class MainMenuItemHandler
 				anim.startScale = anim.scale;
 				anim.target = 1.0;
 				anim.startTime = Date.now();
+				button.z = 10; // drop behind immediately so the newly hovered card draws on top
 				this.animatingButtons.add(button);
 				if (isTopLevel && this.bgBase)
 					this.swapBackground("DashboardBackground", 1.0);
