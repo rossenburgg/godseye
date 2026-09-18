@@ -912,6 +912,11 @@
 		<image texture="pregame/dashboard/subcard_over.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
 
+	<!-- Vista banner behind the header: scenic top fading into the dark (reference language) -->
+	<sprite name="DashboardVista">
+		<image texture="pregame/dashboard/vista_banner.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+
 	<!-- Gold hairline frames for the main menu cards (transparent center) -->
 	<sprite name="DashboardCardFrame">
 		<image texture="pregame/dashboard/card_frame.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>

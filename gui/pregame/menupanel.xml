@@ -6,6 +6,9 @@
 	<!-- PS5-style dashboard background -->
 	<object name="dashboardBackground" type="image" sprite="DashboardBackground" size="0 0 100% 100%"/>
 
+	<!-- Vista banner behind the header: scenic top melting into the dark, like the reference -->
+	<object name="dashboardVista" type="image" size="0 0 100% 30%" sprite="DashboardVista" ghost="true"/>
+
 	<!-- Header: gold emblem + hero title, top-left -->
 	<object name="dashboardEmblem" type="image" size="4% 5% 8% 12.1%" sprite="DashboardEmblem" ghost="true"/>
 	<object type="text" size="9.5% 4.5% 60% 8%" font="sans-bold-18" textcolor="255 255 255" text_align="left" text_valign="center">
