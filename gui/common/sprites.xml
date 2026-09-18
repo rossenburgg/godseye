@@ -914,17 +914,9 @@
 
 	<!-- Vista banner behind the header: 4 parallax layers (sky, mountains, city, foreground),
 	     ChatGPT art keyed and stacked, drifting at different speeds like the stock 0 A.D. backgrounds -->
-	<sprite name="DashboardVistaSky">
-		<image texture="pregame/dashboard/vista_layer_sky.png" size="0 0 100% 100%" texture_size="0 0 100% 100%" round_coordinates="false"/>
-	</sprite>
-	<sprite name="DashboardVistaMtn">
-		<image texture="pregame/dashboard/vista_layer_mtn.png" size="0 0 100% 100%" texture_size="0 0 100% 100%" round_coordinates="false"/>
-	</sprite>
-	<sprite name="DashboardVistaCity">
-		<image texture="pregame/dashboard/vista_layer_city.png" size="0 0 100% 100%" texture_size="0 0 100% 100%" round_coordinates="false"/>
-	</sprite>
-	<sprite name="DashboardVistaFg">
-		<image texture="pregame/dashboard/vista_layer_fg.png" size="0 0 100% 100%" texture_size="0 0 100% 100%" round_coordinates="false"/>
+	<!-- Static full-screen vista painting (ChatGPT Roman market set, flattened) -->
+	<sprite name="DashboardVistaStatic">
+		<image texture="pregame/dashboard/vista_static.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
 
 	<!-- Full-screen navy scrim over the vista: our background color, light at

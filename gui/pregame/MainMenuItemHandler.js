@@ -124,22 +124,11 @@ export class MainMenuItemHandler
 		if (sectionLabel)
 			sectionLabel.z = 200;
 
-		// Vista parallax: 4 banner layers drifting on slow sine waves, back layers
-		// barely move and front layers move more (stock 0 A.D. background trick).
-		// Amplitudes are in % of screen width. The layers are full-screen at a
-		// fixed 2:1 aspect (like stock), sized in pixels each tick, so the art
-		// is never stretched on any screen: it always covers, cropping the
-		// excess. Drift is clamped to the bleed margin so no edge ever shows.
-		// Sine (not cosine) so the motion starts at full speed instead of
-		// crawling out of a standstill.
-		this.vistaLayers = [0, 1, 2, 3].map(i => Engine.GetGUIObjectByName("vistaLayer" + i));
-		this.vistaCfg = [
-			{ "amp": 2, "freq": 0.060 },
-			{ "amp": 4, "freq": 0.060 },
-			{ "amp": 7, "freq": 0.050 },
-			{ "amp": 10, "freq": 0.050 },
-		];
-		this.vistaT0 = Date.now();
+		// Vista: one static full-screen painting (the four generated layers
+		// were never a single scene, so drifting them would slide the seams
+		// visibly). Sized in pixels each tick at a fixed 2:1 "cover": never
+		// stretched on any screen, the excess is cropped off-screen.
+		this.vistaStatic = Engine.GetGUIObjectByName("vistaStatic");
 
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
 	}
@@ -166,7 +155,7 @@ export class MainMenuItemHandler
 		}
 		this.tickButtonAnims();
 		this.tickBackgroundZoom();
-		this.tickVistaParallax();
+		this.tickVistaLayout();
 		this.tickSubmenuSlide();
 		this.tickLobbyWidget();
 		// Deferred idle reset: only when the mouse has truly left every button.
@@ -403,28 +392,20 @@ export class MainMenuItemHandler
 			z.scale = z.target;
 	}
 
-	tickVistaParallax()
+	tickVistaLayout()
 	{
-		if (!this.vistaLayers[0])
+		if (!this.vistaStatic)
 			return;
-		const t = (Date.now() - this.vistaT0) / 1000;
 		const screen = this.mainMenu.getComputedSize();
 		const W = screen.right - screen.left;
 		const H = screen.bottom - screen.top;
 		const stripW = Math.max(2 * H, W);
 		const stripH = stripW / 2;
+		const left = (W - stripW) / 2;
 		const top = (H - stripH) / 2;
-		const margin = Math.max(0, (stripW - W) / 2);
-		for (let i = 0; i < this.vistaLayers.length; i++)
-		{
-			const cfg = this.vistaCfg[i];
-			let d = cfg.amp / 100 * W * Math.sin(cfg.freq * t);
-			d = Math.max(-margin, Math.min(margin, d));
-			const left = (W - stripW) / 2 + d;
-			this.vistaLayers[i].size = {
-				"left": left, "top": top, "right": left + stripW, "bottom": top + stripH
-			};
-		}
+		this.vistaStatic.size = {
+			"left": left, "top": top, "right": left + stripW, "bottom": top + stripH
+		};
 	}
 
 	tickButtonAnims()
