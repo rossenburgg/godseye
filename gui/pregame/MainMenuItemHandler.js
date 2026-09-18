@@ -126,12 +126,12 @@ export class MainMenuItemHandler
 
 		// Vista parallax: 4 banner layers drifting on slow sine waves, back layers
 		// barely move and front layers move more (stock 0 A.D. background trick).
-		// Amplitudes are in % of screen width. The strip is a fixed 8:1 aspect
-		// (matching the 2048x256 textures) sized in pixels each tick, so the art
-		// is never stretched on any screen: wider screens just reveal more of
-		// the strip's bleed. Drift is clamped to the bleed margin so no edge
-		// ever shows. Sine (not cosine) so the motion starts at full speed
-		// instead of crawling out of a standstill.
+		// Amplitudes are in % of screen width. The layers are full-screen at a
+		// fixed 2:1 aspect (like stock), sized in pixels each tick, so the art
+		// is never stretched on any screen: it always covers, cropping the
+		// excess. Drift is clamped to the bleed margin so no edge ever shows.
+		// Sine (not cosine) so the motion starts at full speed instead of
+		// crawling out of a standstill.
 		this.vistaLayers = [0, 1, 2, 3].map(i => Engine.GetGUIObjectByName("vistaLayer" + i));
 		this.vistaCfg = [
 			{ "amp": 2, "freq": 0.060 },
@@ -411,8 +411,9 @@ export class MainMenuItemHandler
 		const screen = this.mainMenu.getComputedSize();
 		const W = screen.right - screen.left;
 		const H = screen.bottom - screen.top;
-		const stripH = 0.30 * H;
-		const stripW = 8 * stripH;
+		const stripW = Math.max(2 * H, W);
+		const stripH = stripW / 2;
+		const top = (H - stripH) / 2;
 		const margin = Math.max(0, (stripW - W) / 2);
 		for (let i = 0; i < this.vistaLayers.length; i++)
 		{
@@ -421,7 +422,7 @@ export class MainMenuItemHandler
 			d = Math.max(-margin, Math.min(margin, d));
 			const left = (W - stripW) / 2 + d;
 			this.vistaLayers[i].size = {
-				"left": left, "top": 0, "right": left + stripW, "bottom": stripH
+				"left": left, "top": top, "right": left + stripW, "bottom": top + stripH
 			};
 		}
 	}

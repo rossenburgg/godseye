@@ -6,12 +6,14 @@
 	<!-- PS5-style dashboard background -->
 	<object name="dashboardBackground" type="image" sprite="DashboardBackground" size="0 0 100% 100%"/>
 
-	<!-- Vista banner behind the header: 4 parallax layers drifting at different speeds.
-	     Each spans -10%..110% so the horizontal drift never exposes an edge. -->
+	<!-- Vista: full-screen OG Kush panorama, 4 parallax layers + navy scrim.
+	     Layer boxes are sized in pixels every tick (fixed 2:1, like stock) so
+	     the art never stretches; the scrim melts it into our background color. -->
 	<object name="vistaLayer0" type="image" size="-10% 0% 110% 30%" sprite="DashboardVistaSky" ghost="true"/>
 	<object name="vistaLayer1" type="image" size="-10% 0% 110% 30%" sprite="DashboardVistaMtn" ghost="true"/>
 	<object name="vistaLayer2" type="image" size="-10% 0% 110% 30%" sprite="DashboardVistaCity" ghost="true"/>
 	<object name="vistaLayer3" type="image" size="-10% 0% 110% 30%" sprite="DashboardVistaFg" ghost="true"/>
+	<object name="vistaScrim" type="image" size="0 0 100% 100%" sprite="DashboardVistaScrim" ghost="true"/>
 
 	<!-- Header: gold emblem + hero title, top-left -->
 	<object name="dashboardEmblem" type="image" size="4% 5% 8% 12.1%" sprite="DashboardEmblem" ghost="true"/>

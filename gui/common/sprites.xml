@@ -927,6 +927,12 @@
 		<image texture="pregame/dashboard/vista_layer_fg.png" size="0 0 100% 100%" texture_size="0 0 100% 100%" round_coordinates="false"/>
 	</sprite>
 
+	<!-- Full-screen navy scrim over the vista: our background color, light at
+	     the top so the art shines, solid at the bottom where the menu sits -->
+	<sprite name="DashboardVistaScrim">
+		<image texture="pregame/dashboard/vista_scrim.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+
 	<!-- Gold hairline frames for the main menu cards (transparent center) -->
 	<sprite name="DashboardCardFrame">
 		<image texture="pregame/dashboard/card_frame.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
