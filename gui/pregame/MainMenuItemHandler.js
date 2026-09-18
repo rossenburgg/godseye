@@ -91,6 +91,13 @@ export class MainMenuItemHandler
 		// PS5-style info panel + top-right utilities.
 		this.tileInfoTitle = Engine.GetGUIObjectByName("tileInfoTitle");
 		this.tileInfoDesc = Engine.GetGUIObjectByName("tileInfoDesc");
+		this.sectionHeader = Engine.GetGUIObjectByName("sectionHeader");
+		// Responsive layout: when a card expands (1.5x), the section header
+		// lifts and the info panel drops so the zoomed card never covers text.
+		this.headerBase = { "left": 4.6, "top": 29.5, "right": 60, "bottom": 32.5 };
+		this.infoTitleBase = { "left": 0, "top": 50, "right": 100, "bottom": 55 };
+		this.infoDescBase = { "left": 15, "top": 55, "right": 85, "bottom": 59 };
+		this.layoutShift = { "value": 0, "target": 0, "startValue": 0, "startTime": 0 };
 		this.hoveredButton = null; // any-level hover, for flicker-free idle resets
 		this.infoPanelDefault = true;
 		this.resetInfoPanel();
@@ -170,6 +177,7 @@ export class MainMenuItemHandler
 		this.tickVistaLayout();
 		this.tickSubmenuSlide();
 		this.tickBackgroundFx();
+		this.tickLayoutShift();
 		this.tickLobbyWidget();
 		// Deferred idle reset: only when the mouse has truly left every button.
 		// (Avoids flicker when moving directly between neighboring tiles.)
@@ -215,6 +223,50 @@ export class MainMenuItemHandler
 			this.bgBase.sprite = desired;
 			this.bgCurrent = desired;
 		}
+	}
+
+	/**
+	 * Responsive layout: while a card is expanded, the section header
+	 * lifts and the info panel drops (250ms ease) so the zoomed card
+	 * never covers text. Everything relaxes back when the hover ends.
+	 */
+	tickLayoutShift()
+	{
+		const hoverAnim = this.hoveredButton ? this.buttonAnims.get(this.hoveredButton) : null;
+		const target = hoverAnim && hoverAnim.isTopLevel ? 1 : 0;
+		const s = this.layoutShift;
+		if (target !== s.target)
+		{
+			s.target = target;
+			s.startValue = s.value;
+			s.startTime = Date.now();
+		}
+		if (s.value === s.target)
+			return;
+
+		const t = Math.min((Date.now() - s.startTime) / 250, 1.0);
+		const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+		s.value = s.startValue + (s.target - s.startValue) * eased;
+		if (t >= 1.0)
+			s.value = s.target;
+
+		const up = -3.5 * s.value;
+		const down = 3.5 * s.value;
+		if (this.sectionHeader)
+			this.sectionHeader.size = {
+				"rleft": this.headerBase.left, "rtop": this.headerBase.top + up,
+				"rright": this.headerBase.right, "rbottom": this.headerBase.bottom + up
+			};
+		if (this.tileInfoTitle)
+			this.tileInfoTitle.size = {
+				"rleft": this.infoTitleBase.left, "rtop": this.infoTitleBase.top + down,
+				"rright": this.infoTitleBase.right, "rbottom": this.infoTitleBase.bottom + down
+			};
+		if (this.tileInfoDesc)
+			this.tileInfoDesc.size = {
+				"rleft": this.infoDescBase.left, "rtop": this.infoDescBase.top + down,
+				"rright": this.infoDescBase.right, "rbottom": this.infoDescBase.bottom + down
+			};
 	}
 
 	/**
@@ -508,7 +560,8 @@ export class MainMenuItemHandler
 				"frameOver": null,
 				"frameStart": 0,
 				"startTime": 0,
-				"origSize": origSize
+				"origSize": origSize,
+				"isTopLevel": isTopLevel
 			});
 			button.onMouseEnter = () => {
 				const anim = this.buttonAnims.get(button);

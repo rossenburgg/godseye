@@ -25,7 +25,7 @@
 	</object>
 
 	<!-- Section header: gold tick + label, aligned to the tile row -->
-	<object type="text" size="4.6% 29.5% 60% 32.5%" font="sans-bold-16" textcolor="212 175 55" text_align="left" text_valign="center">
+	<object name="sectionHeader" type="text" size="4.6% 29.5% 60% 32.5%" font="sans-bold-16" textcolor="212 175 55" text_align="left" text_valign="center">
 		<translatableAttribute id="caption">|   CHOOSE YOUR PATH</translatableAttribute>
 	</object>
 
