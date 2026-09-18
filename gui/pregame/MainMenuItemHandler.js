@@ -102,13 +102,6 @@ export class MainMenuItemHandler
 		this.infoPanelDefault = true;
 		this.resetInfoPanel();
 
-		const playerPlateName = Engine.GetGUIObjectByName("playerPlateName");
-		if (playerPlateName)
-		{
-			const playerName = Engine.ConfigDB_GetValue("user", "player.name") || "Player";
-			playerPlateName.caption = playerName;
-		}
-
 		const quickSettings = Engine.GetGUIObjectByName("quickSettingsButton");
 		if (quickSettings)
 			quickSettings.onPress = async () => {

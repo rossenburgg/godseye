@@ -81,9 +81,10 @@
 		<translatableAttribute id="caption">God's Eye mod for 0 A.D. 0.28</translatableAttribute>
 	</object>
 
-	<!-- 0AD logo: top-right, honoring the base game -->
-	<object name="productLogo" type="image" size="93.75% 0.7% 99.6% 5.9%" ghost="true"/>
-	<object name="productBuild" type="text" size="93.75% 6.1% 99.6% 7.6%" font="sans-10" textcolor="120 140 180" text_align="right" ghost="true"/>
+	<!-- 0AD logo: bottom-right footer credit, honoring the base game.
+	     (The base page script assigns its sprite; the object must exist.) -->
+	<object name="productLogo" type="image" size="91% 93.8% 99.6% 98.4%" ghost="true"/>
+	<object name="productBuild" type="text" size="91% 93.8% 99.6% 98.4%" font="sans-10" textcolor="120 140 180" text_align="right" ghost="true" hidden="true"/>
 
 	<!-- Top-right: quick settings gear -->
 	<object name="quickSettingsButton" type="button" size="97.7% 8.1% 99.6% 12.2%"
@@ -91,9 +92,7 @@
 		<object type="image" size="0% 0% 100% 100%" sprite="DashboardIconSettings" ghost="true"/>
 	</object>
 
-	<!-- Bottom-right player plate: crown + name -->
-	<object type="image" size="89% 94.3% 91.5% 98.7%" sprite="DashboardCrown" ghost="true"/>
-	<object name="playerPlateName" type="text" size="91.9% 94.4% 99.4% 98.5%" font="sans-bold-13" textcolor="212 175 55" text_align="left" text_valign="center" ghost="true"/>
+	<!-- Bottom-right: kept clear for the 0AD logo footer credit above -->
 
 	<!-- Lobby widget: proper panel (dark glass + gold hairline), who's online -->
 	<object name="lobbyWidget" size="1% 79% 17% 96%" hidden="true" ghost="true">
