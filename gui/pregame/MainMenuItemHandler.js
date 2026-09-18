@@ -126,9 +126,12 @@ export class MainMenuItemHandler
 
 		// Vista parallax: 4 banner layers drifting on slow sine waves, back layers
 		// barely move and front layers move more (stock 0 A.D. background trick).
-		// Amplitudes are in % of screen width; layers span -10%..110% so the
-		// drift never exposes an edge. Sine (not cosine) so the motion starts
-		// at full speed instead of crawling out of a standstill.
+		// Amplitudes are in % of screen width. The strip is a fixed 8:1 aspect
+		// (matching the 2048x256 textures) sized in pixels each tick, so the art
+		// is never stretched on any screen: wider screens just reveal more of
+		// the strip's bleed. Drift is clamped to the bleed margin so no edge
+		// ever shows. Sine (not cosine) so the motion starts at full speed
+		// instead of crawling out of a standstill.
 		this.vistaLayers = [0, 1, 2, 3].map(i => Engine.GetGUIObjectByName("vistaLayer" + i));
 		this.vistaCfg = [
 			{ "amp": 2, "freq": 0.060 },
@@ -405,12 +408,20 @@ export class MainMenuItemHandler
 		if (!this.vistaLayers[0])
 			return;
 		const t = (Date.now() - this.vistaT0) / 1000;
+		const screen = this.mainMenu.getComputedSize();
+		const W = screen.right - screen.left;
+		const H = screen.bottom - screen.top;
+		const stripH = 0.30 * H;
+		const stripW = 8 * stripH;
+		const margin = Math.max(0, (stripW - W) / 2);
 		for (let i = 0; i < this.vistaLayers.length; i++)
 		{
 			const cfg = this.vistaCfg[i];
-			const d = cfg.amp * Math.sin(cfg.freq * t);
+			let d = cfg.amp / 100 * W * Math.sin(cfg.freq * t);
+			d = Math.max(-margin, Math.min(margin, d));
+			const left = (W - stripW) / 2 + d;
 			this.vistaLayers[i].size = {
-				"rleft": -10 + d, "rtop": 0, "rright": 110 + d, "rbottom": 30
+				"left": left, "top": 0, "right": left + stripW, "bottom": stripH
 			};
 		}
 	}
