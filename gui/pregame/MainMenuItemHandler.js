@@ -126,14 +126,14 @@ export class MainMenuItemHandler
 
 		// Vista parallax: 4 banner layers drifting on slow cosine waves, back layers
 		// barely move and front layers move more (stock 0 A.D. background trick).
-		// Amplitudes are in % of screen width; layers span -10%..110% so the
+		// Amplitudes are in % of screen width; layers span -6%..106% so the
 		// drift never exposes an edge.
 		this.vistaLayers = [0, 1, 2, 3].map(i => Engine.GetGUIObjectByName("vistaLayer" + i));
 		this.vistaCfg = [
-			{ "amp": 1, "freq": 0.050 },
-			{ "amp": 3, "freq": 0.050 },
-			{ "amp": 6, "freq": 0.045 },
-			{ "amp": 10, "freq": 0.040 },
+			{ "amp": 0.5, "freq": 0.050 },
+			{ "amp": 1.5, "freq": 0.050 },
+			{ "amp": 3, "freq": 0.045 },
+			{ "amp": 5, "freq": 0.040 },
 		];
 		this.vistaT0 = Date.now();
 
@@ -409,7 +409,7 @@ export class MainMenuItemHandler
 			const cfg = this.vistaCfg[i];
 			const d = cfg.amp * Math.cos(cfg.freq * t);
 			this.vistaLayers[i].size = {
-				"rleft": -10 + d, "rtop": 0, "rright": 110 + d, "rbottom": 30
+				"rleft": -6 + d, "rtop": 0, "rright": 106 + d, "rbottom": 30
 			};
 		}
 	}

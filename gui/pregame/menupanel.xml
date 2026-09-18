@@ -8,10 +8,10 @@
 
 	<!-- Vista banner behind the header: 4 parallax layers drifting at different speeds.
 	     Each spans -10%..110% so the horizontal drift never exposes an edge. -->
-	<object name="vistaLayer0" type="image" size="-10% 0% 110% 30%" sprite="DashboardVistaSky" ghost="true"/>
-	<object name="vistaLayer1" type="image" size="-10% 0% 110% 30%" sprite="DashboardVistaMtn" ghost="true"/>
-	<object name="vistaLayer2" type="image" size="-10% 0% 110% 30%" sprite="DashboardVistaCity" ghost="true"/>
-	<object name="vistaLayer3" type="image" size="-10% 0% 110% 30%" sprite="DashboardVistaFg" ghost="true"/>
+	<object name="vistaLayer0" type="image" size="-6% 0% 106% 30%" sprite="DashboardVistaSky" ghost="true"/>
+	<object name="vistaLayer1" type="image" size="-6% 0% 106% 30%" sprite="DashboardVistaMtn" ghost="true"/>
+	<object name="vistaLayer2" type="image" size="-6% 0% 106% 30%" sprite="DashboardVistaCity" ghost="true"/>
+	<object name="vistaLayer3" type="image" size="-6% 0% 106% 30%" sprite="DashboardVistaFg" ghost="true"/>
 
 	<!-- Header: gold emblem + hero title, top-left -->
 	<object name="dashboardEmblem" type="image" size="4% 5% 8% 12.1%" sprite="DashboardEmblem" ghost="true"/>
