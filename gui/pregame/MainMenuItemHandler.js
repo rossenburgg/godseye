@@ -62,24 +62,6 @@ export class MainMenuItemHandler
 		this.buttonAnims = new Map();
 		this.animatingButtons = new Set();
 
-		// Per-tile background art: instant re-theme on hover (PS5-style).
-		// (0ad GUI has no opacity property, so the swap is masked by a
-		// smooth zoom punch instead of a cross-fade.)
-		this.bgBase = Engine.GetGUIObjectByName("dashboardBackground");
-		this.tileBackgrounds = [
-			"DashboardBackgroundLearn",
-			"DashboardBackgroundCampaign",
-			"DashboardBackgroundSingleplayer",
-			"DashboardBackgroundMultiplayer",
-			"DashboardBackgroundSettings",
-			"DashboardBackgroundEditor",
-			"DashboardBackgroundCredits",
-			"DashboardBackgroundCivtree",
-			"DashboardBackgroundManual",
-			"DashboardBackgroundExit"
-		];
-		this.bgZoom = { "scale": 1.0, "startScale": 1.0, "target": 1.0, "startTime": 0 };
-
 		this.setupMenuButtons(this.mainMenuButtons.children, this.menuItems, true);
 		this.setupHotkeys(this.menuItems);
 
@@ -101,12 +83,10 @@ export class MainMenuItemHandler
 
 		const quickSettings = Engine.GetGUIObjectByName("quickSettingsButton");
 		if (quickSettings)
-			quickSettings.onPress = () => {
-				// Find the Settings item by its Options submenu (robust to reorder).
-				const idx = this.menuItems.findIndex(item =>
-					item.submenu && item.submenu.some(sub => sub.caption === translate("Options")));
-				if (idx >= 0)
-					this.pressButton(this.menuItems[idx], idx, true); // toggles like the tile
+			quickSettings.onPress = async () => {
+				// A gear means settings: open the Options page directly,
+				// same as the Settings submenu's Options entry.
+				fireConfigChangeHandlers(await Engine.OpenChildPage("page_options.xml"));
 			};
 
 		// Lobby widget: who's online (opt-in). The handler owns the XMPP
@@ -166,7 +146,6 @@ export class MainMenuItemHandler
 				userReport.hidden = true;
 		}
 		this.tickButtonAnims();
-		this.tickBackgroundZoom();
 		this.tickVistaLayout();
 		this.tickSubmenuSlide();
 		this.tickLobbyWidget();
@@ -176,17 +155,6 @@ export class MainMenuItemHandler
 		{
 			if (!this.infoPanelDefault)
 				this.resetInfoPanel();
-			// Background: while a submenu is open, keep its parent tile's art
-			// (PS5 keeps the game backdrop across its hub). Otherwise base.
-			const parentIdx = !this.submenu.hidden && this.lastOpenItem
-				? this.menuItems.indexOf(this.lastOpenItem) : -1;
-			if (parentIdx >= 0)
-			{
-				if (this.bgZoom.target !== 1.06)
-					this.swapBackground(this.tileBackgrounds[parentIdx], 1.06);
-			}
-			else if (this.bgBase && this.bgZoom.target !== 1.0)
-				this.swapBackground("DashboardBackground", 1.0);
 		}
 	}
 
@@ -369,43 +337,6 @@ export class MainMenuItemHandler
 			this.submenuAnim = null;
 	}
 
-	/**
-	 * Smooth zoom punch that masks the instant background sprite swap.
-	 * 350ms ease-out, settles at 1.06 while a tile is hovered.
-	 */
-	swapBackground(spriteName, zoomTarget)
-	{
-		if (!this.bgBase)
-			return;
-		this.bgBase.sprite = spriteName;
-		this.bgZoom.startScale = this.bgZoom.scale;
-		this.bgZoom.target = zoomTarget;
-		this.bgZoom.startTime = Date.now();
-	}
-
-	tickBackgroundZoom()
-	{
-		if (!this.bgBase)
-			return;
-		const z = this.bgZoom;
-		if (z.scale === z.target)
-			return;
-
-		const duration = 350;
-		const t = Math.min((Date.now() - z.startTime) / duration, 1.0);
-		const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
-		z.scale = z.startScale + (z.target - z.startScale) * eased;
-
-		// Centered zoom via relative size (matches tile animation pattern).
-		const m = (z.scale - 1.0) * 50; // margin % on each side
-		this.bgBase.size = {
-			"rleft": -m, "rtop": -m, "rright": 100 + m, "rbottom": 100 + m
-		};
-
-		if (t >= 1.0)
-			z.scale = z.target;
-	}
-
 	tickVistaLayout()
 	{
 		if (!this.vistaStatic)
@@ -534,8 +465,6 @@ export class MainMenuItemHandler
 				// Tagline readout: show the hovered card's title.
 				if (isTopLevel && this.dashboardTagline)
 					this.dashboardTagline.caption = this.resolveCaption(item).toUpperCase();
-				if (isTopLevel && this.tileBackgrounds[i] && this.bgBase)
-					this.swapBackground(this.tileBackgrounds[i], 1.06);
 				// Gold frame glow on hover (mockup card language).
 				if (isTopLevel)
 				{
