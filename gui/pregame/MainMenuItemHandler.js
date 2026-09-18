@@ -62,6 +62,31 @@ export class MainMenuItemHandler
 		this.buttonAnims = new Map();
 		this.animatingButtons = new Set();
 
+		// Per-tile background art with a smooth bloom transition.
+		// (0ad GUI images have no opacity, so a true crossfade is
+		// impossible; the new art blooms out from the screen center
+		// instead, which reads as a fade with no jarring jump.)
+		this.bgBase = Engine.GetGUIObjectByName("dashboardBackground");
+		this.bgFx = Engine.GetGUIObjectByName("dashboardBackgroundFx");
+		this.tileBackgrounds = [
+			"DashboardBackgroundLearn",
+			"DashboardBackgroundCampaign",
+			"DashboardBackgroundSingleplayer",
+			"DashboardBackgroundMultiplayer",
+			"DashboardBackgroundSettings",
+			"DashboardBackgroundEditor",
+			"DashboardBackgroundCredits",
+			"DashboardBackgroundCivtree",
+			"DashboardBackgroundManual",
+			"DashboardBackgroundExit"
+		];
+		this.bgCurrent = "DashboardBackground"; // art currently on the base layer
+		this.bgDesiredArt = null; // set by hover; null = submenu parent or base
+		this.bgTransition = null; // { toArt, startTime } while blooming
+		this.bgPending = null; // coalesced target when retargeted mid-bloom
+		this.bgLastDesired = "DashboardBackground";
+		this.bgStableSince = 0; // debounce: backdrop follows deliberate hovers only
+
 		this.setupMenuButtons(this.mainMenuButtons.children, this.menuItems, true);
 		this.setupHotkeys(this.menuItems);
 
@@ -148,6 +173,7 @@ export class MainMenuItemHandler
 		this.tickButtonAnims();
 		this.tickVistaLayout();
 		this.tickSubmenuSlide();
+		this.tickBackgroundFx();
 		this.tickLobbyWidget();
 		// Deferred idle reset: only when the mouse has truly left every button.
 		// (Avoids flicker when moving directly between neighboring tiles.)
@@ -156,6 +182,89 @@ export class MainMenuItemHandler
 			if (!this.infoPanelDefault)
 				this.resetInfoPanel();
 		}
+	}
+
+	/**
+	 * Per-tile background art, changed smoothly.
+	 * The new art blooms out from the screen center over 450ms
+	 * (ease-out cubic): no instant swap, no dizziness.
+	 * Fast mouse sweeps are debounced so the backdrop only follows
+	 * deliberate hovers; a retarget mid-bloom is coalesced and starts
+	 * once the current bloom lands.
+	 */
+	tickBackgroundFx()
+	{
+		if (!this.bgBase || !this.bgFx)
+			return;
+
+		// Desired art: hovered tile wins; else the open submenu's parent
+		// tile; else the plain base background.
+		let desired = this.bgDesiredArt;
+		if (!desired && !this.submenu.hidden && this.lastOpenItem)
+		{
+			const parentIdx = this.menuItems.indexOf(this.lastOpenItem);
+			if (parentIdx >= 0)
+				desired = this.tileBackgrounds[parentIdx];
+		}
+		if (!desired)
+			desired = "DashboardBackground";
+
+		if (desired !== this.bgLastDesired)
+		{
+			this.bgLastDesired = desired;
+			this.bgStableSince = Date.now();
+		}
+
+		if (this.bgTransition)
+		{
+			// Target changed back to what's already showing: cancel.
+			if (desired === this.bgCurrent)
+			{
+				this.bgFx.hidden = true;
+				this.bgTransition = null;
+				this.bgPending = null;
+				return;
+			}
+			// Retargeted mid-bloom: coalesce, start when this one lands.
+			if (desired !== this.bgTransition.toArt)
+				this.bgPending = desired;
+		}
+		else if (desired !== this.bgCurrent && Date.now() - this.bgStableSince >= 100)
+			this.startBgBloom(desired);
+
+		if (!this.bgTransition)
+			return;
+
+		const t = Math.min((Date.now() - this.bgTransition.startTime) / 450, 1.0);
+		const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
+		const half = 25 + 25 * eased; // centered rect, 50% -> 100%
+		this.bgFx.size = {
+			"rleft": 50 - half, "rtop": 50 - half,
+			"rright": 50 + half, "rbottom": 50 + half
+		};
+
+		if (t >= 1.0)
+		{
+			const toArt = this.bgTransition.toArt;
+			this.bgBase.sprite = toArt;
+			this.bgCurrent = toArt;
+			this.bgFx.hidden = true;
+			this.bgTransition = null;
+			const next = this.bgPending;
+			this.bgPending = null;
+			if (next && next !== this.bgCurrent)
+				this.startBgBloom(next);
+		}
+	}
+
+	startBgBloom(toArt)
+	{
+		this.bgFx.sprite = toArt;
+		// Start as a centered rect; tickBackgroundFx expands it.
+		this.bgFx.size = { "rleft": 25, "rtop": 25, "rright": 75, "rbottom": 75 };
+		this.bgFx.hidden = false;
+		this.bgTransition = { "toArt": toArt, "startTime": Date.now() };
+		this.bgPending = null;
 	}
 
 	/**
@@ -465,6 +574,9 @@ export class MainMenuItemHandler
 				// Tagline readout: show the hovered card's title.
 				if (isTopLevel && this.dashboardTagline)
 					this.dashboardTagline.caption = this.resolveCaption(item).toUpperCase();
+				// Backdrop follows the hovered card (smooth bloom, see tickBackgroundFx).
+				if (isTopLevel && this.tileBackgrounds[i])
+					this.bgDesiredArt = this.tileBackgrounds[i];
 				// Gold frame glow on hover (mockup card language).
 				if (isTopLevel)
 				{
@@ -490,6 +602,8 @@ export class MainMenuItemHandler
 				// moving between buttons doesn't flicker. See tickAnimations.
 				if (this.hoveredButton === button)
 					this.hoveredButton = null;
+				// Backdrop falls back to the submenu parent (or base); see tickBackgroundFx.
+				this.bgDesiredArt = null;
 				// Tagline readout: restore the default once no card is hovered.
 				if (!this.hoveredButton && this.dashboardTagline)
 					this.dashboardTagline.caption = translate("FORGE YOUR LEGEND");

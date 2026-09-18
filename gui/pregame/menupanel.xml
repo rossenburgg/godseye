@@ -5,6 +5,9 @@
 
 	<!-- PS5-style dashboard background -->
 	<object name="dashboardBackground" type="image" sprite="DashboardBackground" size="0 0 100% 100%"/>
+	<!-- Bloom layer: the incoming backdrop art expands from the center
+	     over the base layer, so background changes never jump. -->
+	<object name="dashboardBackgroundFx" type="image" size="0 0 100% 100%" sprite="DashboardBackground" ghost="true" hidden="true"/>
 
 	<!-- Vista: one static full-screen painting + navy scrim. The static
 	     image is sized in pixels every tick (fixed 2:1 cover) so it never
