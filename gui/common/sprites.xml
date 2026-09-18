@@ -912,9 +912,19 @@
 		<image texture="pregame/dashboard/subcard_over.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
 
-	<!-- Vista banner behind the header: scenic top fading into the dark (reference language) -->
-	<sprite name="DashboardVista">
-		<image texture="pregame/dashboard/vista_banner.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	<!-- Vista banner behind the header: 4 parallax layers (sky, mountains, city, foreground),
+	     ChatGPT art keyed and stacked, drifting at different speeds like the stock 0 A.D. backgrounds -->
+	<sprite name="DashboardVistaSky">
+		<image texture="pregame/dashboard/vista_layer_sky.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardVistaMtn">
+		<image texture="pregame/dashboard/vista_layer_mtn.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardVistaCity">
+		<image texture="pregame/dashboard/vista_layer_city.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
+	</sprite>
+	<sprite name="DashboardVistaFg">
+		<image texture="pregame/dashboard/vista_layer_fg.png" size="0 0 100% 100%" texture_size="0 0 100% 100%"/>
 	</sprite>
 
 	<!-- Gold hairline frames for the main menu cards (transparent center) -->

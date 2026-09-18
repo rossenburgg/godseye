@@ -124,6 +124,19 @@ export class MainMenuItemHandler
 		if (sectionLabel)
 			sectionLabel.z = 200;
 
+		// Vista parallax: 4 banner layers drifting on slow cosine waves, back layers
+		// barely move and front layers move more (stock 0 A.D. background trick).
+		// Amplitudes are in % of screen width; layers span -10%..110% so the
+		// drift never exposes an edge.
+		this.vistaLayers = [0, 1, 2, 3].map(i => Engine.GetGUIObjectByName("vistaLayer" + i));
+		this.vistaCfg = [
+			{ "amp": 1, "freq": 0.050 },
+			{ "amp": 3, "freq": 0.050 },
+			{ "amp": 6, "freq": 0.045 },
+			{ "amp": 10, "freq": 0.040 },
+		];
+		this.vistaT0 = Date.now();
+
 		this.mainMenu.onTick = this.tickAnimations.bind(this);
 	}
 
@@ -149,6 +162,7 @@ export class MainMenuItemHandler
 		}
 		this.tickButtonAnims();
 		this.tickBackgroundZoom();
+		this.tickVistaParallax();
 		this.tickSubmenuSlide();
 		this.tickLobbyWidget();
 		// Deferred idle reset: only when the mouse has truly left every button.
@@ -383,6 +397,21 @@ export class MainMenuItemHandler
 
 		if (t >= 1.0)
 			z.scale = z.target;
+	}
+
+	tickVistaParallax()
+	{
+		if (!this.vistaLayers[0])
+			return;
+		const t = (Date.now() - this.vistaT0) / 1000;
+		for (let i = 0; i < this.vistaLayers.length; i++)
+		{
+			const cfg = this.vistaCfg[i];
+			const d = cfg.amp * Math.cos(cfg.freq * t);
+			this.vistaLayers[i].size = {
+				"rleft": -10 + d, "rtop": 0, "rright": 110 + d, "rbottom": 30
+			};
+		}
 	}
 
 	tickButtonAnims()
