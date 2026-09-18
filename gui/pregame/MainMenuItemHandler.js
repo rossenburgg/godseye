@@ -62,12 +62,10 @@ export class MainMenuItemHandler
 		this.buttonAnims = new Map();
 		this.animatingButtons = new Set();
 
-		// Per-tile background art with a smooth bloom transition.
-		// (0ad GUI images have no opacity, so a true crossfade is
-		// impossible; the new art blooms out from the screen center
-		// instead, which reads as a fade with no jarring jump.)
+		// Per-tile background art. The engine's GUI images have no
+		// opacity, so no fade or motion trickery: the art cuts cleanly
+		// (debounced, so fast mouse sweeps don't strobe it).
 		this.bgBase = Engine.GetGUIObjectByName("dashboardBackground");
-		this.bgFx = Engine.GetGUIObjectByName("dashboardBackgroundFx");
 		this.tileBackgrounds = [
 			"DashboardBackgroundLearn",
 			"DashboardBackgroundCampaign",
@@ -80,10 +78,8 @@ export class MainMenuItemHandler
 			"DashboardBackgroundManual",
 			"DashboardBackgroundExit"
 		];
-		this.bgCurrent = "DashboardBackground"; // art currently on the base layer
+		this.bgCurrent = "DashboardBackground"; // art currently showing
 		this.bgDesiredArt = null; // set by hover; null = submenu parent or base
-		this.bgTransition = null; // { toArt, startTime } while blooming
-		this.bgPending = null; // coalesced target when retargeted mid-bloom
 		this.bgLastDesired = "DashboardBackground";
 		this.bgStableSince = 0; // debounce: backdrop follows deliberate hovers only
 
@@ -185,16 +181,15 @@ export class MainMenuItemHandler
 	}
 
 	/**
-	 * Per-tile background art, changed smoothly.
-	 * The new art blooms out from the screen center over 450ms
-	 * (ease-out cubic): no instant swap, no dizziness.
-	 * Fast mouse sweeps are debounced so the backdrop only follows
-	 * deliberate hovers; a retarget mid-bloom is coalesced and starts
-	 * once the current bloom lands.
+	 * Per-tile background art, changed with a clean cut and zero motion.
+	 * No fade, no zoom, no bloom: every animated transition this engine
+	 * can do looks like a trick and feels worse than the cut itself.
+	 * Debounced so fast mouse sweeps don't strobe the backdrop; while a
+	 * submenu is open it stays on the parent tile's art.
 	 */
 	tickBackgroundFx()
 	{
-		if (!this.bgBase || !this.bgFx)
+		if (!this.bgBase)
 			return;
 
 		// Desired art: hovered tile wins; else the open submenu's parent
@@ -215,56 +210,11 @@ export class MainMenuItemHandler
 			this.bgStableSince = Date.now();
 		}
 
-		if (this.bgTransition)
+		if (desired !== this.bgCurrent && Date.now() - this.bgStableSince >= 150)
 		{
-			// Target changed back to what's already showing: cancel.
-			if (desired === this.bgCurrent)
-			{
-				this.bgFx.hidden = true;
-				this.bgTransition = null;
-				this.bgPending = null;
-				return;
-			}
-			// Retargeted mid-bloom: coalesce, start when this one lands.
-			if (desired !== this.bgTransition.toArt)
-				this.bgPending = desired;
+			this.bgBase.sprite = desired;
+			this.bgCurrent = desired;
 		}
-		else if (desired !== this.bgCurrent && Date.now() - this.bgStableSince >= 100)
-			this.startBgBloom(desired);
-
-		if (!this.bgTransition)
-			return;
-
-		const t = Math.min((Date.now() - this.bgTransition.startTime) / 450, 1.0);
-		const eased = 1 - Math.pow(1 - t, 3); // ease-out cubic
-		const half = 25 + 25 * eased; // centered rect, 50% -> 100%
-		this.bgFx.size = {
-			"rleft": 50 - half, "rtop": 50 - half,
-			"rright": 50 + half, "rbottom": 50 + half
-		};
-
-		if (t >= 1.0)
-		{
-			const toArt = this.bgTransition.toArt;
-			this.bgBase.sprite = toArt;
-			this.bgCurrent = toArt;
-			this.bgFx.hidden = true;
-			this.bgTransition = null;
-			const next = this.bgPending;
-			this.bgPending = null;
-			if (next && next !== this.bgCurrent)
-				this.startBgBloom(next);
-		}
-	}
-
-	startBgBloom(toArt)
-	{
-		this.bgFx.sprite = toArt;
-		// Start as a centered rect; tickBackgroundFx expands it.
-		this.bgFx.size = { "rleft": 25, "rtop": 25, "rright": 75, "rbottom": 75 };
-		this.bgFx.hidden = false;
-		this.bgTransition = { "toArt": toArt, "startTime": Date.now() };
-		this.bgPending = null;
 	}
 
 	/**
