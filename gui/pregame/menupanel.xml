@@ -9,8 +9,8 @@
 	<!-- Vista: one static full-screen painting + navy scrim. The static
 	     image is sized in pixels every tick (fixed 2:1 cover) so it never
 	     stretches; the scrim melts it into our background color. -->
-	<object name="vistaStatic" type="image" size="0 0 100% 100%" sprite="DashboardVistaStatic" ghost="true"/>
-	<object name="vistaScrim" type="image" size="0 0 100% 100%" sprite="DashboardVistaScrim" ghost="true"/>
+	<object name="vistaStatic" type="image" size="0 0 100% 100%" sprite="DashboardVistaStatic" ghost="true" hidden="true"/>
+	<object name="vistaScrim" type="image" size="0 0 100% 100%" sprite="DashboardVistaScrim" ghost="true" hidden="true"/>
 
 	<!-- Header: gold emblem + hero title, top-left -->
 	<object name="dashboardEmblem" type="image" size="4% 5% 8% 12.1%" sprite="DashboardEmblem" ghost="true"/>
